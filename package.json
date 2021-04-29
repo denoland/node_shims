@@ -7,11 +7,14 @@
 		".": "./dist/index.js",
 		"./global": "./dist/global.js"
 	},
+	"files": [
+		"dist",
+		"src"
+	],
 	"scripts": {
 		"denolib": "deno types > src/lib.deno.d.ts",
 		"build": "tsc",
-		"bundle": "deno run --allow-read=dist --allow-write=deno.ns.b.ts https://raw.githubusercontent.com/trgwii/bundler/master/bundler.ts ts-bundle dist deno.ns.b.ts",
-		"full": "npm run denolib & npm run build & npm run bundle"
+		"full": "npm run denolib & npm run build"
 	},
 	"devDependencies": {
 		"@types/node": "^15.0.1",

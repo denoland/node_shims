@@ -1,7 +1,9 @@
 {
 	"compilerOptions": {
 		"module": "CommonJS",
-		"target": "ES2020",
+		"target": "ES2019",
+		"declaration": true,
+		"declarationMap": true,
 		"outDir": "dist"
 	},
 	"include": ["src/index.ts", "src/global.ts"]
