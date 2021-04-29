@@ -18,9 +18,9 @@
 		"src"
 	],
 	"scripts": {
-		"denolib": "deno types > src/lib.deno.d.ts",
+		"denolib": "deno run util/deno_check.ts && deno types > src/lib.deno.d.ts",
 		"build": "tsc",
-		"full": "npm run denolib & npm run build"
+		"prepare": "npm run denolib && npm run build"
 	},
 	"devDependencies": {
 		"@types/node": "^15.0.1",
