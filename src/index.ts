@@ -1,6 +1,5 @@
 ///<reference path="lib.deno.d.ts" />
 
-import fetch from 'node-fetch';
 import { args } from './deno/args.js';
 import { build } from './deno/build.js';
 import { env } from './deno/env.js';
@@ -15,10 +14,6 @@ import { remove } from './deno/remove.js';
 import { rename } from './deno/rename.js';
 import { stat } from './deno/stat.js';
 import { writeTextFile } from './deno/writeTextFile.js';
-
-export { Headers } from 'node-fetch';
-export { crypto } from './crypto.js';
-export { fetch };
 
 //@ts-expect-error
 export const Deno: typeof globalThis.Deno = {
