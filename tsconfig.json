@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"module": "CommonJS",
+		"target": "ES2020",
+		"outDir": "dist"
+	},
+	"include": ["src/index.ts", "src/global.ts"]
+}
