@@ -11,7 +11,8 @@
   },
   "exports": {
     ".": "./dist/index.js",
-    "./global": "./dist/global.js"
+    "./global": "./dist/global.js",
+    "./deno": "./dist/deno.js"
   },
   "files": [
     "dist",
@@ -21,7 +22,7 @@
     "denolib": "deno run util/deno_check.ts && deno types > src/lib.deno.d.ts",
     "build": "tsc",
     "prepare": "npm run denolib && npm run build",
-    "fmt": "deno fmt --ignore=node_modules/"
+    "fmt": "deno fmt --ignore=node_modules"
   },
   "devDependencies": {
     "@types/node": "^15.0.1",
