@@ -1,10 +1,10 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { rm } from 'fs/promises';
+import { rm } from "fs/promises";
 
 export const remove: typeof Deno.remove = async function remove(
-	path,
-	options = {}
+  path,
+  options = {},
 ) {
-	return rm(path, options.recursive ? { recursive: true, force: true } : {});
+  return rm(path, options.recursive ? { recursive: true, force: true } : {});
 };

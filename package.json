@@ -1,32 +1,34 @@
 {
-	"name": "deno.ns",
-	"version": "0.0.1",
-	"description": "Deno namespace shim for node",
-	"main": "./dist/index.js",
-	"author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/trgwii/deno.ns.git"
-	},
-	"exports": {
-		".": "./dist/index.js",
-		"./global": "./dist/global.js"
-	},
-	"files": [
-		"dist",
-		"src"
-	],
-	"scripts": {
-		"denolib": "deno run util/deno_check.ts && deno types > src/lib.deno.d.ts",
-		"build": "tsc",
-		"prepare": "npm run denolib && npm run build"
-	},
-	"devDependencies": {
-		"@types/node": "^15.0.1",
-		"@types/node-fetch": "^2.5.10"
-	},
-	"dependencies": {
-		"node-fetch": "^2.6.1"
-	}
+  "name": "deno.ns",
+  "version": "0.0.1",
+  "description": "Deno namespace shim for node",
+  "main": "./dist/index.js",
+  "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trgwii/deno.ns.git"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./global": "./dist/global.js"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "denolib": "deno run util/deno_check.ts && deno types > src/lib.deno.d.ts",
+    "build": "tsc",
+    "prepare": "npm run denolib && npm run build",
+    "fmt": "deno fmt --ignore=node_modules/"
+  },
+  "devDependencies": {
+    "@types/node": "^15.0.1",
+    "@types/node-fetch": "^2.5.10",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }
