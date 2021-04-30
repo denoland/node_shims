@@ -14,5 +14,22 @@ jobs:
       with:
         deno-version: 1.9.2
     - run: npm ci --ignore-scripts
-    - run: npm run prepare
-    - run: npm run fmt -- --check
+    - run: npm run --silent prepare
+
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: denoland/setup-deno@main
+      with:
+        deno-version: 1.9.2
+    - run: npm run --silent fmt -- --check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: denoland/setup-deno@main
+      with:
+        deno-version: 1.9.2
+    - run: npm run --silent lint

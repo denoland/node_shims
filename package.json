@@ -29,6 +29,7 @@
     "denolib": "deno run tools/deno_check.ts && deno types > src/lib.deno.d.ts",
     "build": "tsc",
     "prepare": "npm run --silent denolib && npm run --silent build",
+    "lint": "npm run --silent clean && deno lint --ignore=node_modules/ --unstable",
     "fmt": "npm run --silent clean && deno fmt --ignore=node_modules/",
     "clean": "git clean -fXde '!node_modules/'"
   },
