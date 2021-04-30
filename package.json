@@ -1,7 +1,14 @@
 {
   "name": "deno.ns",
   "version": "0.0.1",
-  "description": "Deno namespace shim for node",
+  "description": "Deno namespace shim for Node.js",
+  "keywords": [
+    "deno namespace",
+    "deno",
+    "polyfill",
+    "ponyfill",
+    "shim"
+  ],
   "main": "./dist/index.js",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
   "license": "MIT",
@@ -22,7 +29,8 @@
     "denolib": "deno run tools/deno_check.ts && deno types > src/lib.deno.d.ts",
     "build": "tsc",
     "prepare": "npm run denolib && npm run build",
-    "fmt": "deno fmt --ignore=node_modules"
+    "fmt": "npm run --silent clean && deno fmt --ignore=node_modules/",
+    "clean": "git clean -fXde '!node_modules/'"
   },
   "devDependencies": {
     "@types/node": "^15.0.1",
