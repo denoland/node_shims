@@ -18,5 +18,8 @@ export const readlineSync = () => {
     }
     char = String(buf);
   }
+  if (char === "\r") {
+    readSync(process.stdin.fd, buf, 0, 1, 0);
+  }
   return line;
 };
