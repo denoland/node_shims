@@ -19,7 +19,7 @@
     "src"
   ],
   "scripts": {
-    "denolib": "deno run util/deno_check.ts && deno types > src/lib.deno.d.ts",
+    "denolib": "deno run tools/deno_check.ts && deno types > src/lib.deno.d.ts",
     "build": "tsc",
     "prepare": "npm run denolib && npm run build",
     "fmt": "deno fmt --ignore=node_modules"
