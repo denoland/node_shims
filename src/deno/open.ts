@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { open as node_open } from "fs/promises";
+import { open as nodeOpen } from "fs/promises";
 
 export const open: typeof Deno.open = async function open(
   path,
@@ -13,7 +13,7 @@ export const open: typeof Deno.open = async function open(
     : options.read
     ? "r"
     : "?";
-  const f = await node_open(path, flags);
+  const f = await nodeOpen(path, flags);
   let position = 0;
   const file: Deno.File = {
     rid: 0,
@@ -27,10 +27,10 @@ export const open: typeof Deno.open = async function open(
       }
       return (position += bytesRead);
     },
-    readSync(p) {
+    readSync() {
       throw new Error("readSync not implemented");
     },
-    async seek(offset, whence) {
+    seek(offset, whence) {
       if (whence === 0) {
         position = offset;
       } else if (whence === 1) {
@@ -38,9 +38,9 @@ export const open: typeof Deno.open = async function open(
       } else {
         throw new Error("Deno.SeekMode.End not implemented");
       }
-      return position;
+      return Promise.resolve(position);
     },
-    seekSync(offset, whence) {
+    seekSync() {
       throw new Error("seekSync not implemented");
     },
     async stat() {

@@ -1,10 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { rename as node_rename } from "fs/promises";
+import { rename as nodeRename } from "fs/promises";
 
-export const rename: typeof Deno.rename = async function rename(
-  oldpath,
-  newpath,
-) {
-  return node_rename(oldpath, newpath);
+export const rename: typeof Deno.rename = function rename(oldpath, newpath) {
+  return nodeRename(oldpath, newpath);
 };

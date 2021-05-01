@@ -2,7 +2,7 @@
 
 import { rm } from "fs/promises";
 
-export const remove: typeof Deno.remove = async function remove(
+export const remove: typeof Deno.remove = function remove(
   path,
   options = {},
 ) {

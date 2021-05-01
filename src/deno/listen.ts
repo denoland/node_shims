@@ -18,10 +18,10 @@ const _listen = async function* _listen(
           close() {
             s.destroy();
           },
-          async closeWrite() {
+          closeWrite() {
             return new Promise<void>((resolve) => s.end(resolve));
           },
-          async read(p) {
+          read(p) {
             return new Promise<number | null>((resolve) =>
               s.once("readable", () => {
                 const data: Buffer | null = s.read(1);
@@ -36,7 +36,7 @@ const _listen = async function* _listen(
               })
             );
           },
-          async write(p) {
+          write(p) {
             return new Promise<number>((resolve, reject) =>
               s.write(p, (err) => err ? reject(err) : resolve(p.byteLength))
             );

@@ -2,9 +2,8 @@
 
 import { readFile } from "fs/promises";
 
-export const readTextFile: typeof Deno.readTextFile =
-  async function readTextFile(
-    path,
-  ) {
-    return readFile(path, "utf8");
-  };
+export const readTextFile: typeof Deno.readTextFile = function readTextFile(
+  path,
+) {
+  return readFile(path, "utf8");
+};
