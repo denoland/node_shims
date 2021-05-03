@@ -25,7 +25,11 @@ export { mkdir } from "./deno/mkdir.js";
 export { mkdirSync } from "./deno/mkdirSync.js";
 export { noColor } from "./deno/noColor.js";
 export { open } from "./deno/open.js";
-export { permissions } from "./deno/permissions.js";
+export {
+  Permissions,
+  permissions,
+  PermissionStatus,
+} from "./deno/permissions.js";
 export { pid } from "./deno/pid.js";
 export { ppid } from "./deno/ppid.js";
 export { readDir } from "./deno/readDir.js";

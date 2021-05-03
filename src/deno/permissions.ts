@@ -3,13 +3,16 @@
 // The listeners don't actually matter because the state of these permissions
 // is constant and mocked as Node.js has all doors open.
 
-class PermissionStatus extends EventTarget implements Deno.PermissionStatus {
-  onchange: Deno.PermissionStatus["onchange"];
+export class PermissionStatus extends EventTarget
+  implements Deno.PermissionStatus {
+  onchange: Deno.PermissionStatus["onchange"] = null;
 
   constructor(readonly state: Deno.PermissionStatus["state"]) {
     super();
   }
 }
+
+export type Permissions = Deno.Permissions;
 
 export const permissions: typeof Deno.permissions = {
   query(_query) {
