@@ -1,10 +1,10 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { stat as nodeStat } from "fs/promises";
+import type { Stats } from "fs";
 
-export const stat: typeof Deno.stat = async function stat(path) {
-  const s = await nodeStat(path);
-  const stats: Deno.FileInfo = {
+export function denoifyFileInfo(s: Stats): Deno.FileInfo {
+  return {
     atime: s.atime,
     birthtime: s.birthtime,
     blksize: s.blksize,
@@ -22,5 +22,7 @@ export const stat: typeof Deno.stat = async function stat(path) {
     size: s.size,
     uid: s.uid,
   };
-  return stats;
-};
+}
+
+export const stat: typeof Deno.stat = async (path) =>
+  denoifyFileInfo(await nodeStat(path));

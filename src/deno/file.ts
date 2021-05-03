@@ -2,6 +2,8 @@
 
 import * as fs from "fs";
 import { promisify } from "util";
+import { fstat } from "./fstat";
+import { fstatSync } from "./fstatSync";
 import { readSync } from "./readSync";
 import { write } from "./write";
 import { writeSync } from "./writeSync";
@@ -38,11 +40,11 @@ export class File implements Deno.File {
   seekSync(offset: number, whence: Deno.SeekMode): number {
     throw new Error("Method not implemented.");
   }
-  stat(): Promise<Deno.FileInfo> {
-    throw new Error("Method not implemented.");
+  async stat(): Promise<Deno.FileInfo> {
+    return await fstat(this.rid);
   }
   statSync(): Deno.FileInfo {
-    throw new Error("Method not implemented.");
+    return fstatSync(this.rid);
   }
   close(): void {
     fs.closeSync(this.rid);
