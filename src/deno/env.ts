@@ -10,6 +10,7 @@ export const env: typeof Deno.env = {
   delete(key) {
     delete process.env[key];
   },
+  // @ts-expect-error https://github.com/denoland/deno/issues/10267
   toObject() {
     return { ...process.env };
   },

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "strict": true,
     "target": "ES2019",
     "declaration": true,
     "declarationMap": true,

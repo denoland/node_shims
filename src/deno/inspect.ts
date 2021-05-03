@@ -2,4 +2,5 @@
 
 import * as util from "util";
 
-export const inspect: typeof Deno.inspect = util.inspect;
+export const inspect: typeof Deno.inspect = (value, options = {}) =>
+  util.inspect(value, options);
