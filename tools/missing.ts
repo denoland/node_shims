@@ -1,4 +1,5 @@
-#!/usr/bin/env -S deno run --allow-read=src/deno/
+#!/usr/bin/env -S deno run --no-check --allow-read='.'
+import { Project } from "https://deno.land/x/ts_morph@10.0.2/mod.ts";
 
 const wontAdd = new Set([
   // internals
@@ -15,19 +16,20 @@ const wontAdd = new Set([
   "Buffer",
 ]);
 
-const count = wontAdd.size;
-const total = Object.keys(Deno).length;
+const project = new Project({
+  tsConfigFilePath: "./tsconfig.json",
+  skipAddingFilesFromTsConfig: true,
+  compilerOptions: { types: [] },
+});
+const sourceFile = project.addSourceFileAtPath("./src/deno.ts");
+const added = sourceFile.getExportedDeclarations();
+const properties = Object.keys(Deno).sort();
+const pad = (n: number) => n.toString().padStart(3);
 
-let added = 0;
-for await (const dirEntry of Deno.readDir("src/deno")) {
-  wontAdd.add(dirEntry.name.slice(0, -3));
-  added++;
+console.info("%s properties total", pad(properties.length));
+console.info("%s wontfix", pad(wontAdd.size));
+console.info("%s added", pad(added.size));
+console.info("%s to go:", pad(properties.length - wontAdd.size - added.size));
+for (const property of properties) {
+  if (!wontAdd.has(property) && !added.has(property)) console.log(property);
 }
-
-for (const key of Object.keys(Deno).sort()) {
-  if (!wontAdd.has(key)) console.log(key);
-}
-
-console.log(
-  `${added} (remaining: ${total - added}) / ${total - count} (total: ${total})`,
-);

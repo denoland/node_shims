@@ -1,3 +1,5 @@
+// Command palette -> Organize imports
+export { isatty } from "tty";
 export { args } from "./deno/args.js";
 export { build } from "./deno/build.js";
 export { chdir } from "./deno/chdir.js";
@@ -16,7 +18,6 @@ export { execPath } from "./deno/execPath.js";
 export { exit } from "./deno/exit.js";
 export { File } from "./deno/file.js";
 export { inspect } from "./deno/inspect.js";
-export { isatty } from "./deno/isatty.js";
 export { link } from "./deno/link.js";
 export { linkSync } from "./deno/linkSync.js";
 export { listen } from "./deno/listen.js";

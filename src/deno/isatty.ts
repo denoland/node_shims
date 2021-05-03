@@ -1,1 +1,0 @@
-export { isatty } from "tty";
