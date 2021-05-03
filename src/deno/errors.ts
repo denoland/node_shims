@@ -1,40 +1,21 @@
 ///<reference path="../lib.deno.d.ts" />
 
-function makeError(name: string) {
-  const err = (function Err(message?: string): Error {
-    if (!(this instanceof Err)) {
-      return new ((Err as unknown) as new (message?: string) => Error)(
-        message,
-      );
-    }
-    Object.assign(this, new Error(message));
-    this.name = name;
-    this.message = message;
-  } as unknown) as ErrorConstructor;
-  (err as { prototype: Error }).prototype = Error.prototype;
-  err.stackTraceLimit = 10;
-  err.captureStackTrace = () => {};
-  Object.defineProperty(err, "name", { value: name });
-  return err;
-}
-
-export const errors: typeof Deno.errors = {
-  NotFound: makeError("NotFound"),
-  PermissionDenied: makeError("PermissionDenied"),
-  ConnectionRefused: makeError("ConnectionRefused"),
-  ConnectionReset: makeError("ConnectionReset"),
-  ConnectionAborted: makeError("ConnectionAborted"),
-  NotConnected: makeError("NotConnected"),
-  AddrInUse: makeError("AddrInUse"),
-  AddrNotAvailable: makeError("AddrNotAvailable"),
-  BrokenPipe: makeError("BrokenPipe"),
-  AlreadyExists: makeError("AlreadyExists"),
-  InvalidData: makeError("InvalidData"),
-  TimedOut: makeError("TimedOut"),
-  Interrupted: makeError("Interrupted"),
-  WriteZero: makeError("WriteZero"),
-  UnexpectedEof: makeError("UnexpectedEof"),
-  BadResource: makeError("BadResource"),
-  Http: makeError("Http"),
-  Busy: makeError("Busy"),
-};
+// please keep sorted
+export class AddrInUse extends Error {}
+export class AddrNotAvailable extends Error {}
+export class AlreadyExists extends Error {}
+export class BadResource extends Error {}
+export class BrokenPipe extends Error {}
+export class Busy extends Error {}
+export class ConnectionAborted extends Error {}
+export class ConnectionRefused extends Error {}
+export class ConnectionReset extends Error {}
+export class Http extends Error {}
+export class Interrupted extends Error {}
+export class InvalidData extends Error {}
+export class NotConnected extends Error {}
+export class NotFound extends Error {}
+export class PermissionDenied extends Error {}
+export class TimedOut extends Error {}
+export class UnexpectedEof extends Error {}
+export class WriteZero extends Error {}
