@@ -2,4 +2,5 @@
 
 import * as fs from "fs";
 
-export const chownSync: typeof Deno.chownSync = fs.chownSync;
+export const chownSync: typeof Deno.chownSync = (path, uid, gid) =>
+  fs.chownSync(path, uid ?? -1, gid ?? -1);
