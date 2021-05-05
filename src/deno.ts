@@ -52,6 +52,7 @@ export { stat } from "./deno/stat.js";
 export { statSync } from "./deno/statSync.js";
 export { symlink } from "./deno/symlink.js";
 export { symlinkSync } from "./deno/symlinkSync.js";
+export { test } from "./deno/test.js";
 export { truncate } from "./deno/truncate.js";
 export { truncateSync } from "./deno/truncateSync.js";
 export { write } from "./deno/write.js";
