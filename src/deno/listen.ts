@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { createServer } from "net";
-import { errors } from "./errors.js";
+import * as errors from "./errors.js";
 
 const _listen = async function* _listen(
   options: Parameters<typeof Deno.listen>[0],

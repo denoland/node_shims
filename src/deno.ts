@@ -13,7 +13,7 @@ export { copyFileSync } from "./deno/copyFileSync.js";
 export { customInspect } from "./deno/customInspect.js";
 export { cwd } from "./deno/cwd.js";
 export { env } from "./deno/env.js";
-export { errors } from "./deno/errors.js";
+export * as errors from "./deno/errors.js";
 export { execPath } from "./deno/execPath.js";
 export { exit } from "./deno/exit.js";
 export { File } from "./deno/file.js";
