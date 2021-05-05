@@ -47,7 +47,7 @@ const _listen = async function* _listen(
             port: s.localPort,
           },
           remoteAddr: {
-            hostname: s.remoteAddress,
+            hostname: s.remoteAddress ?? "",
             transport: "tcp",
             port: s.remotePort ?? 0,
           },

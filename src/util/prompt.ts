@@ -3,7 +3,7 @@ import { readlineSync } from "./readlineSync.js";
 
 export const prompt: typeof globalThis.prompt = function prompt(
   message,
-  defaultValue = null,
+  defaultValue = undefined,
 ) {
   writeSync(
     process.stdout.fd,
@@ -12,5 +12,5 @@ export const prompt: typeof globalThis.prompt = function prompt(
     ),
   );
   const result = readlineSync();
-  return result.length > 0 ? result : defaultValue;
+  return result.length > 0 ? result : defaultValue ?? null;
 };
