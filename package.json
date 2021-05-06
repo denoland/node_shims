@@ -32,8 +32,7 @@
     "lint": "deno lint --ignore=node_modules,dist,deno,unit,src/lib.deno.d.ts --unstable",
     "fmt": "deno fmt --ignore=node_modules,dist,deno,unit,src/lib.deno.d.ts",
     "clean": "git clean -fXde '!node_modules/'",
-    "deno-test": "node dist/cli/test.js",
-    "deno-unit-tests": "npm run --silent build & deno run -A --unstable tools/run_deno_unit_tests.ts"
+    "test": "npm run --silent build & deno run -A --unstable tools/run_deno_unit_tests.ts"
   },
   "devDependencies": {
     "@types/node": "^14.14.43",
