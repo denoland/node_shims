@@ -80,6 +80,7 @@ const ignore = new Set([
   "write_text_file_test.ts",
 ]);
 
+let exitCode = 0;
 for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
   if (e.isFile && e.name.endsWith(".ts") && !ignore.has(e.name)) {
     await Deno.run({
@@ -98,12 +99,16 @@ for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
       stdout: "null",
     }).status();
     console.log(e.name + ":");
-    await Deno.run({
+    const status = await Deno.run({
       cmd: [
         "node",
         "dist/cli/test.js",
         `unit/file/deno/cli/tests/unit/${e.name}`,
       ],
     }).status();
+    if (!status.success) {
+      exitCode = status.code;
+    }
   }
 }
+Deno.exit(exitCode);

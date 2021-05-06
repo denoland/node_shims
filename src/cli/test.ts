@@ -16,6 +16,7 @@ const test: typeof Deno.test = function test(
       try {
         await t.fn();
       } catch (err) {
+        process.exitCode = 1;
         console.log(`test ${t.name} ... FAILED (${Date.now() - start}ms)`);
         console.log(`\t${err.message}`);
         return;
