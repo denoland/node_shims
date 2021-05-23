@@ -57,4 +57,6 @@ export { truncate } from "./deno/truncate.js";
 export { truncateSync } from "./deno/truncateSync.js";
 export { write } from "./deno/write.js";
 export { writeSync } from "./deno/writeSync.js";
+export { writeFile } from "./deno/writeFile.js";
+export { writeFileSync } from "./deno/writeFileSync.js";
 export { writeTextFile } from "./deno/writeTextFile.js";
