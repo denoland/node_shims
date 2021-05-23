@@ -21,7 +21,6 @@ export class File implements Deno.File {
   async truncate(len?: number): Promise<void> {
     await nodeFtruncate(this.rid, len);
   }
-  // @ts-expect-error https://github.com/denoland/deno/pull/10353
   truncateSync(len?: number): void {
     return fs.ftruncateSync(this.rid, len);
   }
