@@ -2,9 +2,10 @@
 
 import { writeFile } from "fs/promises";
 
-export const writeTextFile: typeof Deno.writeTextFile = function writeTextFile(
-  path,
-  data,
-) {
-  return writeFile(path, data);
-};
+export const writeTextFile: typeof Deno.writeTextFile =
+  async function writeTextFile(
+    path,
+    data,
+  ) {
+    await writeFile(path, data);
+  };

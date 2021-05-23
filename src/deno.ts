@@ -60,3 +60,4 @@ export { writeSync } from "./deno/writeSync.js";
 export { writeFile } from "./deno/writeFile.js";
 export { writeFileSync } from "./deno/writeFileSync.js";
 export { writeTextFile } from "./deno/writeTextFile.js";
+export { writeTextFileSync } from "./deno/writeTextFileSync.js";
