@@ -39,6 +39,7 @@ export { ppid } from "./deno/ppid.js";
 export { read } from "./deno/read.js";
 export { readDir } from "./deno/readDir.js";
 export { readFile } from "./deno/readFile.js";
+export { readFileSync } from "./deno/readFileSync.js";
 export { readLink } from "./deno/readLink.js";
 export { readLinkSync } from "./deno/readLinkSync.js";
 export { readSync } from "./deno/readSync.js";
