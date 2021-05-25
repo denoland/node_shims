@@ -25,6 +25,8 @@ export { linkSync } from "./deno/linkSync.js";
 export { listen } from "./deno/listen.js";
 export { lstat } from "./deno/lstat.js";
 export { lstatSync } from "./deno/lstatSync.js";
+export { makeTempDir } from "./deno/makeTempDir.js";
+export { makeTempDirSync } from "./deno/makeTempDirSync.js";
 export { mkdir } from "./deno/mkdir.js";
 export { mkdirSync } from "./deno/mkdirSync.js";
 export { noColor } from "./deno/noColor.js";
