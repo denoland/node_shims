@@ -1,4 +1,4 @@
-///<reference path="../src/lib.deno.d.ts" />
+import { build } from "https://raw.githubusercontent.com/trgwii/Nodeify/master/nodeify.ts";
 
 // Commented = RUN test
 const ignore = new Set([
@@ -83,28 +83,16 @@ const ignore = new Set([
 let exitCode = 0;
 for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
   if (e.isFile && e.name.endsWith(".ts") && !ignore.has(e.name)) {
-    await Deno.run({
-      cmd: [
-        "deno",
-        "run",
-        "--allow-read=deno",
-        "--allow-write=unit",
-        "--unstable",
-        "https://raw.githubusercontent.com/trgwii/Nodeify/master/nodeify.ts",
-        `vendor/deno/cli/tests/unit/${e.name}`,
-        "unit",
-      ],
-      stdin: "null",
-      stderr: "null",
-      stdout: "null",
-    }).status();
+    await build(`vendor/deno/cli/tests/unit/${e.name}`, "unit");
     console.log(e.name + ":");
     const status = await Deno.run({
       cmd: [
         "node",
         "dist/cli/test.js",
-        `unit/file/deno/cli/tests/unit/${e.name}`,
+        `unit/file/vendor/deno/cli/tests/unit/${e.name}`,
       ],
+      stdout: "inherit",
+      stderr: "inherit",
     }).status();
     if (!status.success) {
       exitCode = status.code;

@@ -1,5 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
+import { platform } from "os";
 import { join } from "path";
 import "../global.js";
 
@@ -32,7 +33,9 @@ Object.defineProperty(Deno, "test", { value: test });
 Deno.args.forEach((arg) =>
   eval(
     'import("' +
-      `file:///${join(process.cwd(), arg).replaceAll("\\", "/")}.js` +
+      `file://${platform() === "win32" ? "/" : ""}${
+        join(process.cwd(), arg).replaceAll("\\", "/")
+      }.js` +
       '")',
   )
 );
