@@ -6,15 +6,18 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - uses: denoland/setup-deno@main
       with:
         deno-version: 1.9.2
     - run: npm ci --ignore-scripts
     - run: npm run --silent prepare
+    - run: npm run --silent test
 
   fmt:
     runs-on: ubuntu-latest
