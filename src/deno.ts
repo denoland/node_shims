@@ -37,6 +37,7 @@ export {
 export { pid } from "./deno/pid.js";
 export { ppid } from "./deno/ppid.js";
 export { readDir } from "./deno/readDir.js";
+export { read } from "./deno/read.js";
 export { readLink } from "./deno/readLink.js";
 export { readLinkSync } from "./deno/readLinkSync.js";
 export { readSync } from "./deno/readSync.js";
