@@ -5,14 +5,10 @@ import { writeFile as nodeWriteFile } from "fs/promises";
 export const writeFile: typeof Deno.writeFile = async function writeFile(
   path,
   data,
-  options = {},
+  { append = false, create = true, mode = 0o666 } = {},
 ) {
   await nodeWriteFile(path, data, {
-    flag: options.append
-      ? "a"
-      : ("create" in options && !options.create)
-      ? "wx"
-      : "w",
-    mode: options.mode,
+    flag: append ? create ? "a" : "ax" : create ? "w" : "wx",
+    mode,
   });
 };
