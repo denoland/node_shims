@@ -14,7 +14,7 @@ jobs:
         submodules: true
     - uses: denoland/setup-deno@main
       with:
-        deno-version: 1.9.2
+        deno-version: 1.10.2
     - run: npm ci --ignore-scripts
     - run: npm run --silent prepare
     - run: npm run --silent test
@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: denoland/setup-deno@main
       with:
-        deno-version: 1.9.2
+        deno-version: 1.10.2
     - run: npm run --silent fmt -- --check
 
   lint:
@@ -34,5 +34,5 @@ jobs:
     - uses: actions/checkout@v2
     - uses: denoland/setup-deno@main
       with:
-        deno-version: 1.9.2
+        deno-version: 1.10.2
     - run: npm run --silent lint
