@@ -1,5 +1,5 @@
-#!/usr/bin/env -S deno run --no-check --allow-read='.'
-import { Project } from "https://deno.land/x/ts_morph@10.0.2/mod.ts";
+#!/usr/bin/env -S deno run --allow-run
+///<reference path="../src/lib.deno.d.ts" />
 
 const wontAdd = new Set([
   // internals
@@ -16,13 +16,18 @@ const wontAdd = new Set([
   "Buffer",
 ]);
 
-const project = new Project({
-  tsConfigFilePath: "./tsconfig.json",
-  skipAddingFilesFromTsConfig: true,
-  compilerOptions: { types: [] },
-});
-const sourceFile = project.addSourceFileAtPath("./src/deno.ts");
-const added = sourceFile.getExportedDeclarations();
+const added = new Set(JSON.parse(new TextDecoder().decode(
+  await Deno.run({
+    cmd: [
+      "node",
+      "-r",
+      "./dist/global",
+      "-p",
+      "JSON.stringify(Object.keys(Deno))",
+    ],
+    stdout: "piped",
+  }).output(),
+)));
 const properties = Object.keys(Deno).sort();
 const pad = (n: number) => n.toString().padStart(3);
 

@@ -26,7 +26,8 @@
     "src"
   ],
   "scripts": {
-    "denolib": "deno run tools/deno_check.ts && deno types > src/lib.deno.d.ts",
+    "denolib": "deno run --allow-run --allow-write=src/lib.deno.d.ts tools/denolib.ts",
+    "missing": "deno run --allow-run tools/missing.ts",
     "build": "tsc",
     "prepare": "npm run --silent denolib && npm run --silent build",
     "lint": "deno lint --ignore=node_modules,dist,deno,unit,src/lib.deno.d.ts --unstable",
@@ -35,9 +36,9 @@
     "test": "npm run --silent build & deno run -A --unstable tools/run_deno_unit_tests.ts"
   },
   "devDependencies": {
-    "@types/node": "^15.0.2",
+    "@types/node": "^15.6.1",
     "@types/node-fetch": "^2.5.10",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
