@@ -1,26 +1,12 @@
 #!/usr/bin/env -S deno run --allow-run
 ///<reference path="../src/lib.deno.d.ts" />
 
-const deprecated: string[] = JSON.parse(new TextDecoder().decode(
-  await Deno.run({
-    cmd: ["deno", "doc", "--json"],
-    stdout: "piped",
-  }).output(),
-))
-  .find((x: { name: string }) => x.name === "Deno").namespaceDef.elements
-  .filter((x: { jsDoc?: string }) => x.jsDoc?.includes("@deprecated"))
-  .map((x: { name: string }) => x.name);
+const properties = Object.keys(Deno).sort();
 
-const wontAdd = new Set([
-  // internals
-  "core",
-  "internal",
+const toWrite = Deno.args.find((arg) => arg.startsWith("--write"))?.split("=")
+  ?.[1];
 
-  // deprecated
-  ...deprecated,
-]);
-
-const added = new Set(JSON.parse(new TextDecoder().decode(
+const implemented = new Set(JSON.parse(new TextDecoder().decode(
   await Deno.run({
     cmd: [
       "node",
@@ -32,16 +18,67 @@ const added = new Set(JSON.parse(new TextDecoder().decode(
     stdout: "piped",
   }).output(),
 )));
-const properties = Object.keys(Deno).sort();
-const pad = (n: number) => n.toString().padStart(3);
 
-console.info("%s properties total", pad(properties.length));
-console.info("%s wontfix", pad(wontAdd.size));
-console.info("%s added", pad(added.size));
-console.info("%s to go", pad(properties.length - wontAdd.size - added.size));
-if (Deno.args.includes("all")) {
+const deprecated: Set<string> = new Set(
+  JSON.parse(new TextDecoder().decode(
+    await Deno.run({
+      cmd: ["deno", "doc", "--json"],
+      stdout: "piped",
+    }).output(),
+  ))
+    .find((x: { name: string }) => x.name === "Deno").namespaceDef.elements
+    .filter((x: { jsDoc?: string }) => x.jsDoc?.includes("@deprecated"))
+    .map((x: { name: string }) => x.name),
+);
+
+const internals = new Set(["core", "internal"]);
+
+const wontFix = new Set([...deprecated, ...internals]);
+
+const status = `
+- total       : ${properties.length}
+- implemented : ${implemented.size}
+- wontfix     : ${wontFix.size}
+
+${properties.length - (implemented.size + wontFix.size)} to go.
+`.trim();
+
+console.log(status);
+
+if (Deno.args.includes("--missing")) {
   console.log("\nMissing properties:\n");
   for (const property of properties) {
-    if (!wontAdd.has(property) && !added.has(property)) console.log(property);
+    if (!implemented.has(property) && !internals.has(property)) {
+      console.log(property);
+    }
+  }
+}
+
+if (toWrite) {
+  const all = properties
+    .filter((property) => !wontFix.has(property)).map((property) =>
+      `- [${implemented.has(property) ? "x" : " "}] **${property}**`
+    ).join("\n");
+
+  const wontFixList = [
+    ...[...deprecated].map((property) => `- **${property}** (deprecated)`),
+    ...[...internals].map((property) => `- **${property}** (Deno internals)`),
+  ].join("\n");
+
+  const writePerms = await Deno.permissions.request({
+    name: "write",
+    path: toWrite,
+  });
+
+  if (writePerms.state === "granted") {
+    Deno.writeTextFile(
+      toWrite,
+      ["# Progress", status, "## status", all, "## wontfix", wontFixList]
+        .join("\n\n"),
+    );
+  } else {
+    console.error(
+      `Requires write access to "${toWrite}", run again with the --allow-write flag`,
+    );
   }
 }

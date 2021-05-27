@@ -4,4 +4,6 @@
 
 🚧 WORK IN PROGRESS 🚧
 
+See [PROGRESS.md](PROGRESS.md)
+
 Related: https://github.com/wojpawlik/deno2node

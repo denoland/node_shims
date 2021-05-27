@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "denolib": "deno run --allow-run --allow-write=src/lib.deno.d.ts tools/denolib.ts",
-    "missing": "deno run --allow-run tools/missing.ts",
+    "missing": "deno run --allow-run --allow-write=PROGRESS.md tools/missing.ts --write=PROGRESS.md",
     "build": "tsc",
     "prepare": "npm run --silent denolib && npm run --silent build",
     "lint": "deno lint --ignore=node_modules,dist,deno,unit,src/lib.deno.d.ts --unstable",
