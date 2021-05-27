@@ -1,16 +1,16 @@
 # Progress
 
 - total       : 105
-- implemented : 68
+- implemented : 69
 - wontfix     : 9
 
-28 to go.
+27 to go.
 
 ## status
 
 - [x] **File**
 - [x] **PermissionStatus**
-- [ ] **Permissions**
+- [x] **Permissions**
 - [ ] **Process**
 - [ ] **SeekMode**
 - [x] **args**

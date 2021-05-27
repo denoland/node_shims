@@ -12,16 +12,16 @@ export class PermissionStatus extends EventTarget
   }
 }
 
-export type Permissions = Deno.Permissions;
-
-export const permissions: typeof Deno.permissions = {
-  query(_query) {
+export class Permissions implements Deno.Permissions {
+  query(_desc: Deno.PermissionDescriptor) {
     return Promise.resolve(new PermissionStatus("granted"));
-  },
-  revoke(_query) {
+  }
+  revoke(_desc: Deno.PermissionDescriptor) {
     return Promise.resolve(new PermissionStatus("denied"));
-  },
-  request(query) {
-    return this.query(query);
-  },
-};
+  }
+  request(desc: Deno.PermissionDescriptor) {
+    return this.query(desc);
+  }
+}
+
+export const permissions: typeof Deno.permissions = new Permissions();
