@@ -11,7 +11,7 @@ const out = new TextDecoder().decode(
 );
 
 await Deno.writeTextFile(
-  "src/lib.deno.d.ts",
+  "src/deno/stable/lib.deno.d.ts",
   out
     .replace(
       `/** A controller object that allows you to abort one or more DOM requests as and

@@ -2,12 +2,12 @@
 
 import * as fs from "fs";
 import { promisify } from "util";
-import { fstat } from "./fstat";
-import { fstatSync } from "./fstatSync";
-import { read } from "./read";
-import { readSync } from "./readSync";
-import { write } from "./write";
-import { writeSync } from "./writeSync";
+import { fstat } from "../functions/fstat";
+import { fstatSync } from "../functions/fstatSync";
+import { read } from "../functions/read";
+import { readSync } from "../functions/readSync";
+import { write } from "../functions/write";
+import { writeSync } from "../functions/writeSync";
 
 const nodeFtruncate = promisify(fs.ftruncate);
 
@@ -20,9 +20,11 @@ export class File implements Deno.File {
     return writeSync(this.rid, p);
   }
   async truncate(len?: number): Promise<void> {
+    //TODO(mkr): replace with Deno.ftruncate
     await nodeFtruncate(this.rid, len);
   }
   truncateSync(len?: number): void {
+    //TODO(mkr): replace with Deno.ftruncateSync
     return fs.ftruncateSync(this.rid, len);
   }
   read(p: Uint8Array): Promise<number | null> {

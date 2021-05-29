@@ -3,7 +3,7 @@
 import { writeTextFile } from "./writeTextFile";
 import { join } from "path";
 import { tmpdir } from "os";
-import { randomId } from "./internal/random_id";
+import { randomId } from "../../internal/random_id";
 
 export const makeTempFile: typeof Deno.makeTempFile =
   async function makeTempFile(

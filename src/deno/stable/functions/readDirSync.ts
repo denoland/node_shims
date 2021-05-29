@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { readdirSync as nodeReadDir } from "fs";
-import * as errors from "./errors.js";
+import * as errors from "../variables/errors";
 
 export const readDirSync: typeof Deno.readDirSync = function* readDir(path) {
   try {

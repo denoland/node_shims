@@ -1,4 +1,4 @@
-///<reference path="../lib.deno.d.ts" />
+///<reference path="../deno/stable/lib.deno.d.ts" />
 
 import { platform } from "os";
 import { join } from "path";

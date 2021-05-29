@@ -1,5 +1,5 @@
 // <source path=https://deno.land/std@0.97.0/io/util.ts />
-///<reference path="../../../lib.deno.d.ts" />
+///<reference path="../../stable/lib.deno.d.ts" />
 
 import { DEFAULT_BUFFER_SIZE } from "../../internal/consts";
 
