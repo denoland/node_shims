@@ -6,4 +6,5 @@ export { mainModule } from "./variables/mainModule.js";
 export { noColor } from "./variables/noColor.js";
 export { permissions } from "./variables/permissions.js";
 export { pid } from "./variables/pid.js";
+export { ppid } from "./variables/ppid.js";
 export { version } from "./variables/version.js";
