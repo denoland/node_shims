@@ -55,14 +55,23 @@ if (Deno.args.includes("--missing")) {
 }
 
 if (toWrite) {
+  const totalCount = properties.length - wontFix.size;
+  const normalFactor = 40 / totalCount;
+  const done = implemented.size * normalFactor;
+  const todo = (totalCount - implemented.size) * normalFactor;
+
+  const progress = `${"█".repeat(done)}${"░".repeat(todo)}`;
+
   const all = properties
-    .filter((property) => !wontFix.has(property)).map((property) =>
-      `- [${implemented.has(property) ? "x" : " "}] **${property}**`
-    ).join("\n");
+    .filter((property) => !wontFix.has(property))
+    .map((property) =>
+      `- [${implemented.has(property) ? "x" : " "}] **\`${property}\`**`
+    )
+    .join("\n");
 
   const wontFixList = [
-    ...[...deprecated].map((property) => `- **${property}** (deprecated)`),
-    ...[...internals].map((property) => `- **${property}** (Deno internals)`),
+    ...[...deprecated].map((property) => `- **\`${property}\`** (deprecated)`),
+    ...[...internals].map((property) => `- **\`${property}\`** (internals)`),
   ].join("\n");
 
   const writePerms = await Deno.permissions.request({
@@ -73,7 +82,15 @@ if (toWrite) {
   if (writePerms.state === "granted") {
     Deno.writeTextFile(
       toWrite,
-      ["# Progress", status, "## status", all, "## wontfix", wontFixList]
+      [
+        "# Progress",
+        progress,
+        status,
+        "## status",
+        all,
+        "## wontfix",
+        wontFixList,
+      ]
         .join("\n\n"),
     );
   } else {

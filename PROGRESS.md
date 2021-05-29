@@ -1,5 +1,7 @@
 # Progress
 
+████████████████████████████░░░░░░░░░░░
+
 - total       : 105
 - implemented : 69
 - wontfix     : 9
@@ -8,111 +10,111 @@
 
 ## status
 
-- [x] **File**
-- [x] **PermissionStatus**
-- [x] **Permissions**
-- [ ] **Process**
-- [ ] **SeekMode**
-- [x] **args**
-- [x] **build**
-- [x] **chdir**
-- [x] **chmod**
-- [x] **chmodSync**
-- [x] **chown**
-- [x] **chownSync**
-- [x] **close**
-- [ ] **connect**
-- [ ] **connectTls**
-- [ ] **copy**
-- [x] **copyFile**
-- [x] **copyFileSync**
-- [ ] **create**
-- [ ] **createSync**
-- [x] **customInspect**
-- [x] **cwd**
-- [x] **env**
-- [x] **errors**
-- [x] **execPath**
-- [x] **exit**
-- [ ] **fdatasync**
-- [ ] **fdatasyncSync**
-- [x] **fstat**
-- [x] **fstatSync**
-- [ ] **fsync**
-- [ ] **fsyncSync**
-- [ ] **ftruncate**
-- [ ] **ftruncateSync**
-- [x] **inspect**
-- [x] **isatty**
-- [x] **link**
-- [x] **linkSync**
-- [x] **listen**
-- [ ] **listenTls**
-- [x] **lstat**
-- [x] **lstatSync**
-- [x] **mainModule**
-- [x] **makeTempDir**
-- [x] **makeTempDirSync**
-- [ ] **makeTempFile**
-- [ ] **makeTempFileSync**
-- [ ] **memoryUsage**
-- [ ] **metrics**
-- [x] **mkdir**
-- [x] **mkdirSync**
-- [x] **noColor**
-- [x] **open**
-- [ ] **openSync**
-- [x] **permissions**
-- [x] **pid**
-- [x] **ppid**
-- [x] **read**
-- [x] **readDir**
-- [x] **readDirSync**
-- [x] **readFile**
-- [x] **readFileSync**
-- [x] **readLink**
-- [x] **readLinkSync**
-- [x] **readSync**
-- [x] **readTextFile**
-- [x] **readTextFileSync**
-- [x] **realPath**
-- [x] **realPathSync**
-- [x] **remove**
-- [x] **removeSync**
-- [x] **rename**
-- [x] **renameSync**
-- [ ] **resources**
-- [ ] **run**
-- [ ] **seek**
-- [ ] **seekSync**
-- [ ] **sleepSync**
-- [x] **stat**
-- [x] **statSync**
-- [ ] **stderr**
-- [ ] **stdin**
-- [ ] **stdout**
-- [x] **symlink**
-- [x] **symlinkSync**
-- [x] **test**
-- [x] **truncate**
-- [x] **truncateSync**
-- [x] **version**
-- [x] **watchFs**
-- [x] **write**
-- [x] **writeFile**
-- [x] **writeFileSync**
-- [x] **writeSync**
-- [x] **writeTextFile**
-- [x] **writeTextFileSync**
+- [x] **`File`**
+- [x] **`PermissionStatus`**
+- [x] **`Permissions`**
+- [ ] **`Process`**
+- [ ] **`SeekMode`**
+- [x] **`args`**
+- [x] **`build`**
+- [x] **`chdir`**
+- [x] **`chmod`**
+- [x] **`chmodSync`**
+- [x] **`chown`**
+- [x] **`chownSync`**
+- [x] **`close`**
+- [ ] **`connect`**
+- [ ] **`connectTls`**
+- [ ] **`copy`**
+- [x] **`copyFile`**
+- [x] **`copyFileSync`**
+- [ ] **`create`**
+- [ ] **`createSync`**
+- [x] **`customInspect`**
+- [x] **`cwd`**
+- [x] **`env`**
+- [x] **`errors`**
+- [x] **`execPath`**
+- [x] **`exit`**
+- [ ] **`fdatasync`**
+- [ ] **`fdatasyncSync`**
+- [x] **`fstat`**
+- [x] **`fstatSync`**
+- [ ] **`fsync`**
+- [ ] **`fsyncSync`**
+- [ ] **`ftruncate`**
+- [ ] **`ftruncateSync`**
+- [x] **`inspect`**
+- [x] **`isatty`**
+- [x] **`link`**
+- [x] **`linkSync`**
+- [x] **`listen`**
+- [ ] **`listenTls`**
+- [x] **`lstat`**
+- [x] **`lstatSync`**
+- [x] **`mainModule`**
+- [x] **`makeTempDir`**
+- [x] **`makeTempDirSync`**
+- [ ] **`makeTempFile`**
+- [ ] **`makeTempFileSync`**
+- [ ] **`memoryUsage`**
+- [ ] **`metrics`**
+- [x] **`mkdir`**
+- [x] **`mkdirSync`**
+- [x] **`noColor`**
+- [x] **`open`**
+- [ ] **`openSync`**
+- [x] **`permissions`**
+- [x] **`pid`**
+- [x] **`ppid`**
+- [x] **`read`**
+- [x] **`readDir`**
+- [x] **`readDirSync`**
+- [x] **`readFile`**
+- [x] **`readFileSync`**
+- [x] **`readLink`**
+- [x] **`readLinkSync`**
+- [x] **`readSync`**
+- [x] **`readTextFile`**
+- [x] **`readTextFileSync`**
+- [x] **`realPath`**
+- [x] **`realPathSync`**
+- [x] **`remove`**
+- [x] **`removeSync`**
+- [x] **`rename`**
+- [x] **`renameSync`**
+- [ ] **`resources`**
+- [ ] **`run`**
+- [ ] **`seek`**
+- [ ] **`seekSync`**
+- [ ] **`sleepSync`**
+- [x] **`stat`**
+- [x] **`statSync`**
+- [ ] **`stderr`**
+- [ ] **`stdin`**
+- [ ] **`stdout`**
+- [x] **`symlink`**
+- [x] **`symlinkSync`**
+- [x] **`test`**
+- [x] **`truncate`**
+- [x] **`truncateSync`**
+- [x] **`version`**
+- [x] **`watchFs`**
+- [x] **`write`**
+- [x] **`writeFile`**
+- [x] **`writeFileSync`**
+- [x] **`writeSync`**
+- [x] **`writeTextFile`**
+- [x] **`writeTextFileSync`**
 
 ## wontfix
 
-- **iter** (deprecated)
-- **iterSync** (deprecated)
-- **Buffer** (deprecated)
-- **readAll** (deprecated)
-- **readAllSync** (deprecated)
-- **writeAll** (deprecated)
-- **writeAllSync** (deprecated)
-- **core** (Deno internals)
-- **internal** (Deno internals)
+- **`iter`** (deprecated)
+- **`iterSync`** (deprecated)
+- **`Buffer`** (deprecated)
+- **`readAll`** (deprecated)
+- **`readAllSync`** (deprecated)
+- **`writeAll`** (deprecated)
+- **`writeAllSync`** (deprecated)
+- **`core`** (internals)
+- **`internal`** (internals)
