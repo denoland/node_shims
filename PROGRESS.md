@@ -1,12 +1,12 @@
 # Progress
 
-██████████████████████████████░░░░░░░░░░
+███████████████████████████████░░░░░░░░░
 
 - total       : 105
-- implemented : 74
+- implemented : 75
 - wontfix     : 9
 
-22 to go.
+21 to go.
 
 ## status
 
@@ -63,7 +63,7 @@
 - [x] **`mkdirSync`**
 - [x] **`noColor`**
 - [x] **`open`**
-- [ ] **`openSync`**
+- [x] **`openSync`**
 - [x] **`permissions`**
 - [x] **`pid`**
 - [x] **`ppid`**

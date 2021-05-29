@@ -3,3 +3,4 @@ set -eu
 
 npm run build
 npm run missing
+git add PROGRESS.md
