@@ -57,8 +57,8 @@ if (Deno.args.includes("--missing")) {
 if (toWrite) {
   const totalCount = properties.length - wontFix.size;
   const normalFactor = 40 / totalCount;
-  const done = implemented.size * normalFactor;
-  const todo = (totalCount - implemented.size) * normalFactor;
+  const done = Math.floor(implemented.size * normalFactor);
+  const todo = Math.ceil((totalCount - implemented.size) * normalFactor);
 
   const progress = `${"█".repeat(done)}${"░".repeat(todo)}`;
 
