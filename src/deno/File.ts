@@ -4,6 +4,7 @@ import * as fs from "fs";
 import { promisify } from "util";
 import { fstat } from "./fstat";
 import { fstatSync } from "./fstatSync";
+import { read } from "./read";
 import { readSync } from "./readSync";
 import { write } from "./write";
 import { writeSync } from "./writeSync";
@@ -24,9 +25,8 @@ export class File implements Deno.File {
   truncateSync(len?: number): void {
     return fs.ftruncateSync(this.rid, len);
   }
-  // deno-lint-ignore no-unused-vars
   read(p: Uint8Array): Promise<number | null> {
-    throw new Error("Method not implemented.");
+    return read(this.rid, p);
   }
   readSync(p: Uint8Array): number | null {
     return readSync(this.rid, p);

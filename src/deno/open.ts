@@ -1,6 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { open as nodeOpen } from "fs/promises";
+import { SeekMode } from "./SeekMode";
 
 export const open: typeof Deno.open = async function open(
   path,
@@ -31,9 +32,9 @@ export const open: typeof Deno.open = async function open(
       throw new Error("readSync not implemented");
     },
     seek(offset, whence) {
-      if (whence === 0) {
+      if (whence === SeekMode.Start) {
         position = offset;
-      } else if (whence === 1) {
+      } else if (whence === SeekMode.Current) {
         position += offset;
       } else {
         throw new Error("Deno.SeekMode.End not implemented");

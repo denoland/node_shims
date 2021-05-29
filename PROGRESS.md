@@ -3,10 +3,10 @@
 ██████████████████████████████░░░░░░░░░░
 
 - total       : 105
-- implemented : 73
+- implemented : 74
 - wontfix     : 9
 
-23 to go.
+22 to go.
 
 ## status
 
@@ -14,7 +14,7 @@
 - [x] **`PermissionStatus`**
 - [x] **`Permissions`**
 - [ ] **`Process`**
-- [ ] **`SeekMode`**
+- [x] **`SeekMode`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**
