@@ -8,6 +8,7 @@ export { chmodSync } from "./deno/chmodSync.js";
 export { chown } from "./deno/chown.js";
 export { chownSync } from "./deno/chownSync.js";
 export { close } from "./deno/close.js";
+export { copy } from "./deno/copy.js";
 export { copyFile } from "./deno/copyFile.js";
 export { copyFileSync } from "./deno/copyFileSync.js";
 export { customInspect } from "./deno/customInspect.js";

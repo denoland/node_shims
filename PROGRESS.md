@@ -1,12 +1,12 @@
 # Progress
 
-██████████████████████████████░░░░░░░░░░
+██████████████████████████████░░░░░░░░░
 
 - total       : 105
-- implemented : 72
+- implemented : 73
 - wontfix     : 9
 
-24 to go.
+23 to go.
 
 ## status
 
@@ -25,7 +25,7 @@
 - [x] **`close`**
 - [ ] **`connect`**
 - [ ] **`connectTls`**
-- [ ] **`copy`**
+- [x] **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
 - [ ] **`create`**
