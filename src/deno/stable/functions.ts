@@ -28,6 +28,7 @@ export { makeTempFileSync } from "./functions/makeTempFileSync.js";
 export { mkdir } from "./functions/mkdir.js";
 export { mkdirSync } from "./functions/mkdirSync.js";
 export { open } from "./functions/open.js";
+export { openSync } from "./functions/openSync.js";
 export { read } from "./functions/read.js";
 export { readDir } from "./functions/readDir.js";
 export { readDirSync } from "./functions/readDirSync.js";

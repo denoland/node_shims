@@ -1,1 +1,1 @@
-export * from "./deno/stable/stable";
+export * from "./deno/stable/main";
