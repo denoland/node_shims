@@ -55,6 +55,7 @@ export { remove } from "./deno/remove.js";
 export { removeSync } from "./deno/removeSync.js";
 export { rename } from "./deno/rename.js";
 export { renameSync } from "./deno/renameSync.js";
+export { sleepSync } from "./deno/sleepSync.js";
 export { stat } from "./deno/stat.js";
 export { statSync } from "./deno/statSync.js";
 export { symlink } from "./deno/symlink.js";

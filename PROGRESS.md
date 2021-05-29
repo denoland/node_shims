@@ -1,12 +1,12 @@
 # Progress
 
-████████████████████████████░░░░░░░░░░░
+█████████████████████████████░░░░░░░░░░
 
 - total       : 105
-- implemented : 69
+- implemented : 70
 - wontfix     : 9
 
-27 to go.
+26 to go.
 
 ## status
 
@@ -87,7 +87,7 @@
 - [ ] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
-- [ ] **`sleepSync`**
+- [x] **`sleepSync`**
 - [x] **`stat`**
 - [x] **`statSync`**
 - [ ] **`stderr`**
