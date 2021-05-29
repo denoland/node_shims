@@ -28,6 +28,8 @@ export { lstatSync } from "./deno/lstatSync.js";
 export { mainModule } from "./deno/mainModule.js";
 export { makeTempDir } from "./deno/makeTempDir.js";
 export { makeTempDirSync } from "./deno/makeTempDirSync.js";
+export { makeTempFile } from "./deno/makeTempFile.js";
+export { makeTempFileSync } from "./deno/makeTempFileSync.js";
 export { mkdir } from "./deno/mkdir.js";
 export { mkdirSync } from "./deno/mkdirSync.js";
 export { noColor } from "./deno/noColor.js";

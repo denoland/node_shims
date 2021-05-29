@@ -1,12 +1,12 @@
 # Progress
 
-█████████████████████████████░░░░░░░░░░
+██████████████████████████████░░░░░░░░░░
 
 - total       : 105
-- implemented : 70
+- implemented : 72
 - wontfix     : 9
 
-26 to go.
+24 to go.
 
 ## status
 
@@ -55,8 +55,8 @@
 - [x] **`mainModule`**
 - [x] **`makeTempDir`**
 - [x] **`makeTempDirSync`**
-- [ ] **`makeTempFile`**
-- [ ] **`makeTempFileSync`**
+- [x] **`makeTempFile`**
+- [x] **`makeTempFileSync`**
 - [ ] **`memoryUsage`**
 - [ ] **`metrics`**
 - [x] **`mkdir`**
