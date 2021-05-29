@@ -6,4 +6,12 @@
 
 See [PROGRESS.md](PROGRESS.md)
 
-Related: https://github.com/wojpawlik/deno2node
+## Contributing
+
+(Only Linux and macOS)
+
+Once you clone the repo, run `git config core.hooksPath tools/hooks` to setup the pre-commit git hook. If you're only committing doc or script changes and don't want to build and update PROGRESS.md, use `git commit --no-verify`.
+
+Related:
+- https://github.com/fromdeno/nodeify
+- https://github.com/wojpawlik/deno2node
