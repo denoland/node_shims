@@ -1,12 +1,12 @@
 # Progress
 
-███████████████████████████████░░░░░░░░░
+████████████████████████████████░░░░░░░░
 
 - total       : 105
-- implemented : 75
+- implemented : 77
 - wontfix     : 9
 
-21 to go.
+19 to go.
 
 ## status
 
@@ -40,8 +40,8 @@
 - [ ] **`fdatasyncSync`**
 - [x] **`fstat`**
 - [x] **`fstatSync`**
-- [ ] **`fsync`**
-- [ ] **`fsyncSync`**
+- [x] **`fsync`**
+- [x] **`fsyncSync`**
 - [ ] **`ftruncate`**
 - [ ] **`ftruncateSync`**
 - [x] **`inspect`**
