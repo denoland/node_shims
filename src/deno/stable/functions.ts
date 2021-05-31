@@ -13,6 +13,8 @@ export { copyFileSync } from "./functions/copyFileSync.js";
 export { cwd } from "./functions/cwd.js";
 export { execPath } from "./functions/execPath.js";
 export { exit } from "./functions/exit.js";
+export { fdatasync } from "./functions/fdatasync.js";
+export { fdatasyncSync } from "./functions/fdatasyncSync.js";
 export { fstat } from "./functions/fstat.js";
 export { fstatSync } from "./functions/fstatSync.js";
 export { fsync } from "./functions/fsync.js";
