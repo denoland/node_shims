@@ -10,6 +10,8 @@ export { close } from "./functions/close.js";
 export { copy } from "./functions/copy.js";
 export { copyFile } from "./functions/copyFile.js";
 export { copyFileSync } from "./functions/copyFileSync.js";
+export { create } from "./functions/create.js";
+export { createSync } from "./functions/createSync.js";
 export { cwd } from "./functions/cwd.js";
 export { execPath } from "./functions/execPath.js";
 export { exit } from "./functions/exit.js";

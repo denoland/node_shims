@@ -1,12 +1,12 @@
 # Progress
 
-█████████████████████████████████░░░░░░░
+██████████████████████████████████░░░░░░
 
 - total       : 105
-- implemented : 81
+- implemented : 83
 - wontfix     : 9
 
-15 to go.
+13 to go.
 
 ## status
 
@@ -28,8 +28,8 @@
 - [x] **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
-- [ ] **`create`**
-- [ ] **`createSync`**
+- [x] **`create`**
+- [x] **`createSync`**
 - [x] **`customInspect`**
 - [x] **`cwd`**
 - [x] **`env`**
