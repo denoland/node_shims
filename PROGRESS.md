@@ -3,10 +3,10 @@
 ████████████████████████████████░░░░░░░░
 
 - total       : 105
-- implemented : 77
+- implemented : 79
 - wontfix     : 9
 
-19 to go.
+17 to go.
 
 ## status
 
@@ -42,8 +42,8 @@
 - [x] **`fstatSync`**
 - [x] **`fsync`**
 - [x] **`fsyncSync`**
-- [ ] **`ftruncate`**
-- [ ] **`ftruncateSync`**
+- [x] **`ftruncate`**
+- [x] **`ftruncateSync`**
 - [x] **`inspect`**
 - [x] **`isatty`**
 - [x] **`link`**

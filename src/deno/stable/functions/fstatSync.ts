@@ -3,5 +3,6 @@
 import { fstatSync as nodeFstatSync } from "fs";
 import { denoifyFileInfo } from "./stat";
 
-export const fstatSync: typeof Deno.fstatSync = (fd) =>
-  denoifyFileInfo(nodeFstatSync(fd));
+export const fstatSync: typeof Deno.fstatSync = function fstatSync(fd) {
+  return denoifyFileInfo(nodeFstatSync(fd));
+};

@@ -17,6 +17,8 @@ export { fstat } from "./functions/fstat.js";
 export { fstatSync } from "./functions/fstatSync.js";
 export { fsync } from "./functions/fsync.js";
 export { fsyncSync } from "./functions/fsyncSync.js";
+export { ftruncate } from "./functions/ftruncate.js";
+export { ftruncateSync } from "./functions/ftruncateSync.js";
 export { inspect } from "./functions/inspect.js";
 export { link } from "./functions/link.js";
 export { linkSync } from "./functions/linkSync.js";

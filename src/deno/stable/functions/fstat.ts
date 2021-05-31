@@ -6,5 +6,6 @@ import { denoifyFileInfo } from "./stat";
 
 const nodeFstat = promisify(fs.fstat);
 
-export const fstat: typeof Deno.fstat = async (fd) =>
-  denoifyFileInfo(await nodeFstat(fd));
+export const fstat: typeof Deno.fstat = async function (fd) {
+  return denoifyFileInfo(await nodeFstat(fd));
+};
