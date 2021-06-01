@@ -1,83 +1,63 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { createServer } from "net";
-import * as errors from "../variables/errors.js";
+import { createServer, Server } from "net";
 
-const _listen = async function* _listen(
-  options: Parameters<typeof Deno.listen>[0],
+import { Conn } from "../../internal/Conn.js";
+import { Listener } from "../../internal/Listener.js";
+
+async function* _listen(
+  server: Server,
+  waitFor: Promise<void>,
 ): AsyncIterableIterator<Deno.Conn> {
-  const server = createServer();
-  await new Promise<void>((resolve) =>
-    server.listen(options.port, options.hostname, resolve)
-  );
+  await waitFor;
+
   while (server.listening) {
     yield new Promise<Deno.Conn>((resolve) =>
-      server.once("connection", (s) => {
-        s.on("error", (err) => console.error(err));
-        const conn: Deno.Conn = {
-          close() {
-            s.destroy();
-          },
-          closeWrite() {
-            return new Promise<void>((resolve) => s.end(resolve));
-          },
-          read(p) {
-            return new Promise<number | null>((resolve) =>
-              s.once("readable", () => {
-                const data: Buffer | null = s.read(1);
-                if (data == null) {
-                  if (s.readableEnded) {
-                    return resolve(null);
-                  }
-                  return resolve(0);
-                }
-                data.copy(p);
-                return resolve(1);
-              })
-            );
-          },
-          write(p) {
-            return new Promise<number>((resolve, reject) =>
-              s.write(p, (err) => err ? reject(err) : resolve(p.byteLength))
-            );
-          },
-          localAddr: {
-            hostname: s.localAddress,
-            transport: "tcp",
-            port: s.localPort,
-          },
-          remoteAddr: {
-            hostname: s.remoteAddress ?? "",
-            transport: "tcp",
-            port: s.remotePort ?? 0,
-          },
-          rid: 0,
+      server.once("connection", (socket) => {
+        socket.on("error", (err) => console.error(err));
+
+        // @ts-expect-error undocumented socket._handle property
+        const rid: number = socket._handle.fd;
+
+        const localAddr: Deno.Addr = {
+          hostname: socket.localAddress,
+          port: socket.localPort,
+          transport: "tcp",
         };
-        resolve(conn);
+
+        const remoteAddr: Deno.Addr = {
+          // cannot be undefined while socket is connected
+          hostname: socket.remoteAddress!,
+          port: socket.remotePort!,
+          transport: "tcp",
+        };
+
+        resolve(new Conn(rid, localAddr, remoteAddr));
       })
     );
   }
-};
+}
 
-export const listen: typeof Deno.listen = function listen(options) {
-  const listener = _listen(options);
-  return Object.assign(listener, {
-    async accept() {
-      const result = await listener.next();
-      if (result.done) {
-        throw new errors.Http("Server not listening");
-      }
-      return result.value as Deno.Conn;
-    },
-    close: () => {},
-    addr: {
-      port: options.port,
-      hostname: options.hostname ?? "0.0.0.0",
-      transport: "tcp" as const,
-    },
-    rid: 0,
-    [Symbol.asyncIterator]() {
-      return listener;
-    },
-  });
+export const listen: typeof Deno.listen = function listen(
+  { port, hostname = "0.0.0.0", transport = "tcp" },
+) {
+  if (transport !== "tcp") {
+    throw new Error("Deno.listen is only implemented for transport: tcp");
+  }
+
+  const server = createServer();
+
+  const waitFor = new Promise<void>((resolve) =>
+    // server._handle.fd is assigned immediately on .listen()
+    server.listen(port, hostname, resolve)
+  );
+
+  // @ts-expect-error undocumented socket._handle property
+  const listener = new Listener(server._handle.fd, {
+    hostname,
+    port,
+    transport: "tcp",
+  }, _listen(server, waitFor));
+
+  return listener;
 };

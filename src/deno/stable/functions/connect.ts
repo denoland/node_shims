@@ -13,15 +13,19 @@ export const connect: typeof Deno.connect = function connect(
 
   const socket = createConnection({ port, host: hostname });
 
+  socket.on("error", (err) => console.error(err));
+
   return new Promise((resolve) => {
-    socket.on("connect", () => {
+    socket.once("connect", () => {
       // @ts-expect-error undocumented socket._handle property
       const rid: number = socket._handle.fd;
+
       const localAddr: Deno.Addr = {
         hostname: socket.localAddress,
         port: socket.localPort,
         transport: "tcp",
       };
+
       const remoteAddr: Deno.Addr = {
         // cannot be undefined while socket is connected
         hostname: socket.remoteAddress!,
