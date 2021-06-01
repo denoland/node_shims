@@ -3,10 +3,10 @@
 █████████████████████████████████████░░░
 
 - total       : 105
-- implemented : 90
+- implemented : 91
 - wontfix     : 9
 
-6 to go.
+5 to go.
 
 ## status
 
@@ -49,7 +49,7 @@
 - [x] **`link`**
 - [x] **`linkSync`**
 - [x] **`listen`**
-- [ ] **`listenTls`**
+- [x] **`listenTls`**
 - [x] **`lstat`**
 - [x] **`lstatSync`**
 - [x] **`mainModule`**

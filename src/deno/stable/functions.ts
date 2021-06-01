@@ -29,6 +29,7 @@ export { inspect } from "./functions/inspect.js";
 export { link } from "./functions/link.js";
 export { linkSync } from "./functions/linkSync.js";
 export { listen } from "./functions/listen.js";
+export { listenTls } from "./functions/listenTls.js";
 export { lstat } from "./functions/lstat.js";
 export { lstatSync } from "./functions/lstatSync.js";
 export { makeTempDir } from "./functions/makeTempDir.js";
