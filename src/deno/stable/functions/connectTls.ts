@@ -1,17 +1,16 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { createConnection } from "net";
+import { connect as tlsConnect } from "tls";
 
 import { Conn } from "../../internal/Conn";
+import { readTextFile } from "./readTextFile";
 
-export const connect: typeof Deno.connect = function connect(
-  { port, hostname = "127.0.0.1", transport = "tcp" },
+export const connectTls: typeof Deno.connectTls = async function connectTls(
+  { port, hostname = "127.0.0.1", certFile },
 ) {
-  if (transport !== "tcp") {
-    throw new Error("Deno.connect is only implemented for transport: tcp");
-  }
+  const cert = certFile && await readTextFile(certFile);
 
-  const socket = createConnection({ port, host: hostname });
+  const socket = tlsConnect({ port, host: hostname, cert });
 
   return new Promise((resolve) => {
     socket.on("connect", () => {
