@@ -7,6 +7,7 @@ export { chmodSync } from "./functions/chmodSync.js";
 export { chown } from "./functions/chown.js";
 export { chownSync } from "./functions/chownSync.js";
 export { close } from "./functions/close.js";
+export { connect } from "./functions/connect.js";
 export { copy } from "./functions/copy.js";
 export { copyFile } from "./functions/copyFile.js";
 export { copyFileSync } from "./functions/copyFileSync.js";

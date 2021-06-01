@@ -3,10 +3,10 @@
 ████████████████████████████████████░░░░
 
 - total       : 105
-- implemented : 87
+- implemented : 88
 - wontfix     : 9
 
-9 to go.
+8 to go.
 
 ## status
 
@@ -23,7 +23,7 @@
 - [x] **`chown`**
 - [x] **`chownSync`**
 - [x] **`close`**
-- [ ] **`connect`**
+- [x] **`connect`**
 - [ ] **`connectTls`**
 - [x] **`copy`**
 - [x] **`copyFile`**
