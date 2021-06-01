@@ -33,6 +33,7 @@ export { makeTempDir } from "./functions/makeTempDir.js";
 export { makeTempDirSync } from "./functions/makeTempDirSync.js";
 export { makeTempFile } from "./functions/makeTempFile.js";
 export { makeTempFileSync } from "./functions/makeTempFileSync.js";
+export { memoryUsage } from "./functions/memoryUsage.js";
 export { mkdir } from "./functions/mkdir.js";
 export { mkdirSync } from "./functions/mkdirSync.js";
 export { open } from "./functions/open.js";
