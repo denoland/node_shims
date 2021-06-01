@@ -55,6 +55,7 @@ export { remove } from "./functions/remove.js";
 export { removeSync } from "./functions/removeSync.js";
 export { rename } from "./functions/rename.js";
 export { renameSync } from "./functions/renameSync.js";
+export { shutdown } from "./functions/shutdown.js";
 export { sleepSync } from "./functions/sleepSync.js";
 export { stat } from "./functions/stat.js";
 export { statSync } from "./functions/statSync.js";
