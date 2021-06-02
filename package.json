@@ -11,10 +11,14 @@
   ],
   "main": "./dist/index.js",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
+  "contributors": [
+    "Wojciech Pawlik <woj.pawlik@gmail.com>",
+    "Muthu Kumar <muthukumar@thefeathers.in> (https://mkr.pw)"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/trgwii/deno.ns.git"
+    "url": "https://github.com/fromdeno/deno.ns.git"
   },
   "exports": {
     ".": "./dist/index.js",
