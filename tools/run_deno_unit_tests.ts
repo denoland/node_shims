@@ -1,5 +1,3 @@
-///<reference path="../src/deno/stable/lib.deno.d.ts" />
-
 import {
   bgGreen,
   bgRed,
