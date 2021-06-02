@@ -93,6 +93,10 @@ const failed = new Set();
 
 let exitCode = 0;
 
+// ensure dir exists
+await Deno.mkdir("unit/file/vendor/deno/cli/tests", { recursive: true });
+
+// copy fixture.json for tests
 await Deno.copyFile(
   "vendor/deno/cli/tests/fixture.json",
   "unit/file/vendor/deno/cli/tests/fixture.json",
