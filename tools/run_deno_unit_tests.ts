@@ -1,8 +1,12 @@
+///<reference path="../src/deno/stable/lib.deno.d.ts" />
+
 import {
   bgGreen,
   bgRed,
   bgYellow,
   black,
+  green,
+  red,
   yellow,
 } from "https://deno.land/std@0.97.0/fmt/colors.ts";
 import { build } from "https://raw.githubusercontent.com/fromdeno/Nodeify/b815b006164c3185250d151bf494c9e352144900/nodeify.ts";
@@ -10,9 +14,9 @@ import { build } from "https://raw.githubusercontent.com/fromdeno/Nodeify/b815b0
 const testsToRun = new Set([
   // --
   // Working
-  // "abort_controller_test.ts",
-  // "build_test.ts",
-  // "get_random_values_test.ts",
+  "abort_controller_test.ts",
+  "build_test.ts",
+  "get_random_values_test.ts",
   "url_search_params_test.ts",
   // --
   // Failing
@@ -90,23 +94,36 @@ const ok = new Set();
 const failed = new Set();
 
 let exitCode = 0;
+
+await Deno.copyFile(
+  "vendor/deno/cli/tests/fixture.json",
+  "unit/file/vendor/deno/cli/tests/fixture.json",
+);
+
 for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
   if (e.isFile && e.name.endsWith("_test.ts")) {
     if (!testsToRun.has(e.name)) {
       console.log(yellow("skipping: " + e.name));
       continue; // Comment this to run all tests
     }
+
     await build(`vendor/deno/cli/tests/unit/${e.name}`, "unit");
+
     console.log(bgYellow(black(e.name + ":")));
+
     const status = await Deno.run({
       cmd: [
         "node",
         "dist/cli/test.js",
         `unit/file/vendor/deno/cli/tests/unit/${e.name}`,
       ],
+      env: {
+        RUN_DENO_TEST: "1",
+      },
       stdout: "inherit",
       stderr: "inherit",
     }).status();
+
     if (!status.success) {
       exitCode = status.code;
       console.log(bgRed("FAILED: " + e.name));
@@ -119,5 +136,9 @@ for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
 }
 
 console.log(bgGreen("OK"), ok);
-console.log(bgRed("FAILED"), failed);
+console.log(green(`${ok.size} tests passed.`));
+if (failed.size) {
+  console.log(bgRed("FAILED"), failed);
+  console.log(red(`${failed.size} tests failed.`));
+} else console.log(green(`All tests passed.`));
 Deno.exit(exitCode);
