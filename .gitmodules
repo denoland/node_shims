@@ -1,3 +1,0 @@
-[submodule "vendor/deno"]
-	path = vendor/deno
-	url = https://github.com/denoland/deno.git
