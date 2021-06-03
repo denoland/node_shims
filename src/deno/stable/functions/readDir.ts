@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { opendir } from "fs/promises";
-import * as errors from "../variables/errors";
+import mapError from "../../internal/errorMap";
 
 export const readDir: typeof Deno.readDir = async function* readDir(path) {
   try {
@@ -14,9 +14,8 @@ export const readDir: typeof Deno.readDir = async function* readDir(path) {
       };
       yield ent;
     }
-  } catch (err) {
-    if (err.code === "ENOENT") {
-      throw new errors.NotFound(err.message);
-    }
+  } catch (e) {
+    console.log({ e });
+    throw mapError(e);
   }
 };
