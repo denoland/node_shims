@@ -10,6 +10,10 @@ import {
 import { build } from "https://raw.githubusercontent.com/fromdeno/Nodeify/b815b006164c3185250d151bf494c9e352144900/nodeify.ts";
 import { join, fromFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
 
+import skip from "./skip_tests.ts";
+
+const DENO_TEST_SKIP = skip.join(",");
+
 const testsToRun = new Set([
   // --
   // Working
@@ -17,6 +21,8 @@ const testsToRun = new Set([
   "build_test.ts",
   "get_random_values_test.ts",
   "url_search_params_test.ts",
+  "read_file_test.ts",
+  "read_text_file_test.ts",
   // --
   // Failing
   // "blob_test.ts",
@@ -54,9 +60,7 @@ const testsToRun = new Set([
   // "process_test.ts",
   // "progressevent_test.ts",
   // "read_dir_test.ts",
-  // "read_file_test.ts",
   // "read_link_test.ts",
-  // "read_text_file_test.ts",
   // "real_path_test.ts",
   // "remove_test.ts",
   // "rename_test.ts",
@@ -124,7 +128,8 @@ for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
       ],
       cwd: join(rootPath, "unit/file/vendor/deno/"),
       env: {
-        RUN_DENO_TEST: "1",
+        DENO_TEST: "1",
+        DENO_TEST_SKIP,
       },
       stdout: "inherit",
       stderr: "inherit",
