@@ -8,6 +8,7 @@ import {
   yellow,
 } from "https://deno.land/std@0.97.0/fmt/colors.ts";
 import { build } from "https://raw.githubusercontent.com/fromdeno/Nodeify/b815b006164c3185250d151bf494c9e352144900/nodeify.ts";
+import { join, fromFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
 
 const testsToRun = new Set([
   // --
@@ -99,8 +100,10 @@ await Deno.mkdir("unit/file/vendor/deno/cli/tests", { recursive: true });
 // copy fixture.json for tests
 await Deno.copyFile(
   "vendor/deno/cli/tests/fixture.json",
-  "unit/file/vendor/deno/cli/tests/fixture.json",
+  "unit/file/vendor/deno/cli/tests/fixture.json"
 );
+
+const rootPath = join(fromFileUrl(import.meta.url), "../..");
 
 for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
   if (e.isFile && e.name.endsWith("_test.ts")) {
@@ -116,9 +119,10 @@ for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
     const status = await Deno.run({
       cmd: [
         "node",
-        "dist/cli/test.js",
-        `unit/file/vendor/deno/cli/tests/unit/${e.name}`,
+        join(rootPath, "dist/cli/test.js"),
+        join(rootPath, `unit/file/vendor/deno/cli/tests/unit/${e.name}.js`),
       ],
+      cwd: join(rootPath, "unit/file/vendor/deno/"),
       env: {
         RUN_DENO_TEST: "1",
       },
