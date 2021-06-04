@@ -23,9 +23,9 @@ const testsToRun = new Set([
   "url_search_params_test.ts",
   "read_file_test.ts",
   "read_text_file_test.ts",
+  "blob_test.ts",
   // --
   // Failing
-  // "blob_test.ts",
   // "body_test.ts",
   // "buffer_test.ts",
   // "chmod_test.ts",
