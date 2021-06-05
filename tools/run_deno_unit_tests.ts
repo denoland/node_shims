@@ -99,24 +99,24 @@ const failed = new Set();
 let exitCode = 0;
 
 // ensure dir exists
-await Deno.mkdir("unit/file/vendor/deno/cli/tests", { recursive: true });
+await Deno.mkdir("unit/file/thirdparty/deno/cli/tests", { recursive: true });
 
 // copy fixture.json for tests
 await Deno.copyFile(
-  "vendor/deno/cli/tests/fixture.json",
-  "unit/file/vendor/deno/cli/tests/fixture.json"
+  "thirdparty/deno/cli/tests/fixture.json",
+  "unit/file/thirdparty/deno/cli/tests/fixture.json"
 );
 
 const rootPath = join(fromFileUrl(import.meta.url), "../..");
 
-for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
+for await (const e of Deno.readDir("thirdparty/deno/cli/tests/unit")) {
   if (e.isFile && e.name.endsWith("_test.ts")) {
     if (!testsToRun.has(e.name)) {
       console.log(yellow("skipping: " + e.name));
       continue; // Comment this to run all tests
     }
 
-    await build(`vendor/deno/cli/tests/unit/${e.name}`, "unit");
+    await build(`thirdparty/deno/cli/tests/unit/${e.name}`, "unit");
 
     console.log(bgYellow(black(e.name + ":")));
 
@@ -124,9 +124,9 @@ for await (const e of Deno.readDir("vendor/deno/cli/tests/unit")) {
       cmd: [
         "node",
         join(rootPath, "dist/cli/test.js"),
-        join(rootPath, `unit/file/vendor/deno/cli/tests/unit/${e.name}.js`),
+        join(rootPath, `unit/file/thirdparty/deno/cli/tests/unit/${e.name}.js`),
       ],
-      cwd: join(rootPath, "unit/file/vendor/deno/"),
+      cwd: join(rootPath, "unit/file/thirdparty/deno/"),
       env: {
         DENO_TEST: "1",
         DENO_TEST_SKIP,

@@ -13,8 +13,8 @@
 			"path": "../tools"
 		},
 		{
-			"name": "vendor",
-			"path": "../vendor"
+			"name": "thirdparty",
+			"path": "../thirdparty"
 		}
 	],
 	"settings": {
@@ -26,7 +26,7 @@
 			"**/.DS_Store": true,
 			"src/": true,
 			"tools/": true,
-			"vendor/": true
+			"thirdparty/": true
 		}
 	}
 }
