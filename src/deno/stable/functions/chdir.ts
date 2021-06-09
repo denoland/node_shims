@@ -1,8 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
+import { fileURLToPath } from "url";
+
 export const chdir: typeof Deno.chdir = function (path: string | URL) {
-  if (path instanceof URL) {
-    if (path.protocol === "file:") return process.chdir(path.pathname);
-    throw new TypeError("Must be a file URL.");
-  } else return process.chdir(path);
+  return process.chdir(path instanceof URL ? fileURLToPath(path) : path);
 };
