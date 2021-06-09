@@ -1,5 +1,4 @@
 #!/usr/bin/env -S deno run --allow-run
-///<reference path="../src/deno/stable/lib.deno.d.ts" />
 
 const properties = Object.keys(Deno).sort();
 
