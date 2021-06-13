@@ -34,8 +34,8 @@
     "missing": "deno run --allow-run --allow-write=PROGRESS.md tools/missing.ts --write=PROGRESS.md",
     "build": "tsc",
     "prepare": "npm run --silent denolib && npm run --silent build",
-    "lint": "deno lint --ignore=node_modules,dist,deno,unit,src/deno/**/lib.deno.d.ts --unstable",
-    "fmt": "deno fmt --ignore=node_modules,dist,deno,unit,src/deno/**/lib.deno.d.ts",
+    "lint": "deno lint --ignore=node_modules,dist,thirdparty,unit,src/deno/**/lib.deno.d.ts --unstable",
+    "fmt": "deno fmt --ignore=node_modules,dist,thirdparty,unit,src/deno/**/lib.deno.d.ts",
     "clean": "git clean -fXde '!node_modules/'",
     "test": "npm run --silent build & deno run -A --unstable tools/run_deno_unit_tests.ts"
   },
