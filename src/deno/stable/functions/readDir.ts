@@ -15,7 +15,6 @@ export const readDir: typeof Deno.readDir = async function* readDir(path) {
       yield ent;
     }
   } catch (e) {
-    console.log({ e });
     throw mapError(e);
   }
 };

@@ -3,18 +3,20 @@
 import { open as nodeOpen } from "fs/promises";
 
 import { File } from "../classes/File";
+import { getFsFlag } from "../../internal/fs_flags";
 
 export const open: typeof Deno.open = async function open(
   path,
-  options = { read: true },
+  { read = true, write, append, truncate, create, createNew, mode } = {}
 ) {
-  const flags = options.append
-    ? "a"
-    : options.write
-    ? options.create ? "w" : "r+"
-    : options.read
-    ? "r"
-    : "?";
-  const f = await nodeOpen(path, flags);
+  const flagMode = getFsFlag({
+    read,
+    write,
+    append,
+    truncate,
+    create,
+    createNew,
+  });
+  const f = await nodeOpen(path, flagMode, mode);
   return new File(f.fd);
 };
