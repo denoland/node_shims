@@ -1,33 +1,38 @@
-const convert = <T>(iter: AsyncIterator<T>, i: number) =>
-  iter.next().then((result) => ({ result, i }));
-
-export async function* merge<T>(iterables: AsyncIterable<T>[]) {
-  const iterators = iterables.map((iter) => iter[Symbol.asyncIterator]());
-  const racers = iterators.map(convert);
-
-  while (racers.length) {
-    const winner = await Promise.race(racers);
-    if (winner.result.done) {
-      iterators.splice(winner.i, 1);
-      racers.splice(
-        winner.i,
-        Infinity,
-        ...racers
-          .slice(winner.i + 1)
-          .map((racer) => racer.then(({ result, i }) => ({ result, i: i - 1 })))
-      );
-    } else {
-      yield await winner.result.value;
-      racers[winner.i] = convert(iterators[winner.i], winner.i);
-    }
+export function* map<T, U>(iter: Iterable<T>, f: (t: T) => U): Iterable<U> {
+  for (const i of iter) {
+    yield f(i);
   }
 }
 
-export async function* map<T, U>(
+export async function* mapAsync<T, U>(
   iter: AsyncIterable<T>,
   f: (t: T) => U
 ): AsyncIterable<U> {
   for await (const i of iter) {
     yield f(i);
+  }
+}
+
+export async function* merge<T>(iterables: AsyncIterable<T>[]) {
+  const racers = new Map<AsyncIterator<T>, Promise<IteratorResult<T>>>(
+    map(
+      map(iterables, (iter) => iter[Symbol.asyncIterator]()),
+      (iter) => [iter, iter.next()]
+    )
+  );
+
+  while (racers.size > 0) {
+    const winner = await Promise.race(
+      map(racers.entries(), ([iter, prom]) =>
+        prom.then((result) => ({ result, iter }))
+      )
+    );
+
+    if (winner.result.done) {
+      racers.delete(winner.iter);
+    } else {
+      yield await winner.result.value;
+      racers.set(winner.iter, winner.iter.next());
+    }
   }
 }
