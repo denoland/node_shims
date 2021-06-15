@@ -7,7 +7,7 @@ import { getFsFlag } from "../../internal/fs_flags";
 
 export const open: typeof Deno.open = async function open(
   path,
-  { read = true, write, append, truncate, create, createNew, mode } = {}
+  { read = true, write, append, truncate, create, createNew, mode = 0o666 } = {}
 ) {
   const flagMode = getFsFlag({
     read,

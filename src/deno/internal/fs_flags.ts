@@ -1,5 +1,5 @@
 // getAccessFlag and getCreationFlag adapted from the original in Rust's std::fs
-// https://github.com/rust-lang/rust/blob/304441960e7058fe97f09ef00b20739b4dc56d11/library/std/src/sys/unix/fs.rs#L694-L728
+// <source path="https://github.com/rust-lang/rust/blob/304441960e7058fe97f09ef00b20739b4dc56d11/library/std/src/sys/unix/fs.rs#L694-L728" />
 
 import * as errors from "../stable/variables/errors.js";
 import { constants } from "fs";
