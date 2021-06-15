@@ -6,5 +6,10 @@ import { read as nodeRead } from "fs";
 const _read = promisify(nodeRead);
 
 export const read: typeof Deno.read = function read(rid, buffer) {
-  return _read(rid, buffer, 0, buffer.length, null).then((r) => r.bytesRead);
+  return (
+    _read(rid, buffer, 0, buffer.length, null)
+      .then((r) => r.bytesRead)
+      // node returns 0 on EOF, Deno expects null
+      .then((bytes) => (bytes === 0 ? null : bytes))
+  );
 };
