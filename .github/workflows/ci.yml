@@ -17,7 +17,7 @@ jobs:
         node-version: '16'
     - uses: denoland/setup-deno@main
       with:
-        deno-version: ~1.11
+        deno-version: ~1.12
     - run: npm ci --ignore-scripts
     - run: npm run --silent prepare
     - run: npm run --silent test
@@ -28,7 +28,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: denoland/setup-deno@main
       with:
-        deno-version: ~1.11
+        deno-version: ~1.12
     - run: npm run --silent fmt -- --check
 
   lint:

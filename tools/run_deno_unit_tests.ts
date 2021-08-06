@@ -8,7 +8,7 @@ import {
   yellow,
 } from "https://deno.land/std@0.97.0/fmt/colors.ts";
 import { build } from "https://raw.githubusercontent.com/fromdeno/Nodeify/b815b006164c3185250d151bf494c9e352144900/nodeify.ts";
-import { join, fromFileUrl } from "https://deno.land/std@0.97.0/path/mod.ts";
+import { fromFileUrl, join } from "https://deno.land/std@0.97.0/path/mod.ts";
 
 import skip from "./skip_tests.ts";
 
@@ -104,7 +104,7 @@ await Deno.mkdir("unit/file/thirdparty/deno/cli/tests", { recursive: true });
 // copy fixture.json for tests
 await Deno.copyFile(
   "thirdparty/deno/cli/tests/fixture.json",
-  "unit/file/thirdparty/deno/cli/tests/fixture.json"
+  "unit/file/thirdparty/deno/cli/tests/fixture.json",
 );
 
 const rootPath = join(fromFileUrl(import.meta.url), "../..");

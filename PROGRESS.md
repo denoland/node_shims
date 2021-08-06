@@ -2,11 +2,12 @@
 
 ██████████████████████████████████████░░
 
-- total       : 105
+- total : 105
 - implemented : 92
-- wontfix     : 9
+- implemented, removed from Deno : 1 (sleepSync)
+- wontfix : 9
 
-4 to go.
+5 to go. (Process,resources,run,seek,seekSync)
 
 ## status
 
@@ -87,7 +88,7 @@
 - [ ] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
-- [x] **`sleepSync`**
+- [x] **`shutdown`**
 - [x] **`stat`**
 - [x] **`statSync`**
 - [x] **`stderr`**
@@ -108,6 +109,8 @@
 - [x] **`writeTextFileSync`**
 
 ## wontfix
+
+(But feel free to PR)
 
 - **`iter`** (deprecated)
 - **`iterSync`** (deprecated)

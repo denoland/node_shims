@@ -5,7 +5,7 @@ const properties = Object.keys(Deno).sort();
 const toWrite = Deno.args.find((arg) => arg.startsWith("--write"))?.split("=")
   ?.[1];
 
-const implemented = new Set(JSON.parse(new TextDecoder().decode(
+const implemented = new Set<string>(JSON.parse(new TextDecoder().decode(
   await Deno.run({
     cmd: [
       "node",
@@ -34,12 +34,23 @@ const internals = new Set(["core", "internal"]);
 
 const wontFix = new Set([...deprecated, ...internals]);
 
-const status = `
-- total       : ${properties.length}
-- implemented : ${implemented.size}
-- wontfix     : ${wontFix.size}
+for (const x of wontFix) {
+  if (implemented.has(x)) {
+    wontFix.delete(x);
+  }
+}
 
-${properties.length - (implemented.size + wontFix.size)} to go.
+const removed = [...implemented].filter((x) => !properties.includes(x));
+
+const togo = properties.filter((x) => !implemented.has(x) && !wontFix.has(x));
+
+const status = `
+- total                          : ${properties.length}
+- implemented                    : ${implemented.size}
+- implemented, removed from Deno : ${removed.length} (${removed})
+- wontfix                        : ${wontFix.size}
+
+${togo.length} to go. (${togo})
 `.trim();
 
 console.log(status);
@@ -68,10 +79,16 @@ if (toWrite) {
     )
     .join("\n");
 
-  const wontFixList = [
-    ...[...deprecated].map((property) => `- **\`${property}\`** (deprecated)`),
-    ...[...internals].map((property) => `- **\`${property}\`** (internals)`),
-  ].join("\n");
+  const wontFixList = [...wontFix].map((property) =>
+    `- **\`${property}\`** (${
+      deprecated.has(property)
+        ? "deprecated"
+        : internals.has(property)
+        ? "internals"
+        : "unknown"
+    })`
+  )
+    .join("\n");
 
   const writePerms = await Deno.permissions.request({
     name: "write",
@@ -88,6 +105,7 @@ if (toWrite) {
         "## status",
         all,
         "## wontfix",
+        "(But feel free to PR)",
         wontFixList,
       ]
         .join("\n\n"),
