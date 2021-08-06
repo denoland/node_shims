@@ -1,25 +1,58 @@
 # Progress
 
-██████████████████████████████████████░░
+64%. 50 stable members to go:
 
-- total, stable : 105
-- total, unstable : 136
-- implemented : 92
-- implemented, stable : 91
-- implemented, unstable : 1 (sleepSync)
-- wontfix : 9
-
-5 to go. (Process,resources,run,seek,seekSync)
-
-30 unstable to go.
-
-## status
-
+- [ ] **`Addr`**
+- [ ] 👎 **`Buffer`**
+- [ ] **`Closer`**
+- [ ] **`Conn`**
+- [ ] **`ConnectOptions`**
+- [ ] **`ConnectTlsOptions`**
+- [ ] **`DirEntry`**
+- [ ] **`EnvPermissionDescriptor`**
 - [x] **`File`**
+- [ ] **`FileInfo`**
+- [ ] **`FsEvent`**
+- [ ] **`FsWatcher`**
+- [ ] **`HrtimePermissionDescriptor`**
+- [ ] **`InspectOptions`**
+- [ ] **`ListenOptions`**
+- [ ] **`ListenTlsOptions`**
+- [ ] **`Listener`**
+- [ ] **`MakeTempOptions`**
+- [ ] **`MemoryUsage`**
+- [ ] **`Metrics`**
+- [ ] **`MkdirOptions`**
+- [ ] **`NetAddr`**
+- [ ] **`NetPermissionDescriptor`**
+- [ ] **`OpenOptions`**
+- [ ] **`PermissionDescriptor`**
+- [ ] **`PermissionName`**
+- [ ] **`PermissionState`**
 - [x] **`PermissionStatus`**
+- [ ] **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
+- [ ] **`PluginPermissionDescriptor`**
 - [ ] **`Process`**
+- [ ] **`ProcessStatus`**
+- [ ] **`ReadFileOptions`**
+- [ ] **`ReadPermissionDescriptor`**
+- [ ] **`Reader`**
+- [ ] **`ReaderSync`**
+- [ ] **`RemoveOptions`**
+- [ ] **`ResourceMap`**
+- [ ] **`RunOptions`**
+- [ ] **`RunPermissionDescriptor`**
 - [x] **`SeekMode`**
+- [ ] **`Seeker`**
+- [ ] **`SeekerSync`**
+- [ ] **`SymlinkOptions`**
+- [ ] **`TestDefinition`**
+- [ ] **`UnixAddr`**
+- [ ] **`WriteFileOptions`**
+- [ ] **`WritePermissionDescriptor`**
+- [ ] **`Writer`**
+- [ ] **`WriterSync`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**
@@ -30,12 +63,12 @@
 - [x] **`close`**
 - [x] **`connect`**
 - [x] **`connectTls`**
-- [x] **`copy`**
+- [x] 👎 **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
 - [x] **`create`**
 - [x] **`createSync`**
-- [x] **`customInspect`**
+- [x] 👎 **`customInspect`**
 - [x] **`cwd`**
 - [x] **`env`**
 - [x] **`errors`**
@@ -51,6 +84,8 @@
 - [x] **`ftruncateSync`**
 - [x] **`inspect`**
 - [x] **`isatty`**
+- [ ] 👎 **`iter`**
+- [ ] 👎 **`iterSync`**
 - [x] **`link`**
 - [x] **`linkSync`**
 - [x] **`listen`**
@@ -73,6 +108,8 @@
 - [x] **`pid`**
 - [x] **`ppid`**
 - [x] **`read`**
+- [ ] 👎 **`readAll`**
+- [ ] 👎 **`readAllSync`**
 - [x] **`readDir`**
 - [x] **`readDirSync`**
 - [x] **`readFile`**
@@ -106,53 +143,10 @@
 - [x] **`version`**
 - [x] **`watchFs`**
 - [x] **`write`**
+- [ ] 👎 **`writeAll`**
+- [ ] 👎 **`writeAllSync`**
 - [x] **`writeFile`**
 - [x] **`writeFileSync`**
 - [x] **`writeSync`**
 - [x] **`writeTextFile`**
 - [x] **`writeTextFileSync`**
-- [ ] **`DiagnosticCategory`** (unstable)
-- [ ] **`HttpClient`** (unstable)
-- [ ] **`Signal`** (unstable)
-- [ ] **`SignalStream`** (unstable)
-- [ ] **`applySourceMap`** (unstable)
-- [ ] **`consoleSize`** (unstable)
-- [ ] **`createHttpClient`** (unstable)
-- [ ] **`emit`** (unstable)
-- [ ] **`formatDiagnostics`** (unstable)
-- [ ] **`futime`** (unstable)
-- [ ] **`futimeSync`** (unstable)
-- [ ] **`hostname`** (unstable)
-- [ ] **`http`** (unstable)
-- [ ] **`kill`** (unstable)
-- [ ] **`listenDatagram`** (unstable)
-- [ ] **`loadavg`** (unstable)
-- [ ] **`openPlugin`** (unstable)
-- [ ] **`osRelease`** (unstable)
-- [ ] **`resolveDns`** (unstable)
-- [ ] **`serveHttp`** (unstable)
-- [ ] **`setRaw`** (unstable)
-- [ ] **`signal`** (unstable)
-- [ ] **`signals`** (unstable)
-- [x] **`sleepSync`** (unstable)
-- [ ] **`startTls`** (unstable)
-- [ ] **`systemCpuInfo`** (unstable)
-- [ ] **`systemMemoryInfo`** (unstable)
-- [ ] **`umask`** (unstable)
-- [ ] **`upgradeWebSocket`** (unstable)
-- [ ] **`utime`** (unstable)
-- [ ] **`utimeSync`** (unstable)
-
-## wontfix
-
-(But feel free to PR)
-
-- **`iter`** (deprecated)
-- **`iterSync`** (deprecated)
-- **`Buffer`** (deprecated)
-- **`readAll`** (deprecated)
-- **`readAllSync`** (deprecated)
-- **`writeAll`** (deprecated)
-- **`writeAllSync`** (deprecated)
-- **`core`** (internals)
-- **`internal`** (internals)
