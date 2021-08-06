@@ -34,7 +34,7 @@ const documented = project
   .getSymbolOrThrow()
   .getExports()
   .map(processExport)
-  .sort((a, b) => a.name.localeCompare(b.name));
+  .sort((a, b) => Number(a.name > b.name) - Number(a.name < b.name));
 
 const stable = documented.filter((member) => member.stable);
 const stableImpl = stable.filter((member) => member.implemented);
