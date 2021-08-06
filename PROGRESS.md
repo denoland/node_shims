@@ -1,58 +1,58 @@
 # Progress
 
-64%. 50 stable members to go:
+97%. 4 stable members to go:
 
-- [ ] **`Addr`**
+- [x] **`Addr`**
 - [ ] 👎 **`Buffer`**
-- [ ] **`Closer`**
-- [ ] **`Conn`**
-- [ ] **`ConnectOptions`**
-- [ ] **`ConnectTlsOptions`**
-- [ ] **`DirEntry`**
-- [ ] **`EnvPermissionDescriptor`**
+- [x] **`Closer`**
+- [x] **`Conn`**
+- [x] **`ConnectOptions`**
+- [x] **`ConnectTlsOptions`**
+- [x] **`DirEntry`**
+- [x] **`EnvPermissionDescriptor`**
 - [x] **`File`**
-- [ ] **`FileInfo`**
-- [ ] **`FsEvent`**
-- [ ] **`FsWatcher`**
-- [ ] **`HrtimePermissionDescriptor`**
-- [ ] **`InspectOptions`**
-- [ ] **`ListenOptions`**
-- [ ] **`ListenTlsOptions`**
-- [ ] **`Listener`**
-- [ ] **`MakeTempOptions`**
-- [ ] **`MemoryUsage`**
-- [ ] **`Metrics`**
-- [ ] **`MkdirOptions`**
-- [ ] **`NetAddr`**
-- [ ] **`NetPermissionDescriptor`**
-- [ ] **`OpenOptions`**
-- [ ] **`PermissionDescriptor`**
-- [ ] **`PermissionName`**
-- [ ] **`PermissionState`**
+- [x] **`FileInfo`**
+- [x] **`FsEvent`**
+- [x] **`FsWatcher`**
+- [x] **`HrtimePermissionDescriptor`**
+- [x] **`InspectOptions`**
+- [x] **`ListenOptions`**
+- [x] **`ListenTlsOptions`**
+- [x] **`Listener`**
+- [x] **`MakeTempOptions`**
+- [x] **`MemoryUsage`**
+- [x] **`Metrics`**
+- [x] **`MkdirOptions`**
+- [x] **`NetAddr`**
+- [x] **`NetPermissionDescriptor`**
+- [x] **`OpenOptions`**
+- [x] **`PermissionDescriptor`**
+- [x] **`PermissionName`**
+- [x] **`PermissionState`**
 - [x] **`PermissionStatus`**
-- [ ] **`PermissionStatusEventMap`**
+- [x] **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
-- [ ] **`PluginPermissionDescriptor`**
-- [ ] **`Process`**
-- [ ] **`ProcessStatus`**
-- [ ] **`ReadFileOptions`**
-- [ ] **`ReadPermissionDescriptor`**
-- [ ] **`Reader`**
-- [ ] **`ReaderSync`**
-- [ ] **`RemoveOptions`**
-- [ ] **`ResourceMap`**
-- [ ] **`RunOptions`**
-- [ ] **`RunPermissionDescriptor`**
+- [x] **`PluginPermissionDescriptor`**
+- [x] **`Process`**
+- [x] **`ProcessStatus`**
+- [x] **`ReadFileOptions`**
+- [x] **`ReadPermissionDescriptor`**
+- [x] **`Reader`**
+- [x] **`ReaderSync`**
+- [x] **`RemoveOptions`**
+- [x] **`ResourceMap`**
+- [x] **`RunOptions`**
+- [x] **`RunPermissionDescriptor`**
 - [x] **`SeekMode`**
-- [ ] **`Seeker`**
-- [ ] **`SeekerSync`**
-- [ ] **`SymlinkOptions`**
-- [ ] **`TestDefinition`**
-- [ ] **`UnixAddr`**
-- [ ] **`WriteFileOptions`**
-- [ ] **`WritePermissionDescriptor`**
-- [ ] **`Writer`**
-- [ ] **`WriterSync`**
+- [x] **`Seeker`**
+- [x] **`SeekerSync`**
+- [x] **`SymlinkOptions`**
+- [x] **`TestDefinition`**
+- [x] **`UnixAddr`**
+- [x] **`WriteFileOptions`**
+- [x] **`WritePermissionDescriptor`**
+- [x] **`Writer`**
+- [x] **`WriterSync`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**
