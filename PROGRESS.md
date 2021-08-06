@@ -1,26 +1,10 @@
 # Progress
 
-██████████████████████████████████████░░
+64%. 50 stable members to go:
 
-- total, stable : 105
-- total, unstable : 136
-- implemented : 92
-- implemented, stable : 91
-- implemented, unstable : 1 (sleepSync)
-- wontfix : 9
-
-5 to go. (Process,resources,run,seek,seekSync)
-
-30 unstable to go.
-
-## status
-
-- [x] **`File`**
-- [x] **`PermissionStatus`**
-- [x] **`Permissions`**
-- [ ] **`Process`**
-- [x] **`SeekMode`**
+- [ ] **`Addr`**
 - [x] **`args`**
+- [ ] 👎 **`Buffer`**
 - [x] **`build`**
 - [x] **`chdir`**
 - [x] **`chmod`**
@@ -28,33 +12,50 @@
 - [x] **`chown`**
 - [x] **`chownSync`**
 - [x] **`close`**
+- [ ] **`Closer`**
+- [ ] **`Conn`**
 - [x] **`connect`**
+- [ ] **`ConnectOptions`**
 - [x] **`connectTls`**
-- [x] **`copy`**
+- [ ] **`ConnectTlsOptions`**
+- [x] 👎 **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
 - [x] **`create`**
 - [x] **`createSync`**
-- [x] **`customInspect`**
+- [x] 👎 **`customInspect`**
 - [x] **`cwd`**
+- [ ] **`DirEntry`**
 - [x] **`env`**
+- [ ] **`EnvPermissionDescriptor`**
 - [x] **`errors`**
 - [x] **`execPath`**
 - [x] **`exit`**
 - [x] **`fdatasync`**
 - [x] **`fdatasyncSync`**
+- [x] **`File`**
+- [ ] **`FileInfo`**
+- [ ] **`FsEvent`**
 - [x] **`fstat`**
 - [x] **`fstatSync`**
+- [ ] **`FsWatcher`**
 - [x] **`fsync`**
 - [x] **`fsyncSync`**
 - [x] **`ftruncate`**
 - [x] **`ftruncateSync`**
+- [ ] **`HrtimePermissionDescriptor`**
 - [x] **`inspect`**
+- [ ] **`InspectOptions`**
 - [x] **`isatty`**
+- [ ] 👎 **`iter`**
+- [ ] 👎 **`iterSync`**
 - [x] **`link`**
 - [x] **`linkSync`**
 - [x] **`listen`**
+- [ ] **`Listener`**
+- [ ] **`ListenOptions`**
 - [x] **`listenTls`**
+- [ ] **`ListenTlsOptions`**
 - [x] **`lstat`**
 - [x] **`lstatSync`**
 - [x] **`mainModule`**
@@ -62,35 +63,64 @@
 - [x] **`makeTempDirSync`**
 - [x] **`makeTempFile`**
 - [x] **`makeTempFileSync`**
+- [ ] **`MakeTempOptions`**
 - [x] **`memoryUsage`**
+- [ ] **`MemoryUsage`**
 - [x] **`metrics`**
+- [ ] **`Metrics`**
 - [x] **`mkdir`**
+- [ ] **`MkdirOptions`**
 - [x] **`mkdirSync`**
+- [ ] **`NetAddr`**
+- [ ] **`NetPermissionDescriptor`**
 - [x] **`noColor`**
 - [x] **`open`**
+- [ ] **`OpenOptions`**
 - [x] **`openSync`**
+- [ ] **`PermissionDescriptor`**
+- [ ] **`PermissionName`**
 - [x] **`permissions`**
+- [x] **`Permissions`**
+- [ ] **`PermissionState`**
+- [x] **`PermissionStatus`**
+- [ ] **`PermissionStatusEventMap`**
 - [x] **`pid`**
+- [ ] **`PluginPermissionDescriptor`**
 - [x] **`ppid`**
+- [ ] **`Process`**
+- [ ] **`ProcessStatus`**
 - [x] **`read`**
+- [ ] 👎 **`readAll`**
+- [ ] 👎 **`readAllSync`**
 - [x] **`readDir`**
 - [x] **`readDirSync`**
+- [ ] **`Reader`**
+- [ ] **`ReaderSync`**
 - [x] **`readFile`**
+- [ ] **`ReadFileOptions`**
 - [x] **`readFileSync`**
 - [x] **`readLink`**
 - [x] **`readLinkSync`**
+- [ ] **`ReadPermissionDescriptor`**
 - [x] **`readSync`**
 - [x] **`readTextFile`**
 - [x] **`readTextFileSync`**
 - [x] **`realPath`**
 - [x] **`realPathSync`**
 - [x] **`remove`**
+- [ ] **`RemoveOptions`**
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
+- [ ] **`ResourceMap`**
 - [ ] **`resources`**
 - [ ] **`run`**
+- [ ] **`RunOptions`**
+- [ ] **`RunPermissionDescriptor`**
 - [ ] **`seek`**
+- [ ] **`Seeker`**
+- [ ] **`SeekerSync`**
+- [x] **`SeekMode`**
 - [ ] **`seekSync`**
 - [x] **`shutdown`**
 - [x] **`stat`**
@@ -99,60 +129,24 @@
 - [x] **`stdin`**
 - [x] **`stdout`**
 - [x] **`symlink`**
+- [ ] **`SymlinkOptions`**
 - [x] **`symlinkSync`**
 - [x] **`test`**
+- [ ] **`TestDefinition`**
 - [x] **`truncate`**
 - [x] **`truncateSync`**
+- [ ] **`UnixAddr`**
 - [x] **`version`**
 - [x] **`watchFs`**
 - [x] **`write`**
+- [ ] 👎 **`writeAll`**
+- [ ] 👎 **`writeAllSync`**
 - [x] **`writeFile`**
+- [ ] **`WriteFileOptions`**
 - [x] **`writeFileSync`**
+- [ ] **`WritePermissionDescriptor`**
+- [ ] **`Writer`**
+- [ ] **`WriterSync`**
 - [x] **`writeSync`**
 - [x] **`writeTextFile`**
 - [x] **`writeTextFileSync`**
-- [ ] **`DiagnosticCategory`** (unstable)
-- [ ] **`HttpClient`** (unstable)
-- [ ] **`Signal`** (unstable)
-- [ ] **`SignalStream`** (unstable)
-- [ ] **`applySourceMap`** (unstable)
-- [ ] **`consoleSize`** (unstable)
-- [ ] **`createHttpClient`** (unstable)
-- [ ] **`emit`** (unstable)
-- [ ] **`formatDiagnostics`** (unstable)
-- [ ] **`futime`** (unstable)
-- [ ] **`futimeSync`** (unstable)
-- [ ] **`hostname`** (unstable)
-- [ ] **`http`** (unstable)
-- [ ] **`kill`** (unstable)
-- [ ] **`listenDatagram`** (unstable)
-- [ ] **`loadavg`** (unstable)
-- [ ] **`openPlugin`** (unstable)
-- [ ] **`osRelease`** (unstable)
-- [ ] **`resolveDns`** (unstable)
-- [ ] **`serveHttp`** (unstable)
-- [ ] **`setRaw`** (unstable)
-- [ ] **`signal`** (unstable)
-- [ ] **`signals`** (unstable)
-- [x] **`sleepSync`** (unstable)
-- [ ] **`startTls`** (unstable)
-- [ ] **`systemCpuInfo`** (unstable)
-- [ ] **`systemMemoryInfo`** (unstable)
-- [ ] **`umask`** (unstable)
-- [ ] **`upgradeWebSocket`** (unstable)
-- [ ] **`utime`** (unstable)
-- [ ] **`utimeSync`** (unstable)
-
-## wontfix
-
-(But feel free to PR)
-
-- **`iter`** (deprecated)
-- **`iterSync`** (deprecated)
-- **`Buffer`** (deprecated)
-- **`readAll`** (deprecated)
-- **`readAllSync`** (deprecated)
-- **`writeAll`** (deprecated)
-- **`writeAllSync`** (deprecated)
-- **`core`** (internals)
-- **`internal`** (internals)
