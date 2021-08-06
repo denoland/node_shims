@@ -1,9 +1,35 @@
 #!/usr/bin/env -S deno run --allow-run
+///<reference path="../src/deno/stable/lib.deno.d.ts" />
+
+import { writeAll } from "https://deno.land/std@0.103.0/io/util.ts";
 
 const properties = Object.keys(Deno).sort();
 
 const toWrite = Deno.args.find((arg) => arg.startsWith("--write"))?.split("=")
   ?.[1];
+
+const unstableProc = Deno.run({
+  cmd: ["deno", "run", "--unstable", "-"],
+  stdin: "piped",
+  stdout: "piped",
+});
+await writeAll(
+  unstableProc.stdin,
+  new TextEncoder().encode(
+    "console.log(JSON.stringify(Object.keys(Deno).sort()))",
+  ),
+);
+unstableProc.stdin.close();
+
+const unstable = new Set<string>(
+  JSON.parse(new TextDecoder().decode(await unstableProc.output())),
+);
+
+for (const x of unstable) {
+  if (properties.includes(x)) {
+    unstable.delete(x);
+  }
+}
 
 const implemented = new Set<string>(JSON.parse(new TextDecoder().decode(
   await Deno.run({
@@ -40,17 +66,25 @@ for (const x of wontFix) {
   }
 }
 
-const removed = [...implemented].filter((x) => !properties.includes(x));
+const stableImpl = [...implemented].filter((x) => properties.includes(x));
+const unstableImpl = [...implemented].filter((x) => unstable.has(x));
 
 const togo = properties.filter((x) => !implemented.has(x) && !wontFix.has(x));
+const togoUnstable = [...unstable].filter((x) =>
+  !implemented.has(x) && !wontFix.has(x)
+);
 
 const status = `
-- total                          : ${properties.length}
+- total, stable                  : ${properties.length}
+- total, unstable                : ${properties.length + unstable.size}
 - implemented                    : ${implemented.size}
-- implemented, removed from Deno : ${removed.length} (${removed})
+- implemented, stable            : ${stableImpl.length}
+- implemented, unstable          : ${unstableImpl.length} (${unstableImpl})
 - wontfix                        : ${wontFix.size}
 
 ${togo.length} to go. (${togo})
+
+${togoUnstable.length} unstable to go.
 `.trim();
 
 console.log(status);
@@ -72,11 +106,14 @@ if (toWrite) {
 
   const progress = `${"█".repeat(done)}${"░".repeat(todo)}`;
 
-  const all = properties
-    .filter((property) => !wontFix.has(property))
-    .map((property) =>
-      `- [${implemented.has(property) ? "x" : " "}] **\`${property}\`**`
-    )
+  const all = [
+    ...properties
+      .filter((p) => !wontFix.has(p))
+      .map((p) => `- [${implemented.has(p) ? "x" : " "}] **\`${p}\`**`),
+    ...[...unstable].filter((p) => !wontFix.has(p)).map((p) =>
+      `- [${implemented.has(p) ? "x" : " "}] **\`${p}\`** (unstable)`
+    ),
+  ]
     .join("\n");
 
   const wontFixList = [...wontFix].map((property) =>

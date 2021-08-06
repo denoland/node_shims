@@ -2,12 +2,16 @@
 
 ██████████████████████████████████████░░
 
-- total : 105
+- total, stable : 105
+- total, unstable : 136
 - implemented : 92
-- implemented, removed from Deno : 1 (sleepSync)
+- implemented, stable : 91
+- implemented, unstable : 1 (sleepSync)
 - wontfix : 9
 
 5 to go. (Process,resources,run,seek,seekSync)
+
+30 unstable to go.
 
 ## status
 
@@ -107,6 +111,37 @@
 - [x] **`writeSync`**
 - [x] **`writeTextFile`**
 - [x] **`writeTextFileSync`**
+- [ ] **`DiagnosticCategory`** (unstable)
+- [ ] **`HttpClient`** (unstable)
+- [ ] **`Signal`** (unstable)
+- [ ] **`SignalStream`** (unstable)
+- [ ] **`applySourceMap`** (unstable)
+- [ ] **`consoleSize`** (unstable)
+- [ ] **`createHttpClient`** (unstable)
+- [ ] **`emit`** (unstable)
+- [ ] **`formatDiagnostics`** (unstable)
+- [ ] **`futime`** (unstable)
+- [ ] **`futimeSync`** (unstable)
+- [ ] **`hostname`** (unstable)
+- [ ] **`http`** (unstable)
+- [ ] **`kill`** (unstable)
+- [ ] **`listenDatagram`** (unstable)
+- [ ] **`loadavg`** (unstable)
+- [ ] **`openPlugin`** (unstable)
+- [ ] **`osRelease`** (unstable)
+- [ ] **`resolveDns`** (unstable)
+- [ ] **`serveHttp`** (unstable)
+- [ ] **`setRaw`** (unstable)
+- [ ] **`signal`** (unstable)
+- [ ] **`signals`** (unstable)
+- [x] **`sleepSync`** (unstable)
+- [ ] **`startTls`** (unstable)
+- [ ] **`systemCpuInfo`** (unstable)
+- [ ] **`systemMemoryInfo`** (unstable)
+- [ ] **`umask`** (unstable)
+- [ ] **`upgradeWebSocket`** (unstable)
+- [ ] **`utime`** (unstable)
+- [ ] **`utimeSync`** (unstable)
 
 ## wontfix
 
