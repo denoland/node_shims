@@ -1,9 +1,9 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { writeTextFile } from "./writeTextFile";
-import { join } from "path";
 import { tmpdir } from "os";
-import { randomId } from "../../internal/random_id";
+import { join } from "path";
+import { randomId } from "../../internal/random_id.js";
+import { writeTextFile } from "./writeTextFile.js";
 
 export const makeTempFile: typeof Deno.makeTempFile =
   async function makeTempFile(

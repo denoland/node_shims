@@ -3,11 +3,11 @@
 import { watch } from "fs/promises";
 import { resolve } from "path";
 
-import { merge, mapAsync } from "../../internal/iterutil.js";
+import { mapAsync, merge } from "../../internal/iterutil.js";
 
 export const watchFs: typeof Deno.watchFs = function watchFs(
   paths,
-  options = { recursive: true }
+  options = { recursive: true },
 ) {
   paths = Array.isArray(paths) ? paths : [paths];
 
@@ -24,9 +24,9 @@ export const watchFs: typeof Deno.watchFs = function watchFs(
         (filename) => ({
           kind: "modify" as const,
           paths: [resolve(path, filename)],
-        })
+        }),
       )
-    )
+    ),
   );
 
   function close() {

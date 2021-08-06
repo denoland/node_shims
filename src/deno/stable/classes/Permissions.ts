@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { PermissionStatus } from "../classes/PermissionStatus";
+import { PermissionStatus } from "../classes/PermissionStatus.js";
 
 export class Permissions implements Deno.Permissions {
   query(_desc: Deno.PermissionDescriptor) {

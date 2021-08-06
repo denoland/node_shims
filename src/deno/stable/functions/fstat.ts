@@ -2,7 +2,7 @@
 
 import * as fs from "fs";
 import { promisify } from "util";
-import { denoifyFileInfo } from "./stat";
+import { denoifyFileInfo } from "./stat.js";
 
 const nodeFstat = promisify(fs.fstat);
 

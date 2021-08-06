@@ -1,8 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { open as nodeOpen } from "fs/promises";
-
-import { File } from "../classes/File";
+import { File } from "../classes/File.js";
 
 export const open: typeof Deno.open = async function open(
   path,

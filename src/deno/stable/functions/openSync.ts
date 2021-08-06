@@ -1,8 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { openSync as nodeOpenSync } from "fs";
-
-import { File } from "../classes/File";
+import { File } from "../classes/File.js";
 
 export const openSync: typeof Deno.openSync = function openSync(
   path,

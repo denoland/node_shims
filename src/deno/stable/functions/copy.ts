@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { iter } from "../../std/io/util";
+import { iter } from "../../std/io/util.js";
 
 export const copy: typeof Deno.copy = async (
   src,

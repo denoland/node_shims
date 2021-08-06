@@ -4,7 +4,7 @@ import { readFileSync as nodeReadFile } from "fs";
 import mapError from "../../internal/errorMap.js";
 
 export const readFileSync: typeof Deno.readFileSync = function readFileSync(
-  path
+  path,
 ) {
   try {
     return nodeReadFile(path);

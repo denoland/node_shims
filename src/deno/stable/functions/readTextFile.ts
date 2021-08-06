@@ -1,10 +1,10 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { readFile } from "fs/promises";
-import mapError from "../../internal/errorMap";
+import mapError from "../../internal/errorMap.js";
 
 export const readTextFile: typeof Deno.readTextFile = function readTextFile(
-  path
+  path,
 ) {
   try {
     return readFile(path, "utf8");

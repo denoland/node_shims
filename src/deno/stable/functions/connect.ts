@@ -1,8 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { createConnection } from "net";
-
-import { Conn } from "../../internal/Conn";
+import { Conn } from "../../internal/Conn.js";
 
 export const connect: typeof Deno.connect = function connect(
   { port, hostname = "127.0.0.1", transport = "tcp" },

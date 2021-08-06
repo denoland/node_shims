@@ -4,10 +4,11 @@ type Class<T> = new (...params: any[]) => T;
 
 type ClassOrT<T> = T extends Class<infer U> ? U : T;
 
-const mapper = (Ctor: typeof errors[keyof typeof errors]) => (err: Error) =>
-  Object.assign(new Ctor(err.message), {
-    stack: err.stack,
-  }) as ClassOrT<typeof Ctor>;
+const mapper = (Ctor: typeof errors[keyof typeof errors]) =>
+  (err: Error) =>
+    Object.assign(new Ctor(err.message), {
+      stack: err.stack,
+    }) as ClassOrT<typeof Ctor>;
 
 const map: Record<string, ReturnType<typeof mapper>> = {
   ENOENT: mapper(errors.NotFound),
