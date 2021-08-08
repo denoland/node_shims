@@ -4,7 +4,6 @@
     "strict": true,
     "target": "ES2019",
     "declaration": true,
-    "declarationMap": true,
     "outDir": "dist"
   },
   "include": ["src/index.ts", "src/global.ts", "src/cli/test.ts"]

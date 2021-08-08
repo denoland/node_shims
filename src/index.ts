@@ -1,3 +1,4 @@
+import "./node-fetch.js";
 export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
 // TODO: Wait for node builtin WhatWG Streams or fetch-blob to export them without assigning to globalThis
