@@ -5,9 +5,10 @@ import mapError from "../../internal/errorMap.js";
 
 export const readTextFile: typeof Deno.readTextFile = function readTextFile(
   path,
+  { signal } = {},
 ) {
   try {
-    return readFile(path, "utf8");
+    return readFile(path, { encoding: "utf8", signal });
   } catch (e) {
     throw mapError(e);
   }
