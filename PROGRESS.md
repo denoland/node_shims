@@ -1,30 +1,47 @@
 # Progress
 
-97%. 4 stable members to go:
+81%. 31 stable members to go:
 
 - [x] **`Addr`**
+- [ ] **`BasicAuth`**
 - [ ] 👎 **`Buffer`**
 - [x] **`Closer`**
+- [ ] 🧪 **`CompilerOptions`**
 - [x] **`Conn`**
 - [x] **`ConnectOptions`**
 - [x] **`ConnectTlsOptions`**
+- [ ] 🧪 **`CreateHttpClientOptions`**
+- [ ] 🧪 **`DatagramConn`**
+- [ ] **`Diagnostic`**
+- [ ] **`DiagnosticCategory`**
+- [ ] **`DiagnosticMessageChain`**
 - [x] **`DirEntry`**
+- [ ] 🧪 **`EmitOptions`**
+- [ ] 🧪 **`EmitResult`**
 - [x] **`EnvPermissionDescriptor`**
 - [x] **`File`**
 - [x] **`FileInfo`**
 - [x] **`FsEvent`**
 - [x] **`FsWatcher`**
 - [x] **`HrtimePermissionDescriptor`**
+- [ ] 🧪 **`HttpClient`**
+- [ ] **`HttpConn`**
+- [ ] **`ImportMap`**
 - [x] **`InspectOptions`**
+- [ ] **`LinuxSignal`**
 - [x] **`ListenOptions`**
 - [x] **`ListenTlsOptions`**
 - [x] **`Listener`**
+- [ ] 🧪 **`Location`**
+- [ ] **`MXRecord`**
+- [ ] **`MacOSSignal`**
 - [x] **`MakeTempOptions`**
 - [x] **`MemoryUsage`**
 - [x] **`Metrics`**
 - [x] **`MkdirOptions`**
 - [x] **`NetAddr`**
 - [x] **`NetPermissionDescriptor`**
+- [ ] **`OpMetrics`**
 - [x] **`OpenOptions`**
 - [x] **`PermissionDescriptor`**
 - [x] **`PermissionName`**
@@ -35,24 +52,40 @@
 - [x] **`PluginPermissionDescriptor`**
 - [x] **`Process`**
 - [x] **`ProcessStatus`**
+- [ ] **`Proxy`**
 - [x] **`ReadFileOptions`**
 - [x] **`ReadPermissionDescriptor`**
 - [x] **`Reader`**
 - [x] **`ReaderSync`**
+- [ ] **`RecordType`**
 - [x] **`RemoveOptions`**
+- [ ] **`RequestEvent`**
+- [ ] **`ResolveDnsOptions`**
 - [x] **`ResourceMap`**
 - [x] **`RunOptions`**
 - [x] **`RunPermissionDescriptor`**
+- [ ] **`SRVRecord`**
 - [x] **`SeekMode`**
 - [x] **`Seeker`**
 - [x] **`SeekerSync`**
+- [ ] **`SetRawOptions`**
+- [ ] 🧪 **`Signal`**
+- [ ] 🧪 **`SignalStream`**
+- [ ] **`StartTlsOptions`**
 - [x] **`SymlinkOptions`**
-- [x] **`TestDefinition`**
+- [ ] **`SystemCpuInfo`**
+- [ ] **`SystemMemoryInfo`**
+- [x] 🧪 **`TestDefinition`**
 - [x] **`UnixAddr`**
+- [ ] **`UnixConnectOptions`**
+- [ ] **`UnixListenOptions`**
+- [ ] **`UpgradeWebSocketOptions`**
+- [ ] **`WebSocketUpgrade`**
 - [x] **`WriteFileOptions`**
 - [x] **`WritePermissionDescriptor`**
 - [x] **`Writer`**
 - [x] **`WriterSync`**
+- [ ] 🧪 **`applySourceMap`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**
@@ -63,33 +96,43 @@
 - [x] **`close`**
 - [x] **`connect`**
 - [x] **`connectTls`**
+- [ ] 🧪 **`consoleSize`**
 - [x] 👎 **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
 - [x] **`create`**
+- [ ] 🧪 **`createHttpClient`**
 - [x] **`createSync`**
 - [x] 👎 **`customInspect`**
 - [x] **`cwd`**
+- [ ] 🧪 **`emit`**
 - [x] **`env`**
 - [x] **`errors`**
 - [x] **`execPath`**
 - [x] **`exit`**
 - [x] **`fdatasync`**
 - [x] **`fdatasyncSync`**
+- [ ] 🧪 **`formatDiagnostics`**
 - [x] **`fstat`**
 - [x] **`fstatSync`**
 - [x] **`fsync`**
 - [x] **`fsyncSync`**
 - [x] **`ftruncate`**
 - [x] **`ftruncateSync`**
+- [ ] 🧪 **`futime`**
+- [ ] 🧪 **`futimeSync`**
+- [ ] 🧪 **`hostname`**
 - [x] **`inspect`**
 - [x] **`isatty`**
 - [ ] 👎 **`iter`**
 - [ ] 👎 **`iterSync`**
+- [ ] 🧪 **`kill`**
 - [x] **`link`**
 - [x] **`linkSync`**
 - [x] **`listen`**
+- [ ] 🧪 **`listenDatagram`**
 - [x] **`listenTls`**
+- [ ] **`loadavg`**
 - [x] **`lstat`**
 - [x] **`lstatSync`**
 - [x] **`mainModule`**
@@ -103,7 +146,9 @@
 - [x] **`mkdirSync`**
 - [x] **`noColor`**
 - [x] **`open`**
+- [ ] 🧪 **`openPlugin`**
 - [x] **`openSync`**
+- [ ] **`osRelease`**
 - [x] **`permissions`**
 - [x] **`pid`**
 - [x] **`ppid`**
@@ -125,11 +170,18 @@
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
+- [ ] 🧪 **`resolveDns`**
 - [ ] **`resources`**
 - [ ] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
+- [ ] 🧪 **`serveHttp`**
+- [ ] 🧪 **`setRaw`**
 - [x] **`shutdown`**
+- [ ] 🧪 **`signal`**
+- [ ] 🧪 **`signals`**
+- [x] 🧪 **`sleepSync`**
+- [ ] 🧪 **`startTls`**
 - [x] **`stat`**
 - [x] **`statSync`**
 - [x] **`stderr`**
@@ -137,9 +189,15 @@
 - [x] **`stdout`**
 - [x] **`symlink`**
 - [x] **`symlinkSync`**
+- [ ] **`systemCpuInfo`**
+- [ ] **`systemMemoryInfo`**
 - [x] **`test`**
 - [x] **`truncate`**
 - [x] **`truncateSync`**
+- [ ] 🧪 **`umask`**
+- [ ] 🧪 **`upgradeWebSocket`**
+- [ ] 🧪 **`utime`**
+- [ ] 🧪 **`utimeSync`**
 - [x] **`version`**
 - [x] **`watchFs`**
 - [x] **`write`**
