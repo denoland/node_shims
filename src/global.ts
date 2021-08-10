@@ -1,6 +1,6 @@
 import * as globals from "./index.js";
 // Adds WhatWG Streams to globalThis
-require("fetch-blob/streams.cjs");
+import "./hacks/web-streams.js";
 
 Object.assign(
   globalThis,
