@@ -6,5 +6,4 @@ export { URL } from "url";
 export * as Deno from "./deno.js";
 export { confirm } from "./util/confirm.js";
 export { prompt } from "./util/prompt.js";
-export { FormData };
-import * as FormData from "form-data";
+export { File, FormData } from "formdata-node";
