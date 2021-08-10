@@ -3,6 +3,8 @@
     "module": "CommonJS",
     "strict": true,
     "target": "ES2019",
+    "lib": ["ES2019"], // no DOM types
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "outDir": "dist"
   },

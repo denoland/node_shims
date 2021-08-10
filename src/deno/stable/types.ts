@@ -26,7 +26,6 @@ export import PermissionName = Deno.PermissionName;
 export import PermissionState = Deno.PermissionState;
 export import PermissionStatusEventMap = Deno.PermissionStatusEventMap;
 export import PluginPermissionDescriptor = Deno.PluginPermissionDescriptor;
-export import Process = Deno.Process;
 export import ProcessStatus = Deno.ProcessStatus;
 export import Reader = Deno.Reader;
 export import ReaderSync = Deno.ReaderSync;
