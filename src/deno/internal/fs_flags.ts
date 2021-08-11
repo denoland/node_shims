@@ -7,6 +7,7 @@ import { constants } from "fs";
 const { O_APPEND, O_CREAT, O_EXCL, O_RDONLY, O_RDWR, O_TRUNC, O_WRONLY } =
   constants;
 
+// deno-lint-ignore ban-types
 type Optional<T extends {}> = { [K in keyof T]?: T[K] };
 
 type Opts<T extends string> = Optional<Record<T, boolean>>;
@@ -21,10 +22,11 @@ export function getAccessFlag(opts: Opts<AccessModes>) {
   if (!opts.read && opts.append) return O_WRONLY | O_APPEND;
   if (opts.read && opts.append) return O_RDWR | O_APPEND;
 
-  if (!opts.read && !opts.write && !opts.append)
+  if (!opts.read && !opts.write && !opts.append) {
     throw new errors.BadResource(
-      "EINVAL: One of 'read', 'write', 'append' is required to open file."
+      "EINVAL: One of 'read', 'write', 'append' is required to open file.",
     );
+  }
 
   throw new errors.BadResource("EINVAL: Invalid fs flags.");
 }
@@ -33,14 +35,14 @@ export function getCreationFlag(opts: Opts<CreationModes>) {
   if (!opts.write && !opts.append) {
     if (opts.truncate || opts.create || opts.createNew) {
       throw new errors.BadResource(
-        "EINVAL: One of 'truncate', 'create', 'createNew' is required when 'write' and 'append' are false."
+        "EINVAL: One of 'truncate', 'create', 'createNew' is required when 'write' and 'append' are false.",
       );
     }
   }
   if (opts.append) {
     if (opts.truncate && !opts.createNew) {
       throw new errors.BadResource(
-        "EINVAL: unexpected 'truncate': true and 'createNew': false when 'append' is true."
+        "EINVAL: unexpected 'truncate': true and 'createNew': false when 'append' is true.",
       );
     }
   }

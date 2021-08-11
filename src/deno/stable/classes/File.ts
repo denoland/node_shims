@@ -1,7 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import * as fs from "fs";
-import { promisify } from "util";
 import { fstat } from "../functions/fstat.js";
 import { fstatSync } from "../functions/fstatSync.js";
 import { ftruncate } from "../functions/ftruncate.js";
@@ -10,8 +9,6 @@ import { read } from "../functions/read.js";
 import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
 import { writeSync } from "../functions/writeSync.js";
-
-const nodeFtruncate = promisify(fs.ftruncate);
 
 export class File implements Deno.File {
   constructor(readonly rid: number) {}
