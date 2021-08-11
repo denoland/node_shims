@@ -24,6 +24,7 @@ const testsToRun = new Set([
   "read_file_test.ts",
   "read_text_file_test.ts",
   "blob_test.ts",
+  "write_file_test.ts",
   // --
   // Failing
   // "body_test.ts",
@@ -85,7 +86,6 @@ const testsToRun = new Set([
   // "webgpu_test.ts",
   // "websocket_test.ts",
   // "worker_types.ts",
-  // "write_file_test.ts",
   // "write_text_file_test.ts",
   // --
   // Hanging tests

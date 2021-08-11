@@ -1,19 +1,26 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { open as nodeOpen } from "fs/promises";
+import { open as _open } from "fs";
+import { promisify } from "util";
+
 import { File } from "../classes/File.js";
+import { getFsFlag } from "../../internal/fs_flags.js";
+
+const nodeOpen = promisify(_open);
 
 export const open: typeof Deno.open = async function open(
   path,
-  options = { read: true },
+  { read = true, write, append, truncate, create, createNew, mode = 0o666 } =
+    {},
 ) {
-  const flags = options.append
-    ? "a"
-    : options.write
-    ? options.create ? "w" : "r+"
-    : options.read
-    ? "r"
-    : "?";
-  const f = await nodeOpen(path, flags);
-  return new File(f.fd);
+  const flagMode = getFsFlag({
+    read,
+    write,
+    append,
+    truncate,
+    create,
+    createNew,
+  });
+  const fd = await nodeOpen(path, flagMode, mode);
+  return new File(fd);
 };

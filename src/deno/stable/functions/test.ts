@@ -27,8 +27,8 @@ export const test: typeof Deno.test = Object.assign(
         await t.fn();
       } catch (err) {
         process.exitCode = 1;
-        console.log(`test ${t.name} ... FAILED (${Date.now() - start}ms)`);
-        console.log(`\t${err.message}`);
+        console.error(`test ${t.name} ... FAILED (${Date.now() - start}ms)`);
+        console.error(`\t${err.message}`);
         return;
       }
       console.log(`test ${t.name} ... ok (${Date.now() - start}ms)`);

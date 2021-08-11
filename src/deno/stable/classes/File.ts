@@ -4,6 +4,8 @@ import * as fs from "fs";
 import { promisify } from "util";
 import { fstat } from "../functions/fstat.js";
 import { fstatSync } from "../functions/fstatSync.js";
+import { ftruncate } from "../functions/ftruncate.js";
+import { ftruncateSync } from "../functions/ftruncateSync.js";
 import { read } from "../functions/read.js";
 import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
@@ -23,13 +25,11 @@ export class File implements Deno.File {
   }
 
   async truncate(len?: number): Promise<void> {
-    //TODO(mkr): replace with Deno.ftruncate
-    await nodeFtruncate(this.rid, len);
+    await ftruncate(this.rid, len);
   }
 
   truncateSync(len?: number): void {
-    //TODO(mkr): replace with Deno.ftruncateSync
-    return fs.ftruncateSync(this.rid, len);
+    return ftruncateSync(this.rid, len);
   }
 
   read(p: Uint8Array): Promise<number | null> {

@@ -1,14 +1,45 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { writeFileSync as nodeWriteFileSync } from "fs";
+import { platform } from "os";
+import { openSync } from "./openSync.js";
+import mapError from "../../internal/errorMap.js";
+import { statSync } from "./statSync.js";
+import { chmodSync } from "./chmodSync.js";
 
 export const writeFileSync: typeof Deno.writeFileSync = function writeFileSync(
   path,
   data,
-  { append = false, create = true, mode = 0o666 } = {},
+  options = {},
 ) {
-  nodeWriteFileSync(path, data, {
-    flag: append ? create ? "a" : "ax" : create ? "w" : "wx",
-    mode,
-  });
+  try {
+    if (options.create !== undefined) {
+      const create = !!options.create;
+      if (!create) {
+        // verify that file exists
+        statSync(path);
+      }
+    }
+
+    const openOptions = options.append
+      ? { write: true, create: true, append: true }
+      : { write: true, create: true, truncate: true };
+    const file = openSync(path, openOptions);
+
+    if (
+      options.mode !== undefined &&
+      options.mode !== null &&
+      platform() !== "win32"
+    ) {
+      chmodSync(path, options.mode);
+    }
+
+    let nwritten = 0;
+    while (nwritten < data.length) {
+      nwritten += file.writeSync(data.subarray(nwritten));
+    }
+
+    file.close();
+  } catch (e) {
+    throw mapError(e);
+  }
 };
