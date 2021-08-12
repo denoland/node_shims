@@ -15,28 +15,12 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
-    - uses: denoland/setup-deno@main
+    - uses: denoland/setup-deno@v1
       with:
         deno-version: ~1.12
-    - run: npm ci --ignore-scripts
+    - run: deno lint --ignore=thirdparty/
+    - run: deno fmt  --ignore=thirdparty/ --check
+    - run: npm ci  --ignore-scripts
     - run: npm run --silent prepare
     - run: npm run --silent test
       if : false # always fails
-
-  fmt:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: denoland/setup-deno@main
-      with:
-        deno-version: ~1.12
-    - run: npm run --silent fmt -- --check
-
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: denoland/setup-deno@main
-      with:
-        deno-version: ~1.11
-    - run: npm run --silent lint
