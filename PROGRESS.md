@@ -1,6 +1,6 @@
 # Progress
 
-96%. 5 stable members to go:
+95%. 6 stable members to go:
 
 - [x] **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -10,11 +10,13 @@
 - [x] **`ConnectTlsOptions`**
 - [x] **`DirEntry`**
 - [x] **`EnvPermissionDescriptor`**
+- [x] **`FFIPermissionDescriptor`**
 - [x] **`File`**
 - [x] **`FileInfo`**
 - [x] **`FsEvent`**
 - [x] **`FsWatcher`**
 - [x] **`HrtimePermissionDescriptor`**
+- [x] **`HttpConn`**
 - [x] **`InspectOptions`**
 - [x] **`ListenOptions`**
 - [x] **`ListenTlsOptions`**
@@ -32,7 +34,6 @@
 - [x] **`PermissionStatus`**
 - [x] **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
-- [x] **`PluginPermissionDescriptor`**
 - [ ] **`Process`**
 - [x] **`ProcessStatus`**
 - [x] **`ReadFileOptions`**
@@ -40,6 +41,7 @@
 - [x] **`Reader`**
 - [x] **`ReaderSync`**
 - [x] **`RemoveOptions`**
+- [x] **`RequestEvent`**
 - [x] **`ResourceMap`**
 - [x] **`RunOptions`**
 - [x] **`RunPermissionDescriptor`**
@@ -129,6 +131,7 @@
 - [ ] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
+- [ ] **`serveHttp`**
 - [x] **`shutdown`**
 - [x] **`stat`**
 - [x] **`statSync`**

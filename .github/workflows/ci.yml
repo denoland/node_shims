@@ -17,7 +17,7 @@ jobs:
         node-version: '16'
     - uses: denoland/setup-deno@v1
       with:
-        deno-version: ~1.12
+        deno-version: ~1.13
     - run: deno lint --ignore=thirdparty/
     - run: deno fmt  --ignore=thirdparty/ --check
     - run: npm ci  --ignore-scripts
