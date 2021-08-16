@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        submodules: true
+        submodules: recursive
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
@@ -21,6 +21,4 @@ jobs:
     - run: deno lint --ignore=thirdparty/
     - run: deno fmt  --ignore=thirdparty/ --check
     - run: npm ci  --ignore-scripts
-    - run: npm run --silent prepare
     - run: npm run --silent test
-      if : false # always fails
