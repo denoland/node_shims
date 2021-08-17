@@ -23,6 +23,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./global": "./dist/global.js",
+    "./tests": "./dist/deno/stable/functions/test.js",
     "./deno": "./dist/deno.js"
   },
   "files": [
