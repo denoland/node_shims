@@ -30,4 +30,8 @@ exports.testsToSkip = new Set([
   // write_file_test
   "writeFileSyncPerm", // permissions
   "writeFilePerm", // permissions
+
+  // write_text_file_test
+  "writeTextFileSyncPerm", // permissions
+  "writeTextFilePerm", // permissions
 ]);

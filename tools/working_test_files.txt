@@ -6,3 +6,4 @@ thirdparty/deno/cli/tests/unit/read_file_test.ts
 thirdparty/deno/cli/tests/unit/read_text_file_test.ts
 thirdparty/deno/cli/tests/unit/blob_test.ts
 thirdparty/deno/cli/tests/unit/write_file_test.ts
+thirdparty/deno/cli/tests/unit/write_text_file_test.ts
