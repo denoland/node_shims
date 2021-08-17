@@ -12,25 +12,36 @@ const ok = green("ok");
 const failed = red("FAILED");
 const skipped = yellow("skipped");
 
-// exit code 255 aborts xargs
-process.on("SIGINT", () => process.exit(255));
+const failures = [];
 
 process.chdir("thirdparty/deno/");
-require(`../${Deno.args[0]}`);
-console.log(`running ${tests.length} tests from ${Deno.args[0]}`);
 
 (async () => {
-  for (const t of tests) {
-    if (testsToSkip.has(t.name)) {
-      console.log(`test ${t.name} ... ${skipped}`);
-      continue;
+  for (const path of Deno.args) {
+    tests.length = 0;
+    require(`../${path}`);
+    console.log(`running ${tests.length} tests from ${path}`);
+    for (const t of tests) {
+      if (testsToSkip.has(t.name)) {
+        console.log(`test ${t.name} ... ${skipped}`);
+        continue;
+      }
+      try {
+        await t.fn();
+        console.log(`test ${t.name} ... ${ok}`);
+      } catch (error) {
+        process.exitCode = 1;
+        console.log(`test ${t.name} ... ${failed}`);
+        failures.push({ t, error });
+      }
     }
-    try {
-      await t.fn();
-      console.log(`test ${t.name} ... ${ok}`);
-    } catch (err) {
-      process.exitCode = 1;
-      console.log(`test ${t.name} ... ${failed}\n${err}`);
+  }
+  if (failures.length) {
+    console.log(failures.length, "tests failed:");
+    for (const { t, error } of failures) {
+      console.log();
+      console.log(t.name);
+      console.log(error);
     }
   }
 })();

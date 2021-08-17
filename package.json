@@ -36,7 +36,7 @@
     "lint": "deno lint --ignore=node_modules,dist,thirdparty,unit,src/deno/stable/lib.deno.d.ts",
     "fmt": "deno fmt --ignore=node_modules,dist,thirdparty,unit,src/deno/stable/lib.deno.d.ts",
     "clean": "git clean -fXde '!node_modules/'",
-    "test": "npm run --silent prepare && xargs --max-lines --arg-file=tools/working_test_files.txt node tools/deno_test.js"
+    "test": "npm run --silent prepare && xargs --arg-file=tools/working_test_files.txt node tools/deno_test.js"
   },
   "devDependencies": {
     "@types/node": "^16.4.13",
