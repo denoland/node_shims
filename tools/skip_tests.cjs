@@ -28,6 +28,7 @@ exports.testsToSkip = new Set([
   "blobStream", //TODO, rq: ReadableStream
 
   // write_file_test
+  "writeFileAbortSignalPreAborted", // implementation detail
   "writeFileSyncPerm", // permissions
   "writeFilePerm", // permissions
 
