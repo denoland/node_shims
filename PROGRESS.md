@@ -1,6 +1,6 @@
 # Progress
 
-95%. 6 stable members to go:
+97%. 4 stable members to go:
 
 - [x] **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -34,7 +34,7 @@
 - [x] **`PermissionStatus`**
 - [x] **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
-- [ ] **`Process`**
+- [x] **`Process`**
 - [x] **`ProcessStatus`**
 - [x] **`ReadFileOptions`**
 - [x] **`ReadPermissionDescriptor`**
@@ -128,7 +128,7 @@
 - [x] **`rename`**
 - [x] **`renameSync`**
 - [ ] **`resources`**
-- [ ] **`run`**
+- [x] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
 - [ ] **`serveHttp`**
