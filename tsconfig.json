@@ -4,7 +4,8 @@
     "strict": true,
     "target": "ES2019",
     "lib": ["ES2019"], // no DOM types
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true, // for `undici-fetch`
+    "incremental": true,
     "declaration": true,
     "outDir": "dist"
   },
