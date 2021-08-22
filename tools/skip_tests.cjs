@@ -1,6 +1,13 @@
 // rq = requires
 
-export default [
+exports.testsToSkip = new Set([
+  // blob_test
+  "blobBuffer", // experimental native Blob
+  "blobCustomInspectFunction", // experimental native Blob
+
+  // body_test
+  "arrayBufferFromByteArrays", // Node.js bug?
+
   // read_file_test
   "readFileSyncPerm", // permissions
   "readFilePerm", // permissions
@@ -21,6 +28,11 @@ export default [
   "blobStream", //TODO, rq: ReadableStream
 
   // write_file_test
+  "writeFileAbortSignalPreAborted", // implementation detail
   "writeFileSyncPerm", // permissions
   "writeFilePerm", // permissions
-];
+
+  // write_text_file_test
+  "writeTextFileSyncPerm", // permissions
+  "writeTextFilePerm", // permissions
+]);

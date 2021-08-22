@@ -1,45 +1,20 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { platform } from "os";
-import { open } from "./open";
+import * as fs from "fs/promises";
 import mapError from "../../internal/errorMap.js";
-import { stat } from "./stat.js";
-import { chmod } from "./chmod.js";
+import { getFsFlag } from "../../internal/fs_flags.js";
 
 export const writeFile: typeof Deno.writeFile = async function writeFile(
   path,
   data,
-  options = {},
+  { append = false, create = true, mode, signal } = {},
 ) {
+  const truncate = create && !append;
+  const flag = getFsFlag({ append, create, truncate, write: true });
   try {
-    if (options.create !== undefined) {
-      const create = !!options.create;
-      if (!create) {
-        // verify that file exists
-        await stat(path);
-      }
-    }
-
-    const openOptions = options.append
-      ? { write: true, create: true, append: true }
-      : { write: true, create: true, truncate: true };
-    const file = await open(path, openOptions);
-
-    if (
-      options.mode !== undefined &&
-      options.mode !== null &&
-      platform() !== "win32"
-    ) {
-      await chmod(path, options.mode);
-    }
-
-    let nwritten = 0;
-    while (nwritten < data.length) {
-      nwritten += await file.write(data.subarray(nwritten));
-    }
-
-    file.close();
-  } catch (e) {
-    throw mapError(e);
+    await fs.writeFile(path, data, { flag, signal });
+    if (mode !== undefined) await fs.chmod(path, mode);
+  } catch (error) {
+    throw mapError(error);
   }
 };
