@@ -3,12 +3,12 @@
 import { readFile } from "fs/promises";
 import mapError from "../../internal/errorMap.js";
 
-export const readTextFile: typeof Deno.readTextFile = function readTextFile(
+export const readTextFile: typeof Deno.readTextFile = async (
   path,
   { signal } = {},
-) {
+) => {
   try {
-    return readFile(path, { encoding: "utf8", signal });
+    return await readFile(path, { encoding: "utf8", signal });
   } catch (e) {
     throw mapError(e);
   }
