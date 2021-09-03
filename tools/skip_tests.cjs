@@ -5,8 +5,17 @@ exports.testsToSkip = new Set([
   "blobBuffer", // experimental native Blob
   "blobCustomInspectFunction", // experimental native Blob
 
-  // body_test
-  "arrayBufferFromByteArrays", // Node.js bug?
+  // copy_file_test
+  "copyFileSyncPerm1", // permissions
+  "copyFileSyncPerm2", // permissions
+  "copyFilePerm1", // permissions
+  "copyFilePerm2", // permissions
+
+  // dir_test
+  "dirCwdPermError", // permissions
+
+  // mkdir_test
+  "mkdirSyncPerm", // permissions
 
   // read_file_test
   "readFileSyncPerm", // permissions
@@ -24,8 +33,9 @@ exports.testsToSkip = new Set([
   "readDirSyncPerm", // permissions
   "readDirPerm", // permissions
 
-  // blob_test
-  "blobStream", //TODO, rq: ReadableStream
+  // truncate_test
+  "truncateSyncPerm", // permissions
+  "truncatePerm", // permissions
 
   // write_file_test
   "writeFileAbortSignalPreAborted", // implementation detail

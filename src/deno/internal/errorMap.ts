@@ -11,6 +11,7 @@ const mapper = (Ctor: typeof errors[keyof typeof errors]) =>
     }) as unknown as ClassOrT<typeof Ctor>;
 
 const map: Record<string, ReturnType<typeof mapper>> = {
+  EEXIST: mapper(errors.AlreadyExists),
   ENOENT: mapper(errors.NotFound),
 };
 
