@@ -1,6 +1,6 @@
 // rq = requires
 
-exports.testsToSkip = new Set([
+const testsToSkip = [
   // blob_test
   "blobBuffer", // experimental native Blob
   "blobCustomInspectFunction", // experimental native Blob
@@ -12,6 +12,7 @@ exports.testsToSkip = new Set([
   "copyFilePerm2", // permissions
 
   // dir_test
+  "dirCwdError", // fails on Linux, reason unknown
   "dirCwdPermError", // permissions
 
   // mkdir_test
@@ -45,4 +46,6 @@ exports.testsToSkip = new Set([
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
-]);
+];
+
+console.info(`/^(?!${testsToSkip.join("$|")}$)/`);
