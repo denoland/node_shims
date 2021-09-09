@@ -5,9 +5,15 @@
     "target": "ES2019",
     "lib": ["ES2019"], // no DOM types
     "esModuleInterop": true, // for `undici-fetch`
-    "incremental": true,
     "declaration": true,
     "outDir": "dist"
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "ES2015"
+    }
   },
   "files": ["src/index.ts", "src/global.ts"]
 }
