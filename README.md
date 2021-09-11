@@ -6,6 +6,11 @@ See [PROGRESS.md](PROGRESS.md)
 
 ## Contributing
 
+Right now, you can help by [enabling a test file](tools/working_test_files.txt),
+making tests pass, and [skipping unsatisfiable tests](tools/skip_tests.cjs).
+
+Please set up [pre-commit hook](tools/hooks/pre-commit):
+
 ```sh
 $ git config core.hooksPath tools/hooks
 ```

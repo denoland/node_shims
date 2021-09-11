@@ -10,6 +10,7 @@
     "shim"
   ],
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
   "contributors": [
     "Wojciech Pawlik <woj.pawlik@gmail.com>",
