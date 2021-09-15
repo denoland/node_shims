@@ -22,3 +22,5 @@ jobs:
     - run: deno fmt  --ignore=thirdparty/ --check
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test
+    - run: npm run --silent denolib
+    - run: tools/missing.ts

@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run --unstable --allow-read='.'
+#!/usr/bin/env -S deno run --allow-read='.'
 
 import {
   Project,
@@ -9,12 +9,11 @@ import {
 let exitCode = 0;
 const ExitCodes = {
   missingType: 1,
+  typeError: 3,
 } as const;
 
 const project = new Project({
   tsConfigFilePath: "./tsconfig.json",
-  skipAddingFilesFromTsConfig: true,
-  compilerOptions: { types: [] },
 });
 const typeChecker = project.getTypeChecker().compilerObject;
 
@@ -67,6 +66,14 @@ for (const member of documented) {
     exitCode ||= ExitCodes.missingType;
   }
   console.log(`- ${checkmark}${down}${flask}${ghost} **\`${member.name}\`**`);
+}
+
+const diagnostics = project.getPreEmitDiagnostics();
+if (diagnostics.length !== 0) {
+  console.error();
+  console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
+  console.error(`Found ${diagnostics.length} errors.`);
+  exitCode = ExitCodes.typeError;
 }
 
 Deno.exit(exitCode);
