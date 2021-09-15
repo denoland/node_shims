@@ -40,6 +40,9 @@
     "clean": "git clean -fXde !node_modules/",
     "test": "NODE_OPTIONS=--experimental-loader=ts-node/esm xargs --arg-file=tools/working_test_files.txt fdt --filter=$(node tools/skip_tests.cjs)"
   },
+  "engines": {
+    "node": ">=16.7.0"
+  },
   "dependencies": {
     "undici": "^4.5.1"
   },
@@ -50,6 +53,6 @@
     "@types/node": "^16.4.13",
     "conditional-type-checks": "^1.0.5",
     "ts-node": "^10.2.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   }
 }

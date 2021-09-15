@@ -2,59 +2,59 @@
 
 95%. 6 stable members to go:
 
-- [x] **`Addr`**
+- [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
-- [x] **`Closer`**
-- [x] **`Conn`**
-- [x] **`ConnectOptions`**
-- [x] **`ConnectTlsOptions`**
-- [x] **`DirEntry`**
-- [x] **`EnvPermissionDescriptor`**
-- [x] **`FFIPermissionDescriptor`**
+- [x] 👻 **`Closer`**
+- [x] 👻 **`Conn`**
+- [x] 👻 **`ConnectOptions`**
+- [x] 👻 **`ConnectTlsOptions`**
+- [x] 👻 **`DirEntry`**
+- [x] 👻 **`EnvPermissionDescriptor`**
+- [x] 👻 **`FFIPermissionDescriptor`**
 - [x] **`File`**
-- [x] **`FileInfo`**
-- [x] **`FsEvent`**
-- [x] **`FsWatcher`**
-- [x] **`HrtimePermissionDescriptor`**
-- [x] **`HttpConn`**
-- [x] **`InspectOptions`**
-- [x] **`ListenOptions`**
-- [x] **`ListenTlsOptions`**
-- [x] **`Listener`**
-- [x] **`MakeTempOptions`**
-- [x] **`MemoryUsage`**
-- [x] **`Metrics`**
-- [x] **`MkdirOptions`**
-- [x] **`NetAddr`**
-- [x] **`NetPermissionDescriptor`**
-- [x] **`OpenOptions`**
-- [x] **`PermissionDescriptor`**
-- [x] **`PermissionName`**
-- [x] **`PermissionState`**
+- [x] 👻 **`FileInfo`**
+- [x] 👻 **`FsEvent`**
+- [x] 👻 **`FsWatcher`**
+- [x] 👻 **`HrtimePermissionDescriptor`**
+- [x] 👻 **`HttpConn`**
+- [x] 👻 **`InspectOptions`**
+- [x] 👻 **`ListenOptions`**
+- [x] 👻 **`ListenTlsOptions`**
+- [x] 👻 **`Listener`**
+- [x] 👻 **`MakeTempOptions`**
+- [x] 👻 **`MemoryUsage`**
+- [x] 👻 **`Metrics`**
+- [x] 👻 **`MkdirOptions`**
+- [x] 👻 **`NetAddr`**
+- [x] 👻 **`NetPermissionDescriptor`**
+- [x] 👻 **`OpenOptions`**
+- [x] 👻 **`PermissionDescriptor`**
+- [x] 👻 **`PermissionName`**
+- [x] 👻 **`PermissionState`**
 - [x] **`PermissionStatus`**
-- [x] **`PermissionStatusEventMap`**
+- [x] 👻 **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
 - [ ] **`Process`**
-- [x] **`ProcessStatus`**
-- [x] **`ReadFileOptions`**
-- [x] **`ReadPermissionDescriptor`**
-- [x] **`Reader`**
-- [x] **`ReaderSync`**
-- [x] **`RemoveOptions`**
-- [x] **`RequestEvent`**
-- [x] **`ResourceMap`**
-- [x] **`RunOptions`**
-- [x] **`RunPermissionDescriptor`**
+- [x] 👻 **`ProcessStatus`**
+- [x] 👻 **`ReadFileOptions`**
+- [x] 👻 **`ReadPermissionDescriptor`**
+- [x] 👻 **`Reader`**
+- [x] 👻 **`ReaderSync`**
+- [x] 👻 **`RemoveOptions`**
+- [x] 👻 **`RequestEvent`**
+- [x] 👻 **`ResourceMap`**
+- [x] 👻 **`RunOptions`**
+- [x] 👻 **`RunPermissionDescriptor`**
 - [x] **`SeekMode`**
-- [x] **`Seeker`**
-- [x] **`SeekerSync`**
-- [x] **`SymlinkOptions`**
-- [x] **`TestDefinition`**
-- [x] **`UnixAddr`**
-- [x] **`WriteFileOptions`**
-- [x] **`WritePermissionDescriptor`**
-- [x] **`Writer`**
-- [x] **`WriterSync`**
+- [x] 👻 **`Seeker`**
+- [x] 👻 **`SeekerSync`**
+- [x] 👻 **`SymlinkOptions`**
+- [x] 👻 **`TestDefinition`**
+- [x] 👻 **`UnixAddr`**
+- [x] 👻 **`WriteFileOptions`**
+- [x] 👻 **`WritePermissionDescriptor`**
+- [x] 👻 **`Writer`**
+- [x] 👻 **`WriterSync`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**

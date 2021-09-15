@@ -11,6 +11,7 @@ export const readlineSync = () => {
         return line;
       }
     } catch (err) {
+      // @ts-expect-error Property 'code' does not exist on type 'Error'.
       if (err.code === "EOF") {
         return line;
       }
