@@ -1,3 +1,5 @@
+///<reference path="../deno/stable/lib.deno.d.ts" />
+
 import { writeSync } from "fs";
 import { readlineSync } from "./readlineSync.js";
 

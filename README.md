@@ -8,6 +8,7 @@ See [PROGRESS.md](PROGRESS.md)
 
 ```js
 const {
+  alert,
   Blob,
   confirm,
   crypto,
