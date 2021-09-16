@@ -24,3 +24,4 @@ jobs:
     - run: npm run --silent test
     - run: npm run --silent denolib
     - run: tools/missing.ts
+    - run: tools/untested.sh

@@ -38,7 +38,7 @@
     "lint": "deno lint --ignore=node_modules,dist,thirdparty,unit,src/deno/stable/lib.deno.d.ts",
     "fmt": "deno fmt --ignore=node_modules,dist,thirdparty,unit,src/deno/stable/lib.deno.d.ts",
     "clean": "git clean -fXde !node_modules/",
-    "test": "NODE_OPTIONS=--experimental-loader=ts-node/esm xargs --arg-file=tools/working_test_files.txt fdt --filter=$(node tools/skip_tests.cjs)"
+    "test": "NODE_OPTIONS=--experimental-loader=ts-node/esm xargs --arg-file=tools/working_test_files.txt fdt --filter=$(node tools/skip_tests.cjs) tools/setup_tests.mjs"
   },
   "engines": {
     "node": ">=16.7.0"
