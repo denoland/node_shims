@@ -127,7 +127,7 @@
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
-- [ ] **`resources`**
+- [x] **`resources`**
 - [ ] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**

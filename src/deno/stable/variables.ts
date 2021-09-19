@@ -8,5 +8,6 @@ export { noColor } from "./variables/noColor.js";
 export { permissions } from "./variables/permissions.js";
 export { pid } from "./variables/pid.js";
 export { ppid } from "./variables/ppid.js";
+export { resources } from "./variables/resources.js";
 export * from "./variables/std.js";
 export { version } from "./variables/version.js";
