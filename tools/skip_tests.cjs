@@ -15,7 +15,11 @@ const testsToSkip = [
   "dirCwdError", // fails on Linux, reason unknown
   "dirCwdPermError", // permissions
 
+  // event_target_test
+  "eventTargetThisShouldDefaultToWindow", // window
+
   // mkdir_test
+  "mkdirSyncErrors", // getCreationFlag throws
   "mkdirSyncPerm", // permissions
 
   // read_file_test
@@ -34,9 +38,23 @@ const testsToSkip = [
   "readDirSyncPerm", // permissions
   "readDirPerm", // permissions
 
+  // timers_test
+  "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
+  "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number
+  "stringifyAndEvalNonFunctions",
+  "testFunctionParamsLength",
+  "timeoutBindThis",
+  "timeoutCallbackThis",
+  "timeoutEvalNoScopeLeak",
+
   // truncate_test
   "truncateSyncPerm", // permissions
   "truncatePerm", // permissions
+
+  // url_test
+  "customInspectFunction",
+  "urlDriveLetter",
+  "urlPathRepeatedSlashes",
 
   // write_file_test
   "writeFileAbortSignalPreAborted", // implementation detail
