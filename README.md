@@ -23,7 +23,11 @@ const {
 } = require("deno.ns");
 ```
 
-https://github.com/wojpawlik/deno2node#shimming
+or `node --require=deno.ns/global <denoBundleOutput>`,
+
+or https://github.com/wojpawlik/deno2node#shimming.
+
+Use https://github.com/fromdeno/test to run `Deno.test`s.
 
 ## Contributing
 
@@ -35,8 +39,3 @@ Please set up [pre-commit hook](tools/hooks/pre-commit):
 ```sh
 $ git config core.hooksPath tools/hooks
 ```
-
-Related:
-
-- https://github.com/fromdeno/nodeify
-- https://github.com/wojpawlik/deno2node

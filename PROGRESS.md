@@ -1,6 +1,6 @@
 # Progress
 
-95%. 6 stable members to go:
+96%. 5 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
