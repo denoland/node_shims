@@ -39,3 +39,11 @@ Please set up [pre-commit hook](tools/hooks/pre-commit):
 ```sh
 $ git config core.hooksPath tools/hooks
 ```
+
+## Acknowledgements
+
+Special thanks to the [@fromdeno](https://github.com/fromdeno) organization for
+starting this project and for their contributions—specifically
+[@wojpawlik](https://github.com/wojpawlik),
+[@MKRhere](https://github.com/MKRhere), and
+[@trgwii](https://github.com/trgwii).
