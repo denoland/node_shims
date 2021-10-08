@@ -24,7 +24,6 @@
   "exports": {
     ".": "./dist/index.js",
     "./global": "./dist/global.js",
-    "./tests": "./dist/deno/stable/functions/test.js",
     "./deno": "./dist/deno.js"
   },
   "files": [
@@ -47,7 +46,7 @@
     "undici": "^4.5.1"
   },
   "peerDependencies": {
-    "@fromdeno/test": "^0.1.0"
+    "@fromdeno/test": "<0.3.0"
   },
   "devDependencies": {
     "@types/node": "^16.4.13",
