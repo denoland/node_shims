@@ -1,6 +1,6 @@
 {
   "name": "deno.ns",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Deno namespace shim for Node.js",
   "keywords": [
     "deno namespace",
@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fromdeno/deno.ns.git"
+    "url": "https://github.com/denoland/deno.ns.git"
   },
   "exports": {
     ".": "./dist/index.js",
