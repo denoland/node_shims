@@ -3,11 +3,28 @@ if (!Deno.version.deno.startsWith("1.14")) {
   Deno.exit(1);
 }
 
-const out = new TextDecoder().decode(
-  await Deno.run({
-    cmd: ["deno", "types"],
-    stdout: "piped",
-  }).output(),
+const run = async (cmd: string) =>
+  new TextDecoder().decode(
+    await Deno.run({
+      cmd: cmd.split(" "),
+      stdout: "piped",
+    }).output(),
+  );
+
+const out = await run("deno types");
+const version = (await run("deno --version")).trim().split("\n").map((line) =>
+  line.split(" ")
+).reduce(
+  (acc, curr) => ({ ...acc, [curr[0]]: curr[1] }),
+  {} as { [k: string]: string },
+);
+
+await Deno.writeTextFile(
+  "src/deno/internal/version.ts",
+  [
+    `export const deno = "${version.deno}";\n`,
+    `export const typescript = "${version.typescript}";\n`,
+  ].join(""),
 );
 
 await Deno.writeTextFile(

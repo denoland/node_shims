@@ -31,7 +31,7 @@
     "src/deno/stable/lib.deno.d.ts"
   ],
   "scripts": {
-    "denolib": "deno run --allow-run --allow-write=src/deno/stable/lib.deno.d.ts tools/denolib.ts",
+    "denolib": "deno run --allow-run --allow-write=src/deno/ tools/denolib.ts",
     "build": "tsc",
     "prepare": "npm run --silent denolib && npm run --silent build",
     "lint": "deno lint --ignore=node_modules,dist,thirdparty,unit,src/deno/stable/lib.deno.d.ts",
