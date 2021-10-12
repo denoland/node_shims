@@ -8,7 +8,7 @@ export const readFile: typeof Deno.readFile = async function readFile(
   { signal } = {},
 ) {
   try {
-    return await nodeReadFile(path, { signal });
+    return new Uint8Array(await nodeReadFile(path, { signal }));
   } catch (e) {
     throw mapError(e);
   }

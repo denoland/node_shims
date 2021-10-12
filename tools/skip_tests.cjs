@@ -64,6 +64,14 @@ const testsToSkip = [
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
+
+  // mkdir, these depend on Deno.umask, which we haven't implemented yet
+  "mkdirMode",
+  "mkdirRecursiveIfExists",
+  "mkdirRecursiveMode",
+  "mkdirSyncMode",
+  "mkdirSyncRecursiveIfExists",
+  "mkdirSyncRecursiveMode",
 ];
 
 console.info(`/^(?!${testsToSkip.join("$|")}$)/`);
