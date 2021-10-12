@@ -20,5 +20,6 @@ export const metrics: typeof Deno.metrics = function metrics() {
     bytesSentControl: 0,
     bytesSentData: 0,
     bytesReceived: 0,
+    ops: {},
   };
 };
