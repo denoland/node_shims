@@ -70,9 +70,9 @@ for (const member of documented) {
 
 const diagnostics = project.getPreEmitDiagnostics();
 if (diagnostics.length !== 0) {
-  console.error();
-  console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
-  console.error(`Found ${diagnostics.length} errors.`);
+  console.log();
+  console.log(project.formatDiagnosticsWithColorAndContext(diagnostics));
+  console.log(`Found ${diagnostics.length} errors.`);
   exitCode = ExitCodes.typeError;
 }
 
