@@ -1,13 +1,16 @@
 name: CI
-
 on:
   pull_request:
+    branches: [main]
   push:
-    branches: [ main ]
-
+    branches: [main]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
     steps:
     - uses: actions/checkout@v2
       with:
