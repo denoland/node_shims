@@ -19,6 +19,12 @@ const testsToSkip = [
   "eventTargetThisShouldDefaultToWindow", // window
 
   // mkdir_test
+  "mkdirMode", // depends on Deno.umask
+  "mkdirRecursiveIfExists", // depends on Deno.umask
+  "mkdirRecursiveMode", // depends on Deno.umask
+  "mkdirSyncMode", // depends on Deno.umask
+  "mkdirSyncRecursiveIfExists", // depends on Deno.umask
+  "mkdirSyncRecursiveMode", // depends on Deno.umask
   "mkdirSyncErrors", // getCreationFlag throws
   "mkdirSyncPerm", // permissions
 
@@ -41,6 +47,9 @@ const testsToSkip = [
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
   "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number
+  "sleepSync", // unstable
+  "sleepSyncLongerPromise", // unstable
+  "sleepSyncShorterPromise", // unstable
   "stringifyAndEvalNonFunctions",
   "testFunctionParamsLength",
   "timeoutBindThis",
@@ -64,14 +73,6 @@ const testsToSkip = [
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
-
-  // mkdir, these depend on Deno.umask, which we haven't implemented yet
-  "mkdirMode",
-  "mkdirRecursiveIfExists",
-  "mkdirRecursiveMode",
-  "mkdirSyncMode",
-  "mkdirSyncRecursiveIfExists",
-  "mkdirSyncRecursiveMode",
 ];
 
 console.info(`/^(?!${testsToSkip.join("$|")}$)/`);
