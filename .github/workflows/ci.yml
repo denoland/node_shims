@@ -23,5 +23,5 @@ jobs:
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test
     - run: npm run --silent denolib
-    - run: tools/missing.ts
+    - run: tools/missing.ts || echo "Some items are missing"
     - run: tools/untested.sh
