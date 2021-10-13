@@ -82,7 +82,7 @@ const testFiles = (await Deno.readTextFile("tools/working_test_files.txt"))
 
 const cmd = [
   "node",
-  "./node_modules/.bin/fdt",
+  "./node_modules/@fromdeno/test/src/cli.mjs",
   `--filter=${skipFilter}`,
   "tools/setup_tests.mjs",
   ...testFiles,
