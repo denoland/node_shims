@@ -1,5 +1,7 @@
-// rq = requires
+#!/usr/bin/env -S deno run --allow-read --allow-run
+// This script runs the unit tests under thirdparty/deno directory
 
+// rq = requires
 const testsToSkip = [
   // blob_test
   "blobBuffer", // experimental native Blob
@@ -74,5 +76,22 @@ const testsToSkip = [
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
 ];
+const skipFilter = `/^(?!${testsToSkip.join("$|")}$)/`;
+const testFiles = (await Deno.readTextFile("tools/working_test_files.txt"))
+  .trim().split(/\s/);
 
-console.info(`/^(?!${testsToSkip.join("$|")}$)/`);
+const cmd = [
+  "node",
+  "./node_modules/@fromdeno/test/src/cli.mjs",
+  `--filter=${skipFilter}`,
+  "tools/setup_tests.mjs",
+  ...testFiles,
+];
+
+console.log("Executing the command", cmd.join(" "));
+const testRun = Deno.run({
+  cmd,
+  env: { NODE_OPTIONS: "--experimental-loader=ts-node/esm" },
+});
+const status = await testRun.status();
+Deno.exit(status.code);

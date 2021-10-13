@@ -1,17 +1,24 @@
 name: CI
-
 on:
   pull_request:
+    branches: [main]
   push:
-    branches: [ main ]
-
+    branches: [main]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
+    - run: git config --global core.autocrlf false
     - uses: actions/checkout@v2
       with:
-        submodules: recursive
+        submodules: true
+    - run: (cd thirdparty/deno; git submodule update --init --depth=1 test_util/std)
+      shell: bash
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
@@ -19,7 +26,9 @@ jobs:
       with:
         deno-version: ~1.14
     - run: deno lint --ignore=thirdparty/
+      if: matrix.os == 'ubuntu-latest'
     - run: deno fmt  --ignore=thirdparty/ --check
+      if: matrix.os == 'ubuntu-latest'
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test
     - run: npm run --silent denolib
