@@ -7,7 +7,8 @@ export const readFileSync: typeof Deno.readFileSync = function readFileSync(
   path,
 ) {
   try {
-    return nodeReadFile(path);
+    const buf = nodeReadFile(path);
+    return new Uint8Array(buf.buffer, buf.byteOffset, buf.length);
   } catch (e) {
     throw mapError(e);
   }
