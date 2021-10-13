@@ -7,6 +7,7 @@ const testFiles = (await Deno.readTextFile("tools/working_test_files.txt"))
   .trim().split(/\s/);
 
 const cmd = [
+  "node",
   "./node_modules/.bin/fdt",
   `--filter=${new TextDecoder().decode(skipFiles).trim()}`,
   "tools/setup_tests.mjs",
