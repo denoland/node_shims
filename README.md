@@ -27,8 +27,6 @@ or `node --require=deno.ns/global <denoBundleOutput>`,
 
 or https://github.com/wojpawlik/deno2node#shimming.
 
-Use https://github.com/fromdeno/test to run `Deno.test`s.
-
 ## Contributing
 
 Right now, you can help by [enabling a test file](tools/working_test_files.txt),
