@@ -42,6 +42,11 @@
   "engines": {
     "node": ">=16.7.0"
   },
+  "peerDependenciesMeta": {
+    "@fromdeno/test": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "undici": "^4.5.1"
   },
