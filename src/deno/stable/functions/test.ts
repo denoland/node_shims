@@ -1,6 +1,6 @@
 /// <reference path="../lib.deno.d.ts" />
 
-import { testDefinitions } from "../../../test.js";
+import { testDefinitions } from "../../internal/test.js";
 
 export const test: typeof Deno.test = function test() {
   let testDef: Deno.TestDefinition;

@@ -24,7 +24,8 @@
   "exports": {
     ".": "./dist/index.js",
     "./global": "./dist/global.js",
-    "./deno": "./dist/deno.js"
+    "./deno": "./dist/deno.js",
+    "./test-internals": "./dist/deno/internal/test.js"
   },
   "files": [
     "dist",
