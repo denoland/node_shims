@@ -22,6 +22,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '16'
+        registry-url: 'https://registry.npmjs.org'
     - uses: denoland/setup-deno@v1
       with:
         deno-version: ~1.14
@@ -34,3 +35,8 @@ jobs:
     - run: npm run --silent denolib
     - run: tools/missing.ts || echo "Some items are missing"
     - run: tools/untested.sh
+    - name: npm publish
+      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/') && github.repository == 'denoland/deno.ns'
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npm publish
