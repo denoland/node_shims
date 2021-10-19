@@ -1,7 +1,26 @@
-///<reference path="../lib.deno.d.ts" />
+/// <reference path="../lib.deno.d.ts" />
 
-export { test } from "@fromdeno/test";
-import type { AssertTrue, IsExact } from "conditional-type-checks";
-type _TypeTest = AssertTrue<
-  IsExact<typeof import("@fromdeno/test").test, typeof Deno.test>
->;
+import { testDefinitions } from "../../internal/test.js";
+
+export const test: typeof Deno.test = function test() {
+  let testDef: Deno.TestDefinition;
+  const firstArg = arguments[0];
+  const secondArg = arguments[1];
+
+  if (typeof firstArg === "string") {
+    if (typeof secondArg !== "function") {
+      throw new TypeError("Missing test function");
+    }
+    testDef = { name: firstArg, fn: secondArg };
+  } else {
+    if (!firstArg?.name) {
+      throw new TypeError("Missing test name");
+    }
+    if (!firstArg?.fn) {
+      throw new TypeError("Missing test function");
+    }
+    testDef = { ...firstArg };
+  }
+
+  testDefinitions.push(testDef);
+};
