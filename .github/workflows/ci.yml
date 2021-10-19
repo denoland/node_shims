@@ -4,6 +4,8 @@ on:
     branches: [main]
   push:
     branches: [main]
+    tags:
+    - '*'
 jobs:
   test:
     runs-on: ${{ matrix.os }}
