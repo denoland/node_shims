@@ -1,5 +1,7 @@
-#!/usr/bin/env -S deno run --allow-read --allow-run
 // This script runs the unit tests under thirdparty/deno directory
+
+import fs from "fs";
+import { createRequire } from "module";
 
 // rq = requires
 const testsToSkip = [
@@ -76,22 +78,43 @@ const testsToSkip = [
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
 ];
-const skipFilter = `/^(?!${testsToSkip.join("$|")}$)/`;
-const testFiles = (await Deno.readTextFile("tools/working_test_files.txt"))
+const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
   .trim().split(/\s/);
 
-const cmd = [
-  "node",
-  "./node_modules/@fromdeno/test/src/cli.mjs",
-  `--filter=${skipFilter}`,
-  "tools/setup_tests.mjs",
-  ...testFiles,
-];
+const testDefinitions = (await import("../src/deno/internal/test.ts"))
+  .testDefinitions;
 
-console.log("Executing the command", cmd.join(" "));
-const testRun = Deno.run({
-  cmd,
-  env: { NODE_OPTIONS: "--experimental-loader=ts-node/esm" },
-});
-const status = await testRun.status();
-Deno.exit(status.code);
+await setupTests();
+
+for (const testFile of testFiles) {
+  console.log(`\nRunning tests in ${testFile}...\n`);
+  await import("../" + testFile);
+  for (const definition of testDefinitions.splice(0)) {
+    if (testsToSkip.includes(definition.name) || definition.ignore) {
+      continue;
+    }
+
+    try {
+      process.stdout.write(`test ${definition.name} ...`);
+      await definition.fn();
+      process.stdout.write(" ok\n");
+    } catch (err) {
+      process.stdout.write("\n");
+      process.stdout.write(err.toString() + "\n");
+      process.stdout.write("\nfailed");
+      process.exit(1);
+    }
+  }
+}
+
+async function setupTests() {
+  // set missing CJS globals to dummy values
+  // required by Deno.mainModule
+  globalThis.require = createRequire(import.meta.url);
+  globalThis.__dirname = "";
+
+  // let Deno tests access thirdparty/deno/cli/tests/fixture.json
+  process.chdir("thirdparty/deno/");
+
+  await import("../src/global.ts");
+}

@@ -13,13 +13,14 @@ export const test: typeof Deno.test = function test() {
     }
     testDef = { name: firstArg, fn: secondArg };
   } else {
-    if (!firstArg?.name) {
-      throw new TypeError("Missing test name");
-    }
     if (!firstArg?.fn) {
       throw new TypeError("Missing test function");
     }
     testDef = { ...firstArg };
+  }
+
+  if ((testDef.name?.length ?? 0) === 0) {
+    throw new TypeError("The test name can't be empty");
   }
 
   testDefinitions.push(testDef);
