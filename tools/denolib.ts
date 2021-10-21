@@ -5,7 +5,8 @@ if (!Deno.version.deno.startsWith("1.14")) {
 
 const stableTypes = await run("deno types");
 const unstableTypes = (await run("deno types --unstable"))
-  .replace(stableTypes, "");
+  .replace(stableTypes, "")
+  .trimStart();
 const version = (await run("deno --version")).trim().split("\n").map((line) =>
   line.split(" ")
 ).reduce(
