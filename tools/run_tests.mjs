@@ -4,7 +4,7 @@ import fs from "fs";
 import { createRequire } from "module";
 
 // rq = requires
-const testsToSkip = [
+const testsToSkip = new Set([
   // blob_test
   "blobBuffer", // experimental native Blob
   "blobCustomInspectFunction", // experimental native Blob
@@ -77,7 +77,11 @@ const testsToSkip = [
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
   "writeTextFilePerm", // permissions
-];
+
+  // utime_test
+  "utimeSyncLargeNumberSuccess", // node.js cannot handle such a large value
+  "utimeSyncPerm", // permissions
+]);
 const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
   .trim().split(/\s/);
 
@@ -90,7 +94,7 @@ for (const testFile of testFiles) {
   console.log(`\nRunning tests in ${testFile}...\n`);
   await import("../" + testFile);
   for (const definition of testDefinitions.splice(0)) {
-    if (testsToSkip.includes(definition.name) || definition.ignore) {
+    if (testsToSkip.has(definition.name) || definition.ignore) {
       continue;
     }
 

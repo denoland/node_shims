@@ -1,6 +1,6 @@
-# Progress
+# Stable Progress
 
-96%. 5 stable members to go:
+94%. 8 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -10,7 +10,7 @@
 - [x] 👻 **`ConnectTlsOptions`**
 - [x] 👻 **`DirEntry`**
 - [x] 👻 **`EnvPermissionDescriptor`**
-- [x] 👻 **`FFIPermissionDescriptor`**
+- [x] 👻 **`FfiPermissionDescriptor`**
 - [x] **`File`**
 - [x] 👻 **`FileInfo`**
 - [x] 👻 **`FsEvent`**
@@ -51,6 +51,8 @@
 - [x] 👻 **`SymlinkOptions`**
 - [x] 👻 **`TestDefinition`**
 - [x] 👻 **`UnixAddr`**
+- [ ] 👻 **`UpgradeWebSocketOptions`**
+- [ ] 👻 **`WebSocketUpgrade`**
 - [x] 👻 **`WriteFileOptions`**
 - [x] 👻 **`WritePermissionDescriptor`**
 - [x] 👻 **`Writer`**
@@ -143,6 +145,7 @@
 - [x] **`test`**
 - [x] **`truncate`**
 - [x] **`truncateSync`**
+- [ ] **`upgradeWebSocket`**
 - [x] **`version`**
 - [x] **`watchFs`**
 - [x] **`write`**
@@ -153,3 +156,70 @@
 - [x] **`writeSync`**
 - [x] **`writeTextFile`**
 - [x] **`writeTextFileSync`**
+
+# Unstable Progress
+
+7%. 25 unstable members to go:
+
+- [ ] 👻 **`BasicAuth`**
+- [ ] 🧪 👻 **`CompilerOptions`**
+- [ ] 👻 **`ConnectTlsClientCertOptions`**
+- [ ] 🧪 👻 **`CreateHttpClientOptions`**
+- [ ] 🧪 👻 **`DatagramConn`**
+- [ ] 👻 **`Diagnostic`**
+- [ ] **`DiagnosticCategory`**
+- [ ] 👻 **`DiagnosticMessageChain`**
+- [ ] 👻 **`DynamicLibrary`**
+- [ ] 🧪 👻 **`EmitOptions`**
+- [ ] 🧪 👻 **`EmitResult`**
+- [ ] 👻 **`ForeignFunction`**
+- [ ] 🧪 **`HttpClient`**
+- [ ] 👻 **`ImportMap`**
+- [x] 👻 **`ListenTlsOptions`**
+- [ ] 🧪 👻 **`Location`**
+- [ ] 👻 **`MXRecord`**
+- [x] 👻 **`Metrics`**
+- [ ] 👻 **`NativeType`**
+- [ ] 👻 **`OpMetrics`**
+- [ ] 👻 **`Proxy`**
+- [ ] 👻 **`RecordType`**
+- [ ] 👻 **`ResolveDnsOptions`**
+- [ ] 👻 **`SRVRecord`**
+- [ ] 👻 **`SetRawOptions`**
+- [ ] 👻 **`Signal`**
+- [ ] 🧪 **`SignalStream`**
+- [ ] 👻 **`StartTlsOptions`**
+- [ ] 👻 **`SystemMemoryInfo`**
+- [x] 🧪 👻 **`TestDefinition`**
+- [ ] 👻 **`UnixConnectOptions`**
+- [ ] 👻 **`UnixListenOptions`**
+- [ ] 🧪 **`applySourceMap`**
+- [x] 🧪 **`connect`**
+- [x] 🧪 **`connectTls`**
+- [ ] 🧪 **`consoleSize`**
+- [ ] 🧪 **`createHttpClient`**
+- [ ] 🧪 **`dlopen`**
+- [ ] 🧪 **`emit`**
+- [ ] 🧪 **`flock`**
+- [ ] 🧪 **`flockSync`**
+- [ ] 🧪 **`formatDiagnostics`**
+- [ ] 🧪 **`funlock`**
+- [ ] 🧪 **`funlockSync`**
+- [x] 🧪 **`futime`**
+- [x] 🧪 **`futimeSync`**
+- [ ] 🧪 **`hostname`**
+- [ ] 🧪 **`kill`**
+- [x] 🧪 **`listen`**
+- [ ] 🧪 **`listenDatagram`**
+- [ ] **`loadavg`**
+- [ ] **`osRelease`**
+- [ ] 🧪 **`resolveDns`**
+- [ ] **`run`**
+- [ ] 🧪 **`setRaw`**
+- [ ] 🧪 **`signal`**
+- [ ] 🧪 **`sleepSync`**
+- [ ] 🧪 **`startTls`**
+- [ ] **`systemMemoryInfo`**
+- [ ] 🧪 **`umask`**
+- [x] 🧪 **`utime`**
+- [x] 🧪 **`utimeSync`**

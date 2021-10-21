@@ -38,9 +38,11 @@ async function* _listen(
   }
 }
 
-export const listen: typeof Deno.listen = function listen(
-  { port, hostname = "0.0.0.0", transport = "tcp" },
-) {
+export const listen: typeof Deno.listen = function listen(options) {
+  if (!isConnectOptions(options)) {
+    throw new Error("Unstable UnixConnectOptions is not implemented");
+  }
+  const { port, hostname = "0.0.0.0", transport = "tcp" } = options;
   if (transport !== "tcp") {
     throw new Error("Deno.listen is only implemented for transport: tcp");
   }
@@ -60,4 +62,10 @@ export const listen: typeof Deno.listen = function listen(
   }, _listen(server, waitFor));
 
   return listener;
+
+  function isConnectOptions(
+    options: Parameters<typeof Deno.connect>[0],
+  ): options is Deno.ConnectOptions {
+    return (options as Deno.ConnectOptions).port != null;
+  }
 };
