@@ -10,7 +10,7 @@ export const futime: typeof Deno.futime = async function (
 ) {
   try {
     await new Promise<void>((resolve, reject) => {
-      // doesn't exist in futimes
+      // doesn't exist in fs.promises
       fs.futimes(rid, atime, mtime, (err) => {
         if (err) {
           reject(err);
