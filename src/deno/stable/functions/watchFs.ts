@@ -21,9 +21,9 @@ export const watchFs: typeof Deno.watchFs = function watchFs(
     paths.map((path) =>
       mapAsync(
         watch(path, { recursive: options?.recursive, signal }),
-        (filename) => ({
+        (info) => ({
           kind: "modify" as const,
-          paths: [resolve(path, filename)],
+          paths: [resolve(path, info.filename)],
         }),
       )
     ),

@@ -16,8 +16,9 @@ export const connectTls: typeof Deno.connectTls = async function connectTls(
       // @ts-expect-error undocumented socket._handle property
       const rid: number = socket._handle.fd;
       const localAddr: Deno.Addr = {
-        hostname: socket.localAddress,
-        port: socket.localPort,
+        // cannot be undefined while socket is connected
+        hostname: socket.localAddress!,
+        port: socket.localPort!,
         transport: "tcp",
       };
       const remoteAddr: Deno.Addr = {

@@ -22,8 +22,9 @@ export const connect: typeof Deno.connect = function connect(options) {
       const rid: number = socket._handle.fd;
 
       const localAddr: Deno.Addr = {
-        hostname: socket.localAddress,
-        port: socket.localPort,
+        // cannot be undefined while socket is connected
+        hostname: socket.localAddress!,
+        port: socket.localPort!,
         transport: "tcp",
       };
 
