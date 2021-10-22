@@ -17,6 +17,7 @@ thirdparty/deno/cli/tests/unit/timers_test.ts
 thirdparty/deno/cli/tests/unit/truncate_test.ts
 thirdparty/deno/cli/tests/unit/url_search_params_test.ts
 thirdparty/deno/cli/tests/unit/url_test.ts
+thirdparty/deno/cli/tests/unit/utime_test.ts
 thirdparty/deno/cli/tests/unit/version_test.ts
 thirdparty/deno/cli/tests/unit/write_file_test.ts
 thirdparty/deno/cli/tests/unit/write_text_file_test.ts

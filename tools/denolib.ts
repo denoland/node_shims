@@ -3,15 +3,10 @@ if (!Deno.version.deno.startsWith("1.14")) {
   Deno.exit(1);
 }
 
-const run = async (cmd: string) =>
-  new TextDecoder().decode(
-    await Deno.run({
-      cmd: cmd.split(" "),
-      stdout: "piped",
-    }).output(),
-  );
-
-const out = await run("deno types");
+const stableTypes = await run("deno types");
+const unstableTypes = (await run("deno types --unstable"))
+  .replace(stableTypes, "")
+  .trimStart();
 const version = (await run("deno --version")).trim().split("\n").map((line) =>
   line.split(" ")
 ).reduce(
@@ -29,7 +24,24 @@ await Deno.writeTextFile(
 
 await Deno.writeTextFile(
   "src/deno/stable/lib.deno.d.ts",
-  out.replace('/// <reference lib="deno.net" />\n', "").replace(
+  processDeclarationFileText(stableTypes),
+);
+await Deno.writeTextFile(
+  "src/deno/unstable/lib.deno.unstable.d.ts",
+  processDeclarationFileText(unstableTypes),
+);
+
+async function run(cmd: string) {
+  return new TextDecoder().decode(
+    await Deno.run({
+      cmd: cmd.split(" "),
+      stdout: "piped",
+    }).output(),
+  );
+}
+
+function processDeclarationFileText(text: string) {
+  return text.replace('/// <reference lib="deno.net" />\n', "").replace(
     `/** A controller object that allows you to abort one or more DOM requests as and
  * when desired. */
 declare class AbortController {
@@ -42,5 +54,8 @@ declare class AbortController {
 
 `,
     "",
-  ),
-);
+  ).replace(
+    `/// <reference lib="deno.ns" />`,
+    `/// <reference path="../stable/lib.deno.d.ts" />`,
+  );
+}

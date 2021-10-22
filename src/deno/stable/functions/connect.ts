@@ -3,9 +3,11 @@
 import { createConnection } from "net";
 import { Conn } from "../../internal/Conn.js";
 
-export const connect: typeof Deno.connect = function connect(
-  { port, hostname = "127.0.0.1", transport = "tcp" },
-) {
+export const connect: typeof Deno.connect = function connect(options) {
+  if (!isConnectOptions(options)) {
+    throw new Error("Unstable UnixConnectOptions is not implemented");
+  }
+  const { transport = "tcp", hostname = "127.0.0.1", port } = options;
   if (transport !== "tcp") {
     throw new Error("Deno.connect is only implemented for transport: tcp");
   }
@@ -20,8 +22,9 @@ export const connect: typeof Deno.connect = function connect(
       const rid: number = socket._handle.fd;
 
       const localAddr: Deno.Addr = {
-        hostname: socket.localAddress,
-        port: socket.localPort,
+        // cannot be undefined while socket is connected
+        hostname: socket.localAddress!,
+        port: socket.localPort!,
         transport: "tcp",
       };
 
@@ -35,4 +38,10 @@ export const connect: typeof Deno.connect = function connect(
       resolve(new Conn(rid, localAddr, remoteAddr, socket));
     });
   });
+
+  function isConnectOptions(
+    options: Parameters<typeof Deno.connect>[0],
+  ): options is Deno.ConnectOptions {
+    return (options as Deno.ConnectOptions).port != null;
+  }
 };
