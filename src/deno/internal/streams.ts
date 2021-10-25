@@ -78,8 +78,17 @@ export class BufferStreamReader implements Deno.Reader {
   }
 
   #runPendingActions() {
+    // deno-lint-ignore no-explicit-any
+    const errors: any[] = [];
     for (const action of this.#pendingActions.splice(0)) {
-      action();
+      try {
+        action();
+      } catch (err) {
+        errors.push(err);
+      }
+    }
+    if (errors.length > 0) {
+      throw (errors.length > 1 ? new AggregateError(errors) : errors[0]);
     }
   }
 }
