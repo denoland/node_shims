@@ -44,10 +44,12 @@
     "node": ">=16.7.0"
   },
   "dependencies": {
-    "undici": "^4.5.1"
+    "undici": "^4.5.1",
+    "which": "^2.0.2"
   },
   "devDependencies": {
     "@types/node": "^16.4.13",
+    "@types/which": "^2.0.1",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   }

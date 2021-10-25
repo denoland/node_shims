@@ -32,6 +32,10 @@ const testsToSkip = new Set([
   "mkdirSyncErrors", // getCreationFlag throws
   "mkdirSyncPerm", // permissions
 
+  // process_test
+  "runPermissions", // permissions
+  "killPermissions", // permissions
+
   // read_file_test
   "readFileSyncPerm", // permissions
   "readFilePerm", // permissions

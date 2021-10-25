@@ -1,3 +1,5 @@
 ///<reference path="../lib.deno.d.ts" />
 
-export const execPath: typeof Deno.execPath = () => process.argv0;
+import which from "which";
+
+export const execPath: typeof Deno.execPath = () => which.sync("deno");
