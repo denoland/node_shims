@@ -91,17 +91,31 @@ const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
 
 const testDefinitions = (await import("../src/deno/internal/test.ts"))
   .testDefinitions;
+const filter = getFilter();
 
 await setupTests();
 
 for (const testFile of testFiles) {
-  console.log(`\nRunning tests in ${testFile}...\n`);
   await import("../" + testFile);
-  for (const definition of testDefinitions.splice(0)) {
-    if (testsToSkip.has(definition.name) || definition.ignore) {
-      continue;
-    }
+  const definitions = testDefinitions.splice(0)
+    .filter((definition) => {
+      if (testsToSkip.has(definition.name) || definition.ignore) {
+        return false;
+      }
+      if (filter && !definition.name.includes(filter)) {
+        return false;
+      }
 
+      return true;
+    });
+
+  if (definitions.length === 0) {
+    continue;
+  }
+
+  console.log(`\nRunning tests in ${testFile}...\n`);
+
+  for (const definition of definitions) {
     try {
       process.stdout.write(`test ${definition.name} ...`);
       await definition.fn();
@@ -109,10 +123,16 @@ for (const testFile of testFiles) {
     } catch (err) {
       process.stdout.write("\n");
       process.stdout.write(err.toString() + "\n");
-      process.stdout.write("\nfailed");
+      process.stdout.write("\nfailed\n");
       process.exit(1);
     }
   }
+}
+
+function getFilter() {
+  const args = process.argv.slice(2);
+  const filterIndex = args.indexOf("--filter");
+  return filterIndex >= 0 ? args[filterIndex + 1] : undefined;
 }
 
 async function setupTests() {

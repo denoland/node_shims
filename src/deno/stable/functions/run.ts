@@ -135,8 +135,21 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
   }
 
   async status() {
-    const [code, signalName] = await this.#status as [number, SignalName];
-    const signal = os.constants.signals[signalName];
+    const [receivedCode, signalName] = await this.#status as [
+      number,
+      SignalName | null,
+    ];
+    // when there is a signal, the exit code is 128 + signal code
+    const signal = signalName
+      ? os.constants.signals[signalName]
+      : receivedCode > 128
+      ? receivedCode - 128
+      : undefined;
+    const code = receivedCode != null
+      ? receivedCode
+      : signal != null
+      ? 128 + signal
+      : undefined;
     const success = code === 0;
     this.#receivedStatus = true;
     return { code, signal, success } as Deno.ProcessStatus;
@@ -157,6 +170,11 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
   }
 
   close(): void {
+    this.#stdin?.close();
+    this.#stdout?.close();
+    this.#stderr?.close();
+
+    this.#process.unref();
     this.#process.kill();
   }
 
@@ -172,6 +190,7 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
 class ProcessReadStream implements Deno.Reader, Deno.Closer {
   readonly #stream: NonNullable<childProcess.ChildProcess["stdout"]>;
   readonly #bufferStreamReader: BufferStreamReader;
+  #closed = false;
 
   constructor(stream: NonNullable<childProcess.ChildProcess["stdout"]>) {
     this.#stream = stream;
@@ -183,14 +202,23 @@ class ProcessReadStream implements Deno.Reader, Deno.Closer {
   }
 
   readAll() {
-    return this.#bufferStreamReader.readAll();
+    if (this.#closed) {
+      return Promise.resolve(new Uint8Array(0));
+    } else {
+      return this.#bufferStreamReader.readAll();
+    }
   }
 
   read(p: Uint8Array) {
-    return this.#bufferStreamReader.read(p);
+    if (this.#closed) {
+      return Promise.resolve(null);
+    } else {
+      return this.#bufferStreamReader.read(p);
+    }
   }
 
   close() {
+    this.#closed = true;
     this.#stream.destroy();
   }
 }
@@ -198,6 +226,7 @@ class ProcessReadStream implements Deno.Reader, Deno.Closer {
 class ProcessWriteStream implements Deno.Writer, Deno.Closer {
   readonly #stream: NonNullable<childProcess.ChildProcess["stdin"]>;
   readonly #streamWriter: StreamWriter;
+  #closed = false;
 
   constructor(stream: NonNullable<childProcess.ChildProcess["stdin"]>) {
     this.#stream = stream;
@@ -209,10 +238,15 @@ class ProcessWriteStream implements Deno.Writer, Deno.Closer {
   }
 
   write(p: Uint8Array): Promise<number> {
-    return this.#streamWriter.write(p);
+    if (this.#closed) {
+      return Promise.resolve(0);
+    } else {
+      return this.#streamWriter.write(p);
+    }
   }
 
   close() {
+    this.#closed = true;
     this.#stream.end();
   }
 }
