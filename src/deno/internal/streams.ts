@@ -40,15 +40,7 @@ export class BufferStreamReader implements Deno.Reader {
           chunks.push(buffer);
           this.#pendingActions.push(action);
         } else if (this.#ended) {
-          const size = chunks
-            .map((c) => c.byteLength)
-            .reduce((a, b) => a + b, 0);
-          const result = new Uint8Array(size);
-          let offset = 0;
-          for (const chunk of chunks) {
-            chunk.copy(result, offset, 0, result.byteLength);
-            offset += chunk.byteLength;
-          }
+          const result = Buffer.concat(chunks);
           resolve(result);
         } else {
           this.#pendingActions.push(action);
@@ -61,29 +53,20 @@ export class BufferStreamReader implements Deno.Reader {
 
   read(p: Uint8Array): Promise<number | null> {
     return new Promise((resolve, reject) => {
-      const readPending = () => {
-        const pending = this.#stream.read(p.byteLength) as Buffer;
-        if (!pending) {
-          return false;
-        }
-
-        pending.copy(p, 0, 0, pending.byteLength);
-
-        // resolve right away if any pending bytes were read
-        if (pending.byteLength > 0) {
-          resolve(pending.byteLength);
-          return true;
-        } else {
-          return false;
-        }
-      };
-
       const action = () => {
         if (this.#error) {
           reject(this.#error);
-        } else if (readPending()) {
           return;
-        } else if (this.#ended) {
+        }
+
+        const readBuffer = this.#stream.read(p.byteLength) as Buffer;
+        if (readBuffer && readBuffer.byteLength > 0) {
+          readBuffer.copy(p, 0, 0, readBuffer.byteLength);
+          resolve(readBuffer.byteLength);
+          return;
+        }
+
+        if (this.#ended) {
           resolve(null);
         } else {
           this.#pendingActions.push(action);
