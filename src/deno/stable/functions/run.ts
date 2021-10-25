@@ -87,7 +87,11 @@ function getEnv(options: UnstableRunOptions) {
   const env = options.env ?? {};
   for (const name in process.env) {
     if (!Object.prototype.hasOwnProperty.call(env, name)) {
-      env[name] = options.clearEnv ? "" : process.env[name]!;
+      if (options.clearEnv) {
+        delete env[name];
+      } else {
+        env[name] = process.env[name]!;
+      }
     }
   }
   return env;

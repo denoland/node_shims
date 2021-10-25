@@ -35,6 +35,8 @@ const testsToSkip = new Set([
   // process_test
   "runPermissions", // permissions
   "killPermissions", // permissions
+  "uid", // permissions
+  "gid", // permissions
 
   // read_file_test
   "readFileSyncPerm", // permissions
