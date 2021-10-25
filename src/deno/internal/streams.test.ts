@@ -22,6 +22,15 @@ Deno.test("reader should read", async () => {
   assertEqualBytes(expectedBytes, result);
 });
 
+Deno.test("reader should read all", async () => {
+  const stream = fs.createReadStream("README.md", { highWaterMark });
+  const reader = new BufferStreamReader(stream);
+  const result = await reader.readAll();
+  stream.close();
+  const expectedBytes = fs.readFileSync("README.md");
+  assertEqualBytes(expectedBytes, Buffer.from(result));
+});
+
 Deno.test("writer should write", async () => {
   const tempFile = await Deno.makeTempFile();
   try {

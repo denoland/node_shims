@@ -88,7 +88,11 @@ function getEnv(options: UnstableRunOptions) {
   for (const name in process.env) {
     if (!Object.prototype.hasOwnProperty.call(env, name)) {
       if (options.clearEnv) {
-        delete env[name];
+        if (os.platform() === "win32") {
+          env[name] = "";
+        } else {
+          delete env[name];
+        }
       } else {
         env[name] = process.env[name]!;
       }
