@@ -1,6 +1,6 @@
 # Stable Progress
 
-94%. 8 stable members to go:
+95%. 6 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -34,7 +34,7 @@
 - [x] **`PermissionStatus`**
 - [x] 👻 **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
-- [ ] **`Process`**
+- [x] **`Process`**
 - [x] 👻 **`ProcessStatus`**
 - [x] 👻 **`ReadFileOptions`**
 - [x] 👻 **`ReadPermissionDescriptor`**
@@ -130,7 +130,7 @@
 - [x] **`rename`**
 - [x] **`renameSync`**
 - [x] **`resources`**
-- [ ] **`run`**
+- [x] **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
 - [ ] **`serveHttp`**
@@ -159,7 +159,7 @@
 
 # Unstable Progress
 
-7%. 25 unstable members to go:
+11%. 24 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
@@ -208,13 +208,13 @@
 - [x] 🧪 **`futime`**
 - [x] 🧪 **`futimeSync`**
 - [ ] 🧪 **`hostname`**
-- [ ] 🧪 **`kill`**
+- [x] 🧪 **`kill`**
 - [x] 🧪 **`listen`**
 - [ ] 🧪 **`listenDatagram`**
 - [ ] **`loadavg`**
 - [ ] **`osRelease`**
 - [ ] 🧪 **`resolveDns`**
-- [ ] **`run`**
+- [x] **`run`**
 - [ ] 🧪 **`setRaw`**
 - [ ] 🧪 **`signal`**
 - [ ] 🧪 **`sleepSync`**

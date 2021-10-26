@@ -36,7 +36,9 @@ jobs:
     - run: npm run --silent test
     - run: npm run --silent denolib
     - run: tools/missing.ts || echo "Some items are missing"
+      if: matrix.os == 'ubuntu-latest'
     - run: tools/untested.sh
+      if: matrix.os == 'ubuntu-latest'
     - name: npm publish
       if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/') && github.repository == 'denoland/deno.ns'
       env:

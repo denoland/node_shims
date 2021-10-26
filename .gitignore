@@ -1,4 +1,5 @@
 node_modules
 dist
 lib.deno.d.ts
+lib.deno.unstable.d.ts
 unit
