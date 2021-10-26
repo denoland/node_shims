@@ -163,25 +163,26 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
     return { code, signal, success } as Deno.ProcessStatus;
   }
 
-  output(): Promise<Uint8Array> {
+  async output(): Promise<Uint8Array> {
     if (!this.#stdout) {
       throw new TypeError("stdout was not piped");
     }
-    return this.#stdout.readAll();
+    const result = await this.#stdout.readAll();
+    this.#stdout.close();
+    return result;
   }
 
-  stderrOutput(): Promise<Uint8Array> {
+  async stderrOutput(): Promise<Uint8Array> {
     if (!this.#stderr) {
       throw new TypeError("stderr was not piped");
     }
-    return this.#stderr.readAll();
+    const result = await this.#stderr.readAll();
+    this.#stderr.close();
+    return result;
   }
 
-  close(): void {
-    this.#stdin?.close();
-    this.#stdout?.close();
-    this.#stderr?.close();
-
+  close() {
+    // Deno doesn't close any stdio streams here
     this.#process.unref();
     this.#process.kill();
   }
