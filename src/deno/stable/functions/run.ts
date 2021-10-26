@@ -181,9 +181,8 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
     return result;
   }
 
-  close(): void {
-    this.#stdin?.close();
-
+  close() {
+    // Deno doesn't close any stdio streams here
     this.#process.unref();
     this.#process.kill();
   }
