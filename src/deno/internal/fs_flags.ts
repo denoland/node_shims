@@ -3,6 +3,7 @@
 
 import * as errors from "../stable/variables/errors.js";
 import { constants } from "fs";
+import os from "os";
 
 const { O_APPEND, O_CREAT, O_EXCL, O_RDONLY, O_RDWR, O_TRUNC, O_WRONLY } =
   constants;
@@ -49,7 +50,17 @@ export function getCreationFlag(opts: Opts<CreationModes>) {
 
   if (!opts.create && !opts.truncate && !opts.createNew) return 0;
   if (opts.create && !opts.truncate && !opts.createNew) return O_CREAT;
-  if (!opts.create && opts.truncate && !opts.createNew) return O_TRUNC;
+  if (!opts.create && opts.truncate && !opts.createNew) {
+    if (os.platform() === "win32") {
+      // for some reason only providing O_TRUNC on windows will
+      // throw a "EINVAL: invalid argument", so to work around this
+      // we relax the restriction here to also create the file if it
+      // doesn't exist
+      return O_CREAT | O_TRUNC;
+    } else {
+      return O_TRUNC;
+    }
+  }
   if (opts.create && opts.truncate && !opts.createNew) {
     return O_CREAT | O_TRUNC;
   }

@@ -10,8 +10,9 @@ const nodeOpen = promisify(_open);
 
 export const open: typeof Deno.open = async function open(
   path,
-  { read = true, write, append, truncate, create, createNew, mode = 0o666 } =
-    {},
+  { read, write, append, truncate, create, createNew, mode = 0o666 } = {
+    read: true,
+  },
 ) {
   const flagMode = getFsFlag({
     read,
