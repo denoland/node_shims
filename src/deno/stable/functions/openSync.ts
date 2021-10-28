@@ -7,8 +7,9 @@ import { getFsFlag } from "../../internal/fs_flags.js";
 
 export const openSync: typeof Deno.openSync = function openSync(
   path,
-  { read = true, write, append, truncate, create, createNew, mode = 0o666 } =
-    {},
+  { read, write, append, truncate, create, createNew, mode = 0o666 } = {
+    read: true,
+  },
 ) {
   const flagMode = getFsFlag({
     read,

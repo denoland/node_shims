@@ -124,7 +124,7 @@ for (const testFile of testFiles) {
       process.stdout.write(" ok\n");
     } catch (err) {
       process.stdout.write("\n");
-      process.stdout.write(err.toString() + "\n");
+      process.stdout.write((err.stack ?? err).toString() + "\n");
       process.stdout.write("\nfailed\n");
       process.exit(1);
     }

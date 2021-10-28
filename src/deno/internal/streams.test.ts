@@ -1,5 +1,6 @@
 import { BufferStreamReader, StreamWriter } from "./streams.js";
 import fs from "fs";
+import assert from "assert/strict";
 
 // use a small buffer size for testing to cause many reads and writes
 const highWaterMark = 128;
@@ -19,7 +20,7 @@ Deno.test("reader should read", async () => {
   stream.close();
   const result = Buffer.concat(chunks);
   const expectedBytes = fs.readFileSync("README.md");
-  assertEqualBytes(expectedBytes, result);
+  assert.deepEqual(expectedBytes, result);
 });
 
 Deno.test("reader should read all", async () => {
@@ -28,7 +29,7 @@ Deno.test("reader should read all", async () => {
   const result = await reader.readAll();
   stream.close();
   const expectedBytes = fs.readFileSync("README.md");
-  assertEqualBytes(expectedBytes, Buffer.from(result));
+  assert.deepEqual(expectedBytes, Buffer.from(result));
 });
 
 Deno.test("writer should write", async () => {
@@ -49,7 +50,7 @@ Deno.test("writer should write", async () => {
     writeStream.close();
     readStream.close();
 
-    assertEqualBytes(
+    assert.deepEqual(
       fs.readFileSync("README.md"),
       fs.readFileSync(tempFile),
     );
@@ -63,17 +64,4 @@ function getRandomBufferSize() {
   const highValue = highWaterMark * 2;
   const lowValue = Math.floor(highWaterMark / 2);
   return Math.floor(Math.random() * (highValue - lowValue + 1)) + lowValue;
-}
-
-function assertEqualBytes(expected: Buffer, actual: Buffer) {
-  if (expected.byteLength !== actual.byteLength) {
-    throw new Error(
-      `Not equal byte lengths ${expected.byteLength} | ${actual.byteLength}`,
-    );
-  }
-  for (let i = 0; i < expected.byteLength; i++) {
-    if (expected[i] !== actual[i]) {
-      throw new Error(`Bytes differed at index ${i}`);
-    }
-  }
 }

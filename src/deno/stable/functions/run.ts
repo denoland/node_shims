@@ -24,6 +24,10 @@ export const run: typeof Deno.run = function run<
 >(options: T) {
   const [cmd, ...args] = options.cmd;
 
+  if (options.cwd && !fs.existsSync(options.cwd)) {
+    throw new Error("The directory name is invalid.");
+  }
+
   // childProcess.spawn will asynchronously check if the command exists, but
   // we need to do this synchronously
   const commandName = getCmd(cmd);
