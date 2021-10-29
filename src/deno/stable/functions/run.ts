@@ -63,10 +63,8 @@ function getStdio(
   } else if (typeof value === "number") {
     switch (kind) {
       case "in":
-        // deno-lint-ignore no-explicit-any
         return fs.createReadStream(null as any, { fd: value });
       case "out":
-        // deno-lint-ignore no-explicit-any
         return fs.createWriteStream(null as any, { fd: value });
       default: {
         const _assertNever: never = kind;

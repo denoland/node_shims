@@ -1,4 +1,4 @@
-if (!Deno.version.deno.startsWith("1.14")) {
+if (!Deno.version.deno.startsWith("1.15")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }

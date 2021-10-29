@@ -54,6 +54,9 @@ const testsToSkip = new Set([
   "readDirSyncPerm", // permissions
   "readDirPerm", // permissions
 
+  // testing_test
+  "invalidStepArguments", // no test runner in deno.ns
+
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
   "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number

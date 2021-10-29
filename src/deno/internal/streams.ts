@@ -2,7 +2,6 @@
 
 export class BufferStreamReader implements Deno.Reader {
   readonly #stream: NodeJS.ReadableStream;
-  // deno-lint-ignore no-explicit-any
   #error: any;
   #ended = false;
   #pendingActions: (() => void)[] = [];
@@ -78,7 +77,6 @@ export class BufferStreamReader implements Deno.Reader {
   }
 
   #runPendingActions() {
-    // deno-lint-ignore no-explicit-any
     const errors: any[] = [];
     for (const action of this.#pendingActions.splice(0)) {
       try {
