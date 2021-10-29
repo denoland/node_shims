@@ -1,7 +1,6 @@
 {
   "lint": {
     "files": {
-      "include": ["src/", "tools/"],
       "exclude": [
         "node_modules",
         "dist",
@@ -17,7 +16,6 @@
   },
   "fmt": {
     "files": {
-      "include": ["src/", "tools/"],
       "exclude": [
         "node_modules",
         "dist",
