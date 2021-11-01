@@ -26,6 +26,7 @@ export { fsyncSync } from "./functions/fsyncSync.js";
 export { ftruncate } from "./functions/ftruncate.js";
 export { ftruncateSync } from "./functions/ftruncateSync.js";
 export { inspect } from "./functions/inspect.js";
+export { kill } from "./functions/kill.js";
 export { link } from "./functions/link.js";
 export { linkSync } from "./functions/linkSync.js";
 export { listen } from "./functions/listen.js";

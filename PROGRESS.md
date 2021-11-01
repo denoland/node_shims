@@ -1,6 +1,6 @@
 # Stable Progress
 
-95%. 6 stable members to go:
+91%. 13 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -21,12 +21,14 @@
 - [x] 👻 **`ListenOptions`**
 - [x] 👻 **`ListenTlsOptions`**
 - [x] 👻 **`Listener`**
+- [ ] 👻 **`MXRecord`**
 - [x] 👻 **`MakeTempOptions`**
 - [x] 👻 **`MemoryUsage`**
 - [x] 👻 **`Metrics`**
 - [x] 👻 **`MkdirOptions`**
 - [x] 👻 **`NetAddr`**
 - [x] 👻 **`NetPermissionDescriptor`**
+- [ ] 👻 **`OpMetrics`**
 - [x] 👻 **`OpenOptions`**
 - [x] 👻 **`PermissionDescriptor`**
 - [x] 👻 **`PermissionName`**
@@ -40,15 +42,20 @@
 - [x] 👻 **`ReadPermissionDescriptor`**
 - [x] 👻 **`Reader`**
 - [x] 👻 **`ReaderSync`**
+- [ ] 👻 **`RecordType`**
 - [x] 👻 **`RemoveOptions`**
 - [x] 👻 **`RequestEvent`**
+- [ ] 👻 **`ResolveDnsOptions`**
 - [x] 👻 **`ResourceMap`**
 - [x] 👻 **`RunOptions`**
 - [x] 👻 **`RunPermissionDescriptor`**
+- [ ] 👻 **`SRVRecord`**
 - [x] **`SeekMode`**
 - [x] 👻 **`Seeker`**
 - [x] 👻 **`SeekerSync`**
+- [ ] 👻 **`Signal`**
 - [x] 👻 **`SymlinkOptions`**
+- [ ] 🧪 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
 - [x] 👻 **`UnixAddr`**
 - [ ] 👻 **`UpgradeWebSocketOptions`**
@@ -90,6 +97,7 @@
 - [x] **`isatty`**
 - [ ] 👎 **`iter`**
 - [ ] 👎 **`iterSync`**
+- [x] **`kill`**
 - [x] **`link`**
 - [x] **`linkSync`**
 - [x] **`listen`**
@@ -129,6 +137,7 @@
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
+- [ ] **`resolveDns`**
 - [x] **`resources`**
 - [x] **`run`**
 - [ ] **`seek`**
@@ -159,11 +168,11 @@
 
 # Unstable Progress
 
-11%. 24 unstable members to go:
+15%. 17 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
-- [ ] 👻 **`ConnectTlsClientCertOptions`**
+- [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
 - [ ] 👻 **`Diagnostic`**
@@ -177,20 +186,15 @@
 - [ ] 👻 **`ImportMap`**
 - [x] 👻 **`ListenTlsOptions`**
 - [ ] 🧪 👻 **`Location`**
-- [ ] 👻 **`MXRecord`**
-- [x] 👻 **`Metrics`**
 - [ ] 👻 **`NativeType`**
-- [ ] 👻 **`OpMetrics`**
 - [ ] 👻 **`Proxy`**
-- [ ] 👻 **`RecordType`**
-- [ ] 👻 **`ResolveDnsOptions`**
-- [ ] 👻 **`SRVRecord`**
 - [ ] 👻 **`SetRawOptions`**
-- [ ] 👻 **`Signal`**
 - [ ] 🧪 **`SignalStream`**
 - [ ] 👻 **`StartTlsOptions`**
 - [ ] 👻 **`SystemMemoryInfo`**
+- [ ] 🧪 👻 **`TestContext`**
 - [x] 🧪 👻 **`TestDefinition`**
+- [ ] 🧪 👻 **`TestStepDefinition`**
 - [ ] 👻 **`UnixConnectOptions`**
 - [ ] 👻 **`UnixListenOptions`**
 - [ ] 🧪 **`applySourceMap`**
@@ -208,12 +212,10 @@
 - [x] 🧪 **`futime`**
 - [x] 🧪 **`futimeSync`**
 - [ ] 🧪 **`hostname`**
-- [x] 🧪 **`kill`**
 - [x] 🧪 **`listen`**
 - [ ] 🧪 **`listenDatagram`**
 - [ ] **`loadavg`**
 - [ ] **`osRelease`**
-- [ ] 🧪 **`resolveDns`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
 - [ ] 🧪 **`signal`**

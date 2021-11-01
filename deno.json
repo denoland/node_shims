@@ -1,0 +1,29 @@
+{
+  "lint": {
+    "files": {
+      "exclude": [
+        "node_modules",
+        "dist",
+        "thirdparty",
+        "unit",
+        "src/deno/stable/lib.deno.d.ts",
+        "src/deno/unstable/lib.deno.unstable.d.ts"
+      ]
+    },
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "exclude": [
+        "node_modules",
+        "dist",
+        "thirdparty",
+        "unit",
+        "src/deno/stable/lib.deno.d.ts",
+        "src/deno/unstable/lib.deno.unstable.d.ts"
+      ]
+    }
+  }
+}

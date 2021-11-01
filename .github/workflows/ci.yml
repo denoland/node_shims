@@ -27,10 +27,10 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - uses: denoland/setup-deno@v1
       with:
-        deno-version: ~1.14
-    - run: deno lint --ignore=thirdparty/
+        deno-version: ~1.15
+    - run: deno lint --config deno.json
       if: matrix.os == 'ubuntu-latest'
-    - run: deno fmt  --ignore=thirdparty/ --check
+    - run: deno fmt --config deno.json --check
       if: matrix.os == 'ubuntu-latest'
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test
