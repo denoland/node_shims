@@ -10,7 +10,7 @@
     "shim"
   ],
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./lib/deno.ns.lib.d.ts",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
   "contributors": [
     "Wojciech Pawlik <woj.pawlik@gmail.com>",
@@ -34,8 +34,9 @@
   ],
   "scripts": {
     "denolib": "deno run --allow-run --allow-write=src/deno/ tools/denolib.ts",
-    "build": "tsc",
+    "build": "tsc && npm run --silent generate-declaration-file",
     "prepare": "npm run --silent denolib && npm run --silent build",
+    "generate-declaration-file": "deno run --allow-write=lib --allow-read=. tools/generateDeclarationFile.ts",
     "lint": "deno lint --config deno.json",
     "fmt": "deno fmt --config deno.json",
     "clean": "git clean -fXde !node_modules/",

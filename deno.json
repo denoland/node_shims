@@ -7,7 +7,8 @@
         "thirdparty",
         "unit",
         "src/deno/stable/lib.deno.d.ts",
-        "src/deno/unstable/lib.deno.unstable.d.ts"
+        "src/deno/unstable/lib.deno.unstable.d.ts",
+        "lib"
       ]
     },
     "rules": {
@@ -22,7 +23,8 @@
         "thirdparty",
         "unit",
         "src/deno/stable/lib.deno.d.ts",
-        "src/deno/unstable/lib.deno.unstable.d.ts"
+        "src/deno/unstable/lib.deno.unstable.d.ts",
+        "lib"
       ]
     }
   }

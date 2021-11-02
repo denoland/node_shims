@@ -5,9 +5,10 @@
 
 export class PermissionStatus extends EventTarget
   implements Deno.PermissionStatus {
-  onchange: Deno.PermissionStatus["onchange"] = null;
+  onchange: ((this: PermissionStatus, ev: Event) => any) | null = null;
 
-  constructor(readonly state: Deno.PermissionStatus["state"]) {
+  /** @internal */
+  constructor(readonly state: Deno.PermissionState) {
     super();
   }
 }
