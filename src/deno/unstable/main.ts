@@ -4,6 +4,11 @@ import fs from "fs";
 import mapError from "../internal/errorMap.js";
 import { errors } from "../stable/variables.js";
 
+export type TestContext = Deno.TestContext;
+export type TestStepDefinition = Deno.TestStepDefinition;
+export type UnixConnectOptions = Deno.UnixConnectOptions;
+export type UnixListenOptions = Deno.UnixListenOptions;
+
 export const futime: typeof Deno.futime = async function (rid, atime, mtime) {
   try {
     await new Promise<void>((resolve, reject) => {

@@ -5,8 +5,9 @@
     "target": "ES2019",
     "lib": ["ES2019"], // no DOM types
     "esModuleInterop": true, // for `undici-fetch`
-    "declaration": true,
-    "outDir": "dist"
+    "declaration": false,
+    "outDir": "dist",
+    "stripInternal": true
   },
   "ts-node": {
     "transpileOnly": true,
