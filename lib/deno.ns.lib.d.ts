@@ -1,11 +1,9 @@
 // Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.
 
-/// <reference no-default-lib="true" />
-/// <reference lib="esnext" />
 /// <reference types="node" />
 
 import { URL } from "url";
-import { Request, Response } from "undici";
+import * as undici from "undici";
 
 /**
  * EventTarget is a DOM interface implemented by objects that can receive events
@@ -165,7 +163,6 @@ declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
 export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
-export { fetch, File, FormData, Headers, Request, Response } from "undici";
 /**
  * Shows the given message and waits for the enter key pressed.
  * If the stdin is not interactive, it does nothing.
@@ -189,6 +186,33 @@ export declare function confirm(message?: string): boolean;
  * @param defaultValue
  */
 export declare function prompt(message?: string, defaultValue?: string): string | null;
+export declare const fetch: (typeof globalThis) extends {
+      "fetch": infer T;
+  } ? T : typeof undici.fetch;
+export declare type File = (typeof globalThis) extends {
+      "File": infer T;
+  } ? T : undici.File;
+export declare const File: File;
+export declare type FormData = (typeof globalThis) extends {
+      "FormData": infer T;
+  } ? T : undici.FormData;
+export declare const FormData: FormData;
+export declare type Headers = (typeof globalThis) extends {
+      "Headers": infer T;
+  } ? T : undici.Headers;
+export declare const Headers: Headers;
+export declare type Request = (typeof globalThis) extends {
+      "Request": {
+          prototype: infer T;
+      };
+  } ? T : undici.Request;
+export declare const Request: Request;
+export declare type Response = (typeof globalThis) extends {
+      "Response": {
+          prototype: infer T;
+      };
+  } ? T : undici.Response;
+export declare const Response: Response;
 
 export declare namespace Deno {
   export class File implements Deno.File {

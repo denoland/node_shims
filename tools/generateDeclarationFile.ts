@@ -29,12 +29,10 @@ statements.push((writer) => {
       `// Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.`,
     )
     .blankLine()
-    .writeLine(`/// <reference no-default-lib="true" />`)
-    .writeLine(`/// <reference lib="esnext" />`)
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
     .writeLine(`import { URL } from "url";`)
-    .writeLine(`import { Request, Response } from "undici";`)
+    .writeLine(`import * as undici from "undici";`)
     .blankLine();
 });
 

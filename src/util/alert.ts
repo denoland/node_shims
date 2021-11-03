@@ -3,7 +3,11 @@
 import { writeSync } from "fs";
 import { readlineSync } from "./readlineSync.js";
 
-export const alert: typeof globalThis.alert = function alert(message) {
-  writeSync(process.stdout.fd, new TextEncoder().encode(`${message} [Enter] `));
-  readlineSync();
-};
+export const alert: typeof globalThis.alert = globalThis["alert"] ??
+  function alert(message) {
+    writeSync(
+      process.stdout.fd,
+      new TextEncoder().encode(`${message} [Enter] `),
+    );
+    readlineSync();
+  };
