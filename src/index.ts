@@ -8,8 +8,7 @@ export { prompt } from "./util/prompt.js";
 // TODO: Wait for node builtin WhatWG Streams or fetch-blob to export them without assigning to globalThis
 import * as undici from "undici";
 
-// the code below here will fallback to using the global types if they exist
-
+// fallback to using the global types and values if they exist
 export const fetch: (typeof globalThis) extends { "fetch": infer T } ? T
   : typeof undici.fetch = (globalThis as any)["fetch"] ??
     undici.fetch;
