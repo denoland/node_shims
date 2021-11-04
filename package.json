@@ -1,6 +1,6 @@
 {
   "name": "deno.ns",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Deno namespace shim for Node.js",
   "keywords": [
     "deno namespace",

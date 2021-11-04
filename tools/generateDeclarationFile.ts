@@ -123,7 +123,7 @@ function getMainStatements() {
       .isAncestorOf(decls[0].getSourceFile());
     if (name !== "Deno" && isInSrcDir) {
       statements.push(
-        ...Array.from(declsToStructures(decls))
+        ...Array.from(declsToStructures(name, decls))
           .map((s) => ensureExported(s)),
       );
     }
@@ -180,32 +180,22 @@ function stripAmbient<TStructure extends StatementStructures>(
 }
 
 function* fileExportsToStructures(file: SourceFile) {
-  for (const [_, decls] of file.getExportedDeclarations()) {
-    yield* declsToStructures(decls);
+  for (const [name, decls] of file.getExportedDeclarations()) {
+    yield* declsToStructures(name, decls);
   }
 }
 
-function* declsToStructures(decls: (ExportedDeclarations | Statement)[]) {
-  for (const decl of decls) {
-    yield* declToStructures(decl);
-  }
-}
-
-function* declsToStructuresEnsureName(
+function* declsToStructures(
   name: string,
   decls: (ExportedDeclarations | Statement)[],
 ) {
   for (const decl of decls) {
-    if (!Node.hasName(decl) || decl.getName() !== name) {
-      console.error(name);
-      console.error(decl.getFullText());
-      throw new Error("Unhandled");
-    }
+    yield* declToStructures(name, decl);
   }
-  yield* declsToStructures(decls);
 }
 
 function* declToStructures(
+  name: string,
   decl: ExportedDeclarations | Statement,
 ): Iterable<StatementStructures> {
   // Check for a qualified name in a type alias...
@@ -224,22 +214,42 @@ function* declToStructures(
   if (Node.hasName(decl) && Node.isQualifiedName(qualifiedName)) {
     const symbol = qualifiedName.getRight().getSymbolOrThrow();
     const declarations = symbol.getDeclarations() as ExportedDeclarations[];
-    yield* declsToStructuresEnsureName(decl.getName(), declarations);
+    yield* declsToStructures(name, declarations);
   } else if (Node.isVariableDeclaration(decl)) {
-    yield* declToStructures(decl.getVariableStatementOrThrow());
-  } else if (Node.isSourceFile(decl)) {
-    for (const [name, declarations] of decl.getExportedDeclarations()) {
-      yield* declsToStructuresEnsureName(name, declarations);
+    const varStmt = decl.getVariableStatementOrThrow();
+    if (decl.getName() !== name) {
+      throw new Error("Unhandled.");
     }
+    if (varStmt.getDeclarations().length > 1) {
+      throw new Error("Unhandled.");
+    }
+    yield varStmt.getStructure();
+  } else if (Node.isSourceFile(decl)) {
+    const statements: StatementStructures[] = [];
+    for (const [name, declarations] of decl.getExportedDeclarations()) {
+      statements.push(
+        ...Array.from(declsToStructures(name, declarations))
+          .map(exportAndStripAmbient),
+      );
+    }
+    yield {
+      kind: StructureKind.Module,
+      name,
+      statements,
+    };
   } else {
-    if (Node.isExpression(decl) || Node.isSourceFile(decl)) {
+    if (Node.isExpression(decl)) {
       console.error(decl.getFullText());
       throw new Error("Unhandled.");
     }
+    if (!Node.hasName(decl) || decl.getName() !== name) {
+      throw new Error("Unhandled.");
+    }
+
     // todo(dsherret): use Node.hasStructure in ts-morph in next release
     if (!(decl as any).getStructure) {
       console.error(decl.getFullText());
-      throw new Error("Unhandled");
+      throw new Error("Unhandled.");
     }
     yield ((decl as any).getStructure() as StatementStructures);
   }
