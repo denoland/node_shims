@@ -1,9 +1,7 @@
 export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
 export * as Deno from "./deno.js";
-export { alert } from "./util/alert.js";
-export { confirm } from "./util/confirm.js";
-export { prompt } from "./util/prompt.js";
+export * from "./util/mod.js";
 
 // TODO: Wait for node builtin WhatWG Streams or fetch-blob to export them without assigning to globalThis
 import * as undici from "undici";
