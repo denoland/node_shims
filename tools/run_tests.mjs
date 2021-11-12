@@ -5,6 +5,9 @@ import { createRequire } from "module";
 
 // rq = requires
 const testsToSkip = new Set([
+  // abort_controller_test
+  "abortReason", // reason is not supported yet in node.js
+
   // blob_test
   "blobBuffer", // experimental native Blob
   "blobCustomInspectFunction", // experimental native Blob

@@ -414,7 +414,7 @@ export declare namespace Deno {
    *
    * Requires `allow-net` permission.
    */
-  export function connectTls(options: ConnectTlsOptions): Promise<Conn>;
+  export function connectTls(options: ConnectTlsOptions): Promise<TlsConn>;
   /**
    * *UNSTABLE** New API, yet to be vetted.
    *
@@ -431,10 +431,10 @@ export declare namespace Deno {
    *
    * Requires `allow-net` permission.
    */
-  export function connectTls(options: ConnectTlsOptions): Promise<Conn>;
+  export function connectTls(options: ConnectTlsOptions): Promise<TlsConn>;
   /**
-   * @deprecated Use `copy` from https://deno.land/std/io/util.ts instead.
-   * `Deno.copy` will be removed in Deno 2.0.
+   * @deprecated Use `copy` from https://deno.land/std/streams/conversion.ts
+   * instead. `Deno.copy` will be removed in Deno 2.0.
    *
    * Copies from `src` to `dst` until either EOF (`null`) is read from `src` or
    * an error occurs. It resolves to the number of bytes copied or rejects with
@@ -750,7 +750,7 @@ export declare namespace Deno {
    *
    * Requires `allow-net` permission.
    */
-  export function listenTls(options: ListenTlsOptions): Listener;
+  export function listenTls(options: ListenTlsOptions): TlsListener;
   /**
    * Resolves to a `Deno.FileInfo` for the specified `path`. If `path` is a
    * symlink, information for the symlink will be returned instead of what it
@@ -1293,7 +1293,7 @@ export declare namespace Deno {
    * await Deno.symlink("old/name", "new/name");
    * ```
    *
-   * Requires `allow-write` permission.
+   * Requires full `allow-read` and `allow-write` permissions.
    */
   export function symlink(oldpath: string | URL, newpath: string | URL, options?: SymlinkOptions): Promise<void>;
   /**
@@ -1306,7 +1306,7 @@ export declare namespace Deno {
    * Deno.symlinkSync("old/name", "new/name");
    * ```
    *
-   * Requires `allow-write` permission.
+   * Requires full `allow-read` and `allow-write` permissions.
    */
   export function symlinkSync(oldpath: string | URL, newpath: string | URL, options?: SymlinkOptions): void;
   /**
@@ -2191,10 +2191,6 @@ export declare namespace Deno {
      * for example via a call to `Deno.exit`. Defaults to true.
      */
     sanitizeExit?: boolean;
-  }
-
-  /** *UNSTABLE**: New option, yet to be vetted. */
-  export interface TestDefinition {
     /**
      * Specifies the permissions that should be used to run the test.
      * Set this to "inherit" to keep the calling thread's permissions.
@@ -2298,8 +2294,6 @@ export declare namespace Deno {
              * If set to `"inherit"`, the current `ffi` permission will be inherited.
              * If set to `true`, the global `ffi` permission will be requested.
              * If set to `false`, the global `ffi` permission will be revoked.
-             * If set to `Array<string | URL>`, the `ffi` permission will be requested with the
-             * specified file paths.
              *
              * Defaults to "inherit".
              */
@@ -2336,6 +2330,22 @@ export declare namespace Deno {
              */
             write?: "inherit" | boolean | Array<string | URL>;
           };
+  }
+
+  export interface TlsConn extends Conn {
+    /**
+     * Runs the client or server handshake protocol to completion if that has
+     * not happened yet. Calling this method is optional; the TLS handshake
+     * will be completed automatically as soon as data is sent or received.
+     */
+    handshake(): Promise<void>;
+  }
+
+  /** Specialized listener that accepts TLS connections. */
+  export interface TlsListener extends Listener, AsyncIterable<TlsConn> {
+    /** Waits for a TLS client to connect and accepts the connection. */
+    accept(): Promise<TlsConn>;
+    [Symbol.asyncIterator](): AsyncIterableIterator<TlsConn>;
   }
 
   export interface UnixAddr {

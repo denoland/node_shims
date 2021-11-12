@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
 import { connect as tlsConnect } from "tls";
-import { Conn } from "../../internal/Conn.js";
+import { TlsConn } from "../../internal/Conn.js";
 import { readTextFile } from "./readTextFile.js";
 
 export const connectTls: typeof Deno.connectTls = async function connectTls(
@@ -28,7 +28,7 @@ export const connectTls: typeof Deno.connectTls = async function connectTls(
         transport: "tcp",
       };
 
-      resolve(new Conn(rid, localAddr, remoteAddr, socket));
+      resolve(new TlsConn(rid, localAddr, remoteAddr, socket));
     });
   });
 };
