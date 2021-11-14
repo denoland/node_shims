@@ -21,3 +21,10 @@ export class Conn extends File implements Deno.Conn {
     await new Promise<void>((resolve) => this.#socket.end(resolve));
   }
 }
+
+export class TlsConn extends Conn implements Deno.TlsConn {
+  handshake() {
+    console.warn("deno.ns: Handshake is not supported.");
+    return Promise.resolve();
+  }
+}

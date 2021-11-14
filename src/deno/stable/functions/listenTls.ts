@@ -2,18 +2,18 @@
 
 import { createServer, Server } from "tls";
 
-import { Conn } from "../../internal/Conn.js";
+import { TlsConn } from "../../internal/Conn.js";
 import { Listener } from "../../internal/Listener.js";
 import { readTextFileSync } from "./readTextFileSync.js";
 
 async function* _listen(
   server: Server,
   waitFor: Promise<void>,
-): AsyncIterableIterator<Deno.Conn> {
+): AsyncIterableIterator<Deno.TlsConn> {
   await waitFor;
 
   while (server.listening) {
-    yield new Promise<Deno.Conn>((resolve) =>
+    yield new Promise<Deno.TlsConn>((resolve) =>
       server.once("secureConnection", (socket) => {
         socket.on("error", (err) => console.error(err));
 
@@ -34,7 +34,7 @@ async function* _listen(
           transport: "tcp",
         };
 
-        resolve(new Conn(rid, localAddr, remoteAddr));
+        resolve(new TlsConn(rid, localAddr, remoteAddr));
       })
     );
   }

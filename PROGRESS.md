@@ -28,7 +28,7 @@
 - [x] 👻 **`MkdirOptions`**
 - [x] 👻 **`NetAddr`**
 - [x] 👻 **`NetPermissionDescriptor`**
-- [ ] 👻 **`OpMetrics`**
+- [x] 👻 **`OpMetrics`**
 - [x] 👻 **`OpenOptions`**
 - [x] 👻 **`PermissionDescriptor`**
 - [x] 👻 **`PermissionName`**
@@ -53,10 +53,13 @@
 - [x] **`SeekMode`**
 - [x] 👻 **`Seeker`**
 - [x] 👻 **`SeekerSync`**
-- [ ] 👻 **`Signal`**
+- [x] 👻 **`Signal`**
+- [ ] 👻 **`StartTlsOptions`**
 - [x] 👻 **`SymlinkOptions`**
-- [ ] 🧪 👻 **`TestContext`**
+- [x] 🧪 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
+- [x] 👻 **`TlsConn`**
+- [x] 👻 **`TlsListener`**
 - [x] 👻 **`UnixAddr`**
 - [ ] 👻 **`UpgradeWebSocketOptions`**
 - [ ] 👻 **`WebSocketUpgrade`**
@@ -144,6 +147,7 @@
 - [ ] **`seekSync`**
 - [ ] **`serveHttp`**
 - [x] **`shutdown`**
+- [ ] **`startTls`**
 - [x] **`stat`**
 - [x] **`statSync`**
 - [x] **`stderr`**
@@ -168,7 +172,7 @@
 
 # Unstable Progress
 
-15%. 17 unstable members to go:
+26%. 14 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
@@ -189,14 +193,12 @@
 - [ ] 👻 **`NativeType`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
-- [ ] 🧪 **`SignalStream`**
-- [ ] 👻 **`StartTlsOptions`**
 - [ ] 👻 **`SystemMemoryInfo`**
-- [ ] 🧪 👻 **`TestContext`**
-- [x] 🧪 👻 **`TestDefinition`**
-- [ ] 🧪 👻 **`TestStepDefinition`**
-- [ ] 👻 **`UnixConnectOptions`**
-- [ ] 👻 **`UnixListenOptions`**
+- [x] 🧪 👻 **`TestContext`**
+- [x] 🧪 👻 **`TestStepDefinition`**
+- [x] 👻 **`UnixConnectOptions`**
+- [x] 👻 **`UnixListenOptions`**
+- [ ] 🧪 **`addSignalListener`**
 - [ ] 🧪 **`applySourceMap`**
 - [x] 🧪 **`connect`**
 - [x] 🧪 **`connectTls`**
@@ -216,11 +218,10 @@
 - [ ] 🧪 **`listenDatagram`**
 - [ ] **`loadavg`**
 - [ ] **`osRelease`**
+- [ ] 🧪 **`removeSignalListener`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
-- [ ] 🧪 **`signal`**
 - [ ] 🧪 **`sleepSync`**
-- [ ] 🧪 **`startTls`**
 - [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
 - [x] 🧪 **`utime`**

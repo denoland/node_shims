@@ -3,13 +3,13 @@
 import { close } from "../stable/functions/close.js";
 import * as errors from "../stable/variables/errors.js";
 
-export class Listener implements Deno.Listener {
-  #listener: AsyncIterableIterator<Deno.Conn>;
+export class Listener<TConn extends Deno.Conn> implements Deno.Listener {
+  #listener: AsyncIterableIterator<TConn>;
 
   constructor(
     readonly rid: number,
     readonly addr: Deno.Addr,
-    listener: AsyncIterableIterator<Deno.Conn>,
+    listener: AsyncIterableIterator<TConn>,
   ) {
     this.#listener = listener;
   }
