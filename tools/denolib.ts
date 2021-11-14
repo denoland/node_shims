@@ -1,3 +1,5 @@
+import { Project } from "./deps.ts";
+
 if (!Deno.version.deno.startsWith("1.16")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
@@ -24,7 +26,7 @@ await Deno.writeTextFile(
 
 await Deno.writeTextFile(
   "src/deno/stable/lib.deno.d.ts",
-  processDeclarationFileText(stableTypes),
+  removeDeclsFromStable(processDeclarationFileText(stableTypes)),
 );
 await Deno.writeTextFile(
   "src/deno/unstable/lib.deno.unstable.d.ts",
@@ -41,21 +43,22 @@ async function run(cmd: string) {
 }
 
 function processDeclarationFileText(text: string) {
-  return text.replace('/// <reference lib="deno.net" />\n', "").replace(
-    `/** A controller object that allows you to abort one or more DOM requests as and
- * when desired. */
-declare class AbortController {
-  /** Returns the AbortSignal object associated with this object. */
-  readonly signal: AbortSignal;
-  /** Invoking this method will set this object's AbortSignal's aborted flag and
-   * signal to any observers that the associated activity is to be aborted. */
-  abort(): void;
+  return text.replace('/// <reference lib="deno.net" />\n', "")
+    .replace(
+      `/// <reference lib="deno.ns" />`,
+      `/// <reference path="../stable/lib.deno.d.ts" />`,
+    );
 }
 
-`,
-    "",
-  ).replace(
-    `/// <reference lib="deno.ns" />`,
-    `/// <reference path="../stable/lib.deno.d.ts" />`,
-  );
+function removeDeclsFromStable(text: string) {
+  const project = new Project({ useInMemoryFileSystem: true });
+  const sourceFile = project.createSourceFile("deno.lib.d.ts", text);
+
+  // these are removed because they're available in @types/node
+  sourceFile.getClassOrThrow("AbortController").remove();
+  sourceFile.getInterfaceOrThrow("AbortSignal").remove();
+  sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
+  sourceFile.getVariableStatementOrThrow("AbortSignal").remove();
+
+  return sourceFile.getFullText();
 }

@@ -34,7 +34,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test
-    - run: npm run --silent denolib
+    - run: npm run --silent prepare
     - run: tools/missing.ts || echo "Some items are missing"
       if: matrix.os == 'ubuntu-latest'
     - run: tools/untested.sh
