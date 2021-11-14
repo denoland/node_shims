@@ -54,6 +54,7 @@ function removeDeclsFromStable(text: string) {
   const project = new Project({ useInMemoryFileSystem: true });
   const sourceFile = project.createSourceFile("deno.lib.d.ts", text);
 
+  // these are removed because they're available in @types/node
   sourceFile.getClassOrThrow("AbortController").remove();
   sourceFile.getInterfaceOrThrow("AbortSignal").remove();
   sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
