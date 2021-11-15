@@ -7,35 +7,43 @@ export * from "./util/mod.js";
 import * as undici from "undici";
 
 // fallback to using the global types and values if they exist
-export const fetch: (typeof globalThis) extends { "fetch": infer T } ? T
-  : typeof undici.fetch = (globalThis as any)["fetch"] ??
+
+/** @removeExportKeyword */
+export type GlobalThisPrototypeType<TKey extends string, FallbackType> =
+  (typeof globalThis) extends {
+    [P in TKey]: {
+      prototype: infer T;
+    };
+  } ? T
+    : FallbackType;
+
+/** @removeExportKeyword */
+export type GlobalThisType<TKey extends string, FallbackType> =
+  (typeof globalThis) extends {
+    [P in TKey]: infer T;
+  } ? T
+    : FallbackType;
+
+export const fetch: GlobalThisType<"fetch", typeof undici.fetch> =
+  (globalThis as any)["fetch"] ??
     undici.fetch;
 
-export type File = (typeof globalThis) extends
-  { "File": { prototype: infer T } } ? T
-  : undici.File;
-export const File: File = (globalThis as any)["File"] ?? undici.File;
+export type File = GlobalThisPrototypeType<"File", undici.File>;
+export const File: GlobalThisType<"File", typeof undici.File> =
+  (globalThis as any)["File"] ?? undici.File;
 
-export type FormData = (typeof globalThis) extends
-  { "FormData": { prototype: infer T } } ? T
-  : undici.FormData;
-export const FormData: FormData = (globalThis as any)["FormData"] ??
-  undici.FormData;
+export type FormData = GlobalThisPrototypeType<"FormData", undici.FormData>;
+export const FormData: GlobalThisType<"FormData", typeof undici.FormData> =
+  (globalThis as any)["FormData"] ?? undici.FormData;
 
-export type Headers = (typeof globalThis) extends
-  { "Headers": { prototype: infer T } } ? T
-  : undici.Headers;
-export const Headers: Headers = (globalThis as any)["Headers"] ??
-  undici.Headers;
+export type Headers = GlobalThisPrototypeType<"Headers", undici.Headers>;
+export const Headers: GlobalThisType<"Headers", typeof undici.Headers> =
+  (globalThis as any)["Headers"] ?? undici.Headers;
 
-export type Request = (typeof globalThis) extends
-  { "Request": { prototype: infer T } } ? T
-  : undici.Request;
-export const Request: Request = (globalThis as any)["Request"] ??
-  undici.Request;
+export type Request = GlobalThisPrototypeType<"Request", undici.Request>;
+export const Request: GlobalThisType<"Request", typeof undici.Request> =
+  (globalThis as any)["Request"] ?? undici.Request;
 
-export type Response = (typeof globalThis) extends
-  { "Response": { prototype: infer T } } ? T
-  : undici.Response;
-export const Response: Response = (globalThis as any)["Response"] ??
-  undici.Response;
+export type Response = GlobalThisPrototypeType<"Response", undici.Response>;
+export const Response: GlobalThisType<"Response", typeof undici.Response> =
+  (globalThis as any)["Response"] ?? undici.Response;
