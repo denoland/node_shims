@@ -11,16 +11,19 @@ export const fetch: (typeof globalThis) extends { "fetch": infer T } ? T
   : typeof undici.fetch = (globalThis as any)["fetch"] ??
     undici.fetch;
 
-export type File = (typeof globalThis) extends { "File": infer T } ? T
+export type File = (typeof globalThis) extends
+  { "File": { prototype: infer T } } ? T
   : undici.File;
 export const File: File = (globalThis as any)["File"] ?? undici.File;
 
-export type FormData = (typeof globalThis) extends { "FormData": infer T } ? T
+export type FormData = (typeof globalThis) extends
+  { "FormData": { prototype: infer T } } ? T
   : undici.FormData;
 export const FormData: FormData = (globalThis as any)["FormData"] ??
   undici.FormData;
 
-export type Headers = (typeof globalThis) extends { "Headers": infer T } ? T
+export type Headers = (typeof globalThis) extends
+  { "Headers": { prototype: infer T } } ? T
   : undici.Headers;
 export const Headers: Headers = (globalThis as any)["Headers"] ??
   undici.Headers;
