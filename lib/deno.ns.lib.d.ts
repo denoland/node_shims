@@ -163,39 +163,25 @@ declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
 export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
-export declare const fetch: (typeof globalThis) extends {
-      "fetch": infer T;
-  } ? T : typeof undici.fetch;
-export declare type File = (typeof globalThis) extends {
-      "File": {
+declare type GlobalThisPrototypeType<TKey extends string, FallbackType> = (typeof globalThis) extends {
+      [P in TKey]: {
           prototype: infer T;
       };
-  } ? T : undici.File;
-export declare const File: File;
-export declare type FormData = (typeof globalThis) extends {
-      "FormData": {
-          prototype: infer T;
-      };
-  } ? T : undici.FormData;
-export declare const FormData: FormData;
-export declare type Headers = (typeof globalThis) extends {
-      "Headers": {
-          prototype: infer T;
-      };
-  } ? T : undici.Headers;
-export declare const Headers: Headers;
-export declare type Request = (typeof globalThis) extends {
-      "Request": {
-          prototype: infer T;
-      };
-  } ? T : undici.Request;
-export declare const Request: Request;
-export declare type Response = (typeof globalThis) extends {
-      "Response": {
-          prototype: infer T;
-      };
-  } ? T : undici.Response;
-export declare const Response: Response;
+  } ? T : FallbackType;
+declare type GlobalThisType<TKey extends string, FallbackType> = (typeof globalThis) extends {
+      [P in TKey]: infer T;
+  } ? T : FallbackType;
+export declare const fetch: GlobalThisType<"fetch", typeof undici.fetch>;
+export declare type File = GlobalThisPrototypeType<"File", undici.File>;
+export declare const File: GlobalThisType<"File", typeof undici.File>;
+export declare type FormData = GlobalThisPrototypeType<"FormData", undici.FormData>;
+export declare const FormData: GlobalThisType<"FormData", typeof undici.FormData>;
+export declare type Headers = GlobalThisPrototypeType<"Headers", undici.Headers>;
+export declare const Headers: GlobalThisType<"Headers", typeof undici.Headers>;
+export declare type Request = GlobalThisPrototypeType<"Request", undici.Request>;
+export declare const Request: GlobalThisType<"Request", typeof undici.Request>;
+export declare type Response = GlobalThisPrototypeType<"Response", undici.Response>;
+export declare const Response: GlobalThisType<"Response", typeof undici.Response>;
 export declare function setTimeout(cb: (...args: any[]) => void, delay?: number, ...args: any[]): number;
 export declare function setInterval(cb: (...args: any[]) => void, delay?: number, ...args: any[]): number;
 /**

@@ -165,9 +165,31 @@ function ensureExported<TStructure extends StatementStructures>(
   structure: TStructure,
 ) {
   if (Structure.isExportable(structure)) {
-    structure.isExported = true;
+    const isInternal = hasRemoveExportKeywordJsDocTag(structure);
+    structure.isExported = !isInternal;
+
+    // remove the jsdocs if its internal
+    if (isInternal && Structure.isJSDocable(structure)) {
+      delete structure.docs;
+    }
   }
   return structure;
+}
+
+function hasRemoveExportKeywordJsDocTag(structure: StatementStructures) {
+  if (!Structure.isJSDocable(structure)) {
+    return false;
+  }
+  if (!structure.docs || !(structure.docs instanceof Array)) {
+    return false;
+  }
+
+  return structure.docs.some((d) => {
+    if (!d || typeof d === "string") {
+      return false;
+    }
+    return d.tags?.some((t) => t.tagName === "removeExportKeyword") ?? false;
+  });
 }
 
 function stripAmbient<TStructure extends StatementStructures>(
