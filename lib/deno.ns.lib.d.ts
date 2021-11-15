@@ -167,15 +167,21 @@ export declare const fetch: (typeof globalThis) extends {
       "fetch": infer T;
   } ? T : typeof undici.fetch;
 export declare type File = (typeof globalThis) extends {
-      "File": infer T;
+      "File": {
+          prototype: infer T;
+      };
   } ? T : undici.File;
 export declare const File: File;
 export declare type FormData = (typeof globalThis) extends {
-      "FormData": infer T;
+      "FormData": {
+          prototype: infer T;
+      };
   } ? T : undici.FormData;
 export declare const FormData: FormData;
 export declare type Headers = (typeof globalThis) extends {
-      "Headers": infer T;
+      "Headers": {
+          prototype: infer T;
+      };
   } ? T : undici.Headers;
 export declare const Headers: Headers;
 export declare type Request = (typeof globalThis) extends {
