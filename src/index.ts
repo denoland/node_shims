@@ -1,10 +1,10 @@
-export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
 export * as Deno from "./deno.js";
 export * from "./util/mod.js";
 
 // TODO: Wait for node builtin WhatWG Streams or fetch-blob to export them without assigning to globalThis
 import * as undici from "undici";
+import { Blob as BufferBlob } from "buffer";
 
 // fallback to using the global types and values if they exist
 
@@ -23,6 +23,10 @@ export type GlobalThisType<TKey extends string, FallbackType> =
     [P in TKey]: infer T;
   } ? T
     : FallbackType;
+
+export type Blob = GlobalThisPrototypeType<"Blob", BufferBlob>;
+export const Blob: GlobalThisType<"Blob", typeof BufferBlob> =
+  (globalThis as any)["Blob"] ?? BufferBlob;
 
 export const fetch: GlobalThisType<"fetch", typeof undici.fetch> =
   (globalThis as any)["fetch"] ??
