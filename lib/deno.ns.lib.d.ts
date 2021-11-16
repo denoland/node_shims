@@ -4,6 +4,7 @@
 
 import { URL } from "url";
 import * as undici from "undici";
+import { Blob as BufferBlob } from "buffer";
 
 /**
  * EventTarget is a DOM interface implemented by objects that can receive events
@@ -161,7 +162,6 @@ interface EventListenerObject {
 
 declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
-export { Blob } from "buffer";
 export { webcrypto as crypto } from "crypto";
 declare type GlobalThisPrototypeType<TKey extends string, FallbackType> = (typeof globalThis) extends {
       [P in TKey]: {
@@ -171,6 +171,8 @@ declare type GlobalThisPrototypeType<TKey extends string, FallbackType> = (typeo
 declare type GlobalThisType<TKey extends string, FallbackType> = (typeof globalThis) extends {
       [P in TKey]: infer T;
   } ? T : FallbackType;
+export declare type Blob = GlobalThisPrototypeType<"Blob", BufferBlob>;
+export declare const Blob: GlobalThisType<"Blob", typeof BufferBlob>;
 export declare const fetch: GlobalThisType<"fetch", typeof undici.fetch>;
 export declare type File = GlobalThisPrototypeType<"File", undici.File>;
 export declare const File: GlobalThisType<"File", typeof undici.File>;
