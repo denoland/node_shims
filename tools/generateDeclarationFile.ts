@@ -104,10 +104,12 @@ function getMainStatements() {
     "EventListenerObject",
     "EventListenerOrEventListenerObject",
   ].map((name) => {
-    // todo(dsherret): use Node.hasStructure type guard in next ts-morph release
-    return (denoStableDeclFile.getStatementOrThrow((s) =>
-      Node.hasName(s) && s.getName() === name
-    ) as any).getStructure();
+    const statement = denoStableDeclFile
+      .getStatementOrThrow((s) => Node.hasName(s) && s.getName() === name);
+    if (!Node.hasStructure(statement)) {
+      throw new Error("Unhandled");
+    }
+    return statement.getStructure() as StatementStructures;
   }));
 
   // re-export the export declarations from the index file that aren't relative
@@ -156,15 +158,11 @@ function getDenoNamespace(): ModuleDeclarationStructure {
   };
 }
 
-function exportAndStripAmbient<TStructure extends StatementStructures>(
-  structure: TStructure,
-) {
+function exportAndStripAmbient<TStructure>(structure: TStructure) {
   return ensureExported(stripAmbient(structure));
 }
 
-function ensureExported<TStructure extends StatementStructures>(
-  structure: TStructure,
-) {
+function ensureExported<TStructure>(structure: TStructure) {
   if (Structure.isExportable(structure)) {
     const isInternal = hasRemoveExportKeywordJsDocTag(structure);
     structure.isExported = !isInternal;
@@ -177,7 +175,7 @@ function ensureExported<TStructure extends StatementStructures>(
   return structure;
 }
 
-function hasRemoveExportKeywordJsDocTag(structure: StatementStructures) {
+function hasRemoveExportKeywordJsDocTag(structure: unknown) {
   if (!Structure.isJSDocable(structure)) {
     return false;
   }
@@ -193,9 +191,7 @@ function hasRemoveExportKeywordJsDocTag(structure: StatementStructures) {
   });
 }
 
-function stripAmbient<TStructure extends StatementStructures>(
-  structure: TStructure,
-) {
+function stripAmbient<TStructure>(structure: TStructure) {
   if (Structure.isAmbientable(structure)) {
     structure.hasDeclareKeyword = false;
   }
@@ -269,12 +265,12 @@ function* declToStructures(
       throw new Error("Unhandled.");
     }
 
-    // todo(dsherret): use Node.hasStructure in ts-morph in next release
-    if (!(decl as any).getStructure) {
-      console.error(decl.getFullText());
+    if (!Node.hasStructure(decl)) {
+      // todo(dsherret): remove assertion in next version of ts-morph
+      console.error((decl as Node).getFullText());
       throw new Error("Unhandled.");
     }
-    yield ((decl as any).getStructure() as StatementStructures);
+    yield decl.getStructure();
   }
 }
 
