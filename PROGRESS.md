@@ -14,6 +14,7 @@
 - [x] **`File`**
 - [x] 👻 **`FileInfo`**
 - [x] 👻 **`FsEvent`**
+- [x] 👻 **`FsEventFlag`**
 - [x] 👻 **`FsWatcher`**
 - [x] 👻 **`HrtimePermissionDescriptor`**
 - [x] 👻 **`HttpConn`**
@@ -59,6 +60,7 @@
 - [x] 🧪 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
 - [x] 👻 **`TlsConn`**
+- [x] 👻 **`TlsHandshakeInfo`**
 - [x] 👻 **`TlsListener`**
 - [x] 👻 **`UnixAddr`**
 - [ ] 👻 **`UpgradeWebSocketOptions`**
@@ -172,7 +174,7 @@
 
 # Unstable Progress
 
-26%. 14 unstable members to go:
+30%. 16 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
@@ -193,11 +195,17 @@
 - [ ] 👻 **`NativeType`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
+- [ ] 👻 **`StartTlsOptions`**
 - [ ] 👻 **`SystemMemoryInfo`**
 - [x] 🧪 👻 **`TestContext`**
 - [x] 🧪 👻 **`TestStepDefinition`**
+- [x] 👻 **`TlsConn`**
+- [x] 👻 **`TlsHandshakeInfo`**
+- [ ] 👻 **`TypedArray`**
 - [x] 👻 **`UnixConnectOptions`**
 - [x] 👻 **`UnixListenOptions`**
+- [ ] 🧪 **`UnsafePointer`**
+- [ ] 🧪 **`UnsafePointerView`**
 - [ ] 🧪 **`addSignalListener`**
 - [ ] 🧪 **`applySourceMap`**
 - [x] 🧪 **`connect`**
@@ -218,11 +226,13 @@
 - [ ] 🧪 **`listenDatagram`**
 - [ ] **`loadavg`**
 - [ ] **`osRelease`**
+- [ ] 🧪 **`refTimer`**
 - [ ] 🧪 **`removeSignalListener`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
 - [ ] 🧪 **`sleepSync`**
 - [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
+- [ ] 🧪 **`unrefTimer`**
 - [x] 🧪 **`utime`**
 - [x] 🧪 **`utimeSync`**

@@ -9,6 +9,7 @@ export type EnvPermissionDescriptor = Deno.EnvPermissionDescriptor;
 export type FfiPermissionDescriptor = Deno.FfiPermissionDescriptor;
 export type FileInfo = Deno.FileInfo;
 export type FsEvent = Deno.FsEvent;
+export type FsEventFlag = Deno.FsEventFlag;
 export type FsWatcher = Deno.FsWatcher;
 export type HrtimePermissionDescriptor = Deno.HrtimePermissionDescriptor;
 export type HttpConn = Deno.HttpConn;
