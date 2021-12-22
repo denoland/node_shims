@@ -1,5 +1,6 @@
 import { readSync } from "fs";
-export const readlineSync = () => {
+
+export function readlineSync() {
   let line = "";
   let char = "";
   const buf = Buffer.alloc(1);
@@ -10,8 +11,7 @@ export const readlineSync = () => {
       if (bytesRead === 0) {
         return line;
       }
-    } catch (err) {
-      // @ts-expect-error Property 'code' does not exist on type 'Error'.
+    } catch (err: any) {
       if (err.code === "EOF") {
         return line;
       }
@@ -23,4 +23,4 @@ export const readlineSync = () => {
     readSync(process.stdin.fd, buf, 0, 1, 0);
   }
   return line;
-};
+}

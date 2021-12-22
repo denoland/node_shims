@@ -1,13 +1,13 @@
 {
-  "name": "@deno/shim-timers",
+  "name": "@deno/shim-prompts",
   "version": "0.1.0",
-  "description": "Web compatible shim for setTimeout and setInterval.",
+  "description": "alert, confirm, and prompt for Node.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "prepare": "echo \"Prepared.\"",
     "build": "tsc",
-    "test": "ts-node --project tsconfig.json src/index.test.ts"
+    "test": "echo \"No tests yet\""
   },
   "files": [
     "dist"
@@ -20,7 +20,7 @@
     "shim",
     "deno",
     "node.js",
-    "timers"
+    "prompts"
   ],
   "author": "The Deno authors",
   "license": "MIT",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/denoland/deno.ns#readme",
   "devDependencies": {
-    "typescript": "^4.5.2",
-    "ts-node": "^10.4.0"
+    "@types/node": "^16.4.13",
+    "typescript": "^4.5.2"
   }
 }
