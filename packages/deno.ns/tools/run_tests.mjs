@@ -70,6 +70,8 @@ const testsToSkip = new Set([
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
   "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number
   "callbackTakesLongerThanInterval", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "sleepSyncShorterPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "sleepSyncLongerPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
   "unrefTimer", // can't use execCode
   "unrefTimer - mix ref and unref 1", // can't use execCode
   "unrefTimer - mix ref and unref 2", // can't use execCode
