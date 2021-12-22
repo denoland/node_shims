@@ -9,16 +9,16 @@ const ExitCodes = {
 } as const;
 
 const project = new Project({
-  tsConfigFilePath: "./tsconfig.json",
+  tsConfigFilePath: `./tsconfig.json`,
 });
 const typeChecker = project.getTypeChecker().compilerObject;
 
-const entryPoint = project.addSourceFileAtPath("./src/deno.ts");
+const entryPoint = project.addSourceFileAtPath(`./src/deno.ts`);
 const implemented = new Set(entryPoint.getExportedDeclarations().keys());
 
-const stableMembers = getDenoMembersFromFile("./src/deno/stable/lib.deno.d.ts");
+const stableMembers = getDenoMembersFromFile(`./src/deno/stable/lib.deno.d.ts`);
 const unstableMembers = getDenoMembersFromFile(
-  "./src/deno/unstable/lib.deno.unstable.d.ts",
+  `./src/deno/unstable/lib.deno.unstable.d.ts`,
 );
 
 outputInfo({

@@ -1,4 +1,4 @@
-// This script runs the unit tests under thirdparty/deno directory
+// This script runs the unit tests under third_party/deno directory
 
 import fs from "fs";
 import { createRequire } from "module";
@@ -46,12 +46,18 @@ const testsToSkip = new Set([
   "readFilePerm", // permissions
   "readFileDoesNotLeakResources", //TODO, rq: Deno.resources
   "readFileSyncDoesNotLeakResources", //TODO, rq: Deno.resources
+  "readFileWithAbortSignal", //TODO, rq: issue #64
+  "readFileWithAbortSignalReason", //TODO, rq: issue #64
+  "readFileWithAbortSignalPrimitiveReason", //TODO, rq: issue #64
 
   // read_text_file_test
   "readTextFileSyncPerm", // permissions
   "readTextFilePerm", // permissions
   "readTextFileDoesNotLeakResources", //TODO, rq: Deno.resources
   "readTextFileSyncDoesNotLeakResources", //TODO, rq: Deno.resources
+  "readTextFileWithAbortSignal", //TODO, rq: issue #64
+  "readTextFileWithAbortSignalReason", //TODO, rq: issue #64
+  "readTextFileWithAbortSignalPrimitiveReason", //TODO, rq: issue #64
 
   // read_dir_test
   "readDirSyncPerm", // permissions
@@ -63,9 +69,16 @@ const testsToSkip = new Set([
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
   "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number
-  "sleepSync", // unstable
-  "sleepSyncLongerPromise", // unstable
-  "sleepSyncShorterPromise", // unstable
+  "callbackTakesLongerThanInterval", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "sleepSyncShorterPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "sleepSyncLongerPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "unrefTimer", // can't use execCode
+  "unrefTimer - mix ref and unref 1", // can't use execCode
+  "unrefTimer - mix ref and unref 2", // can't use execCode
+  "unrefTimer - unref interval", // can't use execCode
+  "unrefTimer - unref then ref 1", // can't use execCode
+  "unrefTimer - unref then ref", // can't use execCode
+  "unrefTimer - invalid calls do nothing", // todo: add unrefTimer
   "stringifyAndEvalNonFunctions",
   "testFunctionParamsLength",
   "timeoutBindThis",
@@ -85,6 +98,10 @@ const testsToSkip = new Set([
   "writeFileAbortSignalPreAborted", // implementation detail
   "writeFileSyncPerm", // permissions
   "writeFilePerm", // permissions
+  "writeFileAbortSignalReason", // TODO, rq: issue #65
+  "writeFileAbortSignalPrimitiveReason", // TODO, rq: issue #65
+  "writeFileAbortSignalReasonPreAborted", // TODO, rq: issue #65
+  "writeFileAbortSignalPrimitiveReasonPreAborted", // TODO, rq: issue #65
 
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
@@ -149,8 +166,8 @@ async function setupTests() {
   globalThis.require = createRequire(import.meta.url);
   globalThis.__dirname = "";
 
-  // let Deno tests access thirdparty/deno/cli/tests/fixture.json
-  process.chdir("thirdparty/deno/");
+  // let Deno tests access third_party/deno/cli/tests/fixture.json
+  process.chdir("third_party/deno/");
 
   await import("../src/global.ts");
 }

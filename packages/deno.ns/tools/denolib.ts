@@ -17,7 +17,7 @@ const version = (await run("deno --version")).trim().split("\n").map((line) =>
 );
 
 await Deno.writeTextFile(
-  "src/deno/internal/version.ts",
+  `./src/deno/internal/version.ts`,
   [
     `export const deno = "${version.deno}";\n`,
     `export const typescript = "${version.typescript}";\n`,
@@ -25,11 +25,11 @@ await Deno.writeTextFile(
 );
 
 await Deno.writeTextFile(
-  "src/deno/stable/lib.deno.d.ts",
+  `./src/deno/stable/lib.deno.d.ts`,
   removeDeclsFromStable(processDeclarationFileText(stableTypes)),
 );
 await Deno.writeTextFile(
-  "src/deno/unstable/lib.deno.unstable.d.ts",
+  `./src/deno/unstable/lib.deno.unstable.d.ts`,
   processDeclarationFileText(unstableTypes),
 );
 
