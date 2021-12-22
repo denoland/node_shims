@@ -184,31 +184,6 @@ export declare type Request = GlobalThisPrototypeType<"Request", undici.Request>
 export declare const Request: GlobalThisType<"Request", typeof undici.Request>;
 export declare type Response = GlobalThisPrototypeType<"Response", undici.Response>;
 export declare const Response: GlobalThisType<"Response", typeof undici.Response>;
-export declare function setTimeout(cb: (...args: any[]) => void, delay?: number, ...args: any[]): number;
-export declare function setInterval(cb: (...args: any[]) => void, delay?: number, ...args: any[]): number;
-/**
- * Shows the given message and waits for the enter key pressed.
- * If the stdin is not interactive, it does nothing.
- * @param message
- */
-export declare function alert(message?: string): void;
-/**
- * Shows the given message and waits for the answer. Returns the user's answer as boolean.
- * Only `y` and `Y` are considered as true.
- * If the stdin is not interactive, it returns false.
- * @param message
- */
-export declare function confirm(message?: string): boolean;
-/**
- * Shows the given message and waits for the user's input. Returns the user's input as string.
- * If the default value is given and the user inputs the empty string, then it returns the given
- * default value.
- * If the default value is not given and the user inputs the empty string, it returns null.
- * If the stdin is not interactive, it returns null.
- * @param message
- * @param defaultValue
- */
-export declare function prompt(message?: string, defaultValue?: string): string | null;
 
 export declare namespace Deno {
   export class File implements Deno.File {
@@ -2819,6 +2794,17 @@ export declare namespace Deno {
    * Requires `allow-write` permission.
    */
   export function utimeSync(path: string | URL, atime: number | Date, mtime: number | Date): void;
+  /**
+   * UNSTABLE**: new API, yet to be vetted.
+   *
+   * SleepSync puts the main thread to sleep synchronously for a given amount of
+   * time in milliseconds.
+   *
+   * ```ts
+   * Deno.sleepSync(10);
+   * ```
+   */
+  export function sleepSync(millis: number): void;
 }
 
 declare module "deno.ns/deno" {
