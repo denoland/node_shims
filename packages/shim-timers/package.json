@@ -1,0 +1,34 @@
+{
+  "name": "@deno/shim-timers",
+  "version": "0.1.0",
+  "description": "Web compatible shim for setTimeout and setInterval.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "echo \"Prepared.\"",
+    "build": "tsc",
+    "test": "echo \"No tests yet\""
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denoland/deno.ns.git"
+  },
+  "keywords": [
+    "shim",
+    "deno",
+    "node.js",
+    "timers"
+  ],
+  "author": "The Deno authors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denoland/deno.ns/issues"
+  },
+  "homepage": "https://github.com/denoland/deno.ns#readme",
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  }
+}
