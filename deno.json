@@ -3,12 +3,12 @@
     "files": {
       "exclude": [
         "node_modules",
-        "dist",
-        "thirdparty",
-        "unit",
-        "src/deno/stable/lib.deno.d.ts",
-        "src/deno/unstable/lib.deno.unstable.d.ts",
-        "lib"
+        "packages/deno.ns/node_modules",
+        "packages/deno.ns/dist",
+        "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
+        "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
+        "packages/deno.ns/lib",
+        "thirdparty"
       ]
     },
     "rules": {
@@ -19,12 +19,12 @@
     "files": {
       "exclude": [
         "node_modules",
-        "dist",
-        "thirdparty",
-        "unit",
-        "src/deno/stable/lib.deno.d.ts",
-        "src/deno/unstable/lib.deno.unstable.d.ts",
-        "lib"
+        "packages/deno.ns/node_modules",
+        "packages/deno.ns/dist",
+        "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
+        "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
+        "packages/deno.ns/lib",
+        "thirdparty"
       ]
     }
   }

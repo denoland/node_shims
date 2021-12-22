@@ -1,6 +1,7 @@
 #!/usr/bin/env -S deno run --allow-read='.'
 
 import { Project, Symbol, SymbolFlags } from "./deps.ts";
+import { folders } from "./folders.ts";
 
 let exitCode = 0;
 const ExitCodes = {
@@ -9,16 +10,20 @@ const ExitCodes = {
 } as const;
 
 const project = new Project({
-  tsConfigFilePath: "./tsconfig.json",
+  tsConfigFilePath: `${folders.denoNsRoot}/tsconfig.json`,
 });
 const typeChecker = project.getTypeChecker().compilerObject;
 
-const entryPoint = project.addSourceFileAtPath("./src/deno.ts");
+const entryPoint = project.addSourceFileAtPath(
+  `${folders.denoNsRoot}/src/deno.ts`,
+);
 const implemented = new Set(entryPoint.getExportedDeclarations().keys());
 
-const stableMembers = getDenoMembersFromFile("./src/deno/stable/lib.deno.d.ts");
+const stableMembers = getDenoMembersFromFile(
+  `${folders.denoNsRoot}/src/deno/stable/lib.deno.d.ts`,
+);
 const unstableMembers = getDenoMembersFromFile(
-  "./src/deno/unstable/lib.deno.unstable.d.ts",
+  `${folders.denoNsRoot}/src/deno/unstable/lib.deno.unstable.d.ts`,
 );
 
 outputInfo({

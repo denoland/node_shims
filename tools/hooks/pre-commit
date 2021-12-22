@@ -1,7 +1,0 @@
-#!/bin/sh
-set -eu
-
-git diff --diff-filter=d --cached --name-only -z -- '*.ts' \
-  | xargs --null --no-run-if-empty deno lint
-tools/missing.ts > PROGRESS.md
-git add PROGRESS.md
