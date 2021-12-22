@@ -46,12 +46,18 @@ const testsToSkip = new Set([
   "readFilePerm", // permissions
   "readFileDoesNotLeakResources", //TODO, rq: Deno.resources
   "readFileSyncDoesNotLeakResources", //TODO, rq: Deno.resources
+  "readFileWithAbortSignal", //TODO, rq: issue #64
+  "readFileWithAbortSignalReason", //TODO, rq: issue #64
+  "readFileWithAbortSignalPrimitiveReason", //TODO, rq: issue #64
 
   // read_text_file_test
   "readTextFileSyncPerm", // permissions
   "readTextFilePerm", // permissions
   "readTextFileDoesNotLeakResources", //TODO, rq: Deno.resources
   "readTextFileSyncDoesNotLeakResources", //TODO, rq: Deno.resources
+  "readTextFileWithAbortSignal", //TODO, rq: issue #64
+  "readTextFileWithAbortSignalReason", //TODO, rq: issue #64
+  "readTextFileWithAbortSignalPrimitiveReason", //TODO, rq: issue #64
 
   // read_dir_test
   "readDirSyncPerm", // permissions
@@ -63,9 +69,14 @@ const testsToSkip = new Set([
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
   "clearTimeoutShouldThrowWithBigint", // Timeout is an object, not a number
-  "sleepSync", // unstable
-  "sleepSyncLongerPromise", // unstable
-  "sleepSyncShorterPromise", // unstable
+  "callbackTakesLongerThanInterval", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "unrefTimer", // can't use execCode
+  "unrefTimer - mix ref and unref 1", // can't use execCode
+  "unrefTimer - mix ref and unref 2", // can't use execCode
+  "unrefTimer - unref interval", // can't use execCode
+  "unrefTimer - unref then ref 1", // can't use execCode
+  "unrefTimer - unref then ref", // can't use execCode
+  "unrefTimer - invalid calls do nothing", // todo: add unrefTimer
   "stringifyAndEvalNonFunctions",
   "testFunctionParamsLength",
   "timeoutBindThis",
@@ -85,6 +96,10 @@ const testsToSkip = new Set([
   "writeFileAbortSignalPreAborted", // implementation detail
   "writeFileSyncPerm", // permissions
   "writeFilePerm", // permissions
+  "writeFileAbortSignalReason", // TODO, rq: issue #65
+  "writeFileAbortSignalPrimitiveReason", // TODO, rq: issue #65
+  "writeFileAbortSignalReasonPreAborted", // TODO, rq: issue #65
+  "writeFileAbortSignalPrimitiveReasonPreAborted", // TODO, rq: issue #65
 
   // write_text_file_test
   "writeTextFileSyncPerm", // permissions
