@@ -15,6 +15,10 @@
 		{
 			"name": "third_party",
 			"path": "../packages/deno.ns/third_party"
+		},
+		{
+			"name": "shim-timers",
+			"path": "../packages/shim-timers"
 		}
 	],
 	"settings": {

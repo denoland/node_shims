@@ -1,7 +1,8 @@
 {
   "name": "deno.ns-workspace",
   "workspaces": [
-    "packages/deno.ns"
+    "packages/deno.ns",
+    "packages/shim-timers"
   ],
   "scripts": {
     "lint": "deno lint --config deno.json",

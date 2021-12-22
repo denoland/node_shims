@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "strict": true,
+    "target": "ES2019",
+    "lib": ["ES2019"],
+    "declaration": true,
+    "outDir": "dist",
+    "stripInternal": true
+  },
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true,
+    "compilerOptions": {
+      "module": "ES2015"
+    }
+  },
+  "files": ["src/index.ts"]
+}
