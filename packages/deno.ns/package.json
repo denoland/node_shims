@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run --silent build && npm run denolib",
+    "prepare": "npm run denolib && npm run --silent build",
     "clean": "git clean -fXde !node_modules/",
     "test": "node --loader=ts-node/esm tools/run_tests.mjs",
     "denolib": "deno run --allow-run --allow-write=src/deno tools/denolib.ts",
