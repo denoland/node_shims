@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
-    - run: (cd thirdparty/deno; git submodule update --init --depth=1 test_util/std)
+    - run: (cd packages/deno.ns/third_party/deno; git submodule update --init --depth=1 test_util/std)
       shell: bash
     - uses: actions/setup-node@v2
       with:

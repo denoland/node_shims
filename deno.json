@@ -8,7 +8,7 @@
         "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
         "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
         "packages/deno.ns/lib",
-        "packages/deno.ns/thirdparty"
+        "packages/deno.ns/third_party"
       ]
     },
     "rules": {
@@ -24,7 +24,7 @@
         "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
         "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
         "packages/deno.ns/lib",
-        "packages/deno.ns/thirdparty"
+        "packages/deno.ns/third_party"
       ]
     }
   }

@@ -13,8 +13,8 @@
 			"path": "../packages/deno.ns/tools"
 		},
 		{
-			"name": "thirdparty",
-			"path": "../packages/deno.ns/thirdparty"
+			"name": "third_party",
+			"path": "../packages/deno.ns/third_party"
 		}
 	],
 	"settings": {
@@ -26,7 +26,7 @@
 			"**/.DS_Store": true,
 			"packages/deno.ns/src/": true,
 			"packages/deno.ns/tools/": true,
-			"packages/deno.ns/thirdparty/": true
+			"packages/deno.ns/third_party/": true
 		}
 	}
 }

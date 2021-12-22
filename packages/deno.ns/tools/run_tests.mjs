@@ -1,4 +1,4 @@
-// This script runs the unit tests under thirdparty/deno directory
+// This script runs the unit tests under third_party/deno directory
 
 import fs from "fs";
 import { createRequire } from "module";
@@ -149,8 +149,8 @@ async function setupTests() {
   globalThis.require = createRequire(import.meta.url);
   globalThis.__dirname = "";
 
-  // let Deno tests access thirdparty/deno/cli/tests/fixture.json
-  process.chdir("thirdparty/deno/");
+  // let Deno tests access third_party/deno/cli/tests/fixture.json
+  process.chdir("third_party/deno/");
 
   await import("../src/global.ts");
 }
