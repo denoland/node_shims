@@ -283,7 +283,7 @@ function getDeclarationProject() {
     tsConfigFilePath: `./tsconfig.json`,
   });
 
-  // exitIfDiagnostics(project, project.getPreEmitDiagnostics());
+  exitIfDiagnostics(project, project.getPreEmitDiagnostics());
 
   const dtsEmitResult = project.emitToMemory({
     emitOnlyDtsFiles: true,

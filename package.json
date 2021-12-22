@@ -2,6 +2,7 @@
   "name": "deno.ns-workspace",
   "workspaces": [
     "packages/deno.ns",
+    "packages/shim-prompts",
     "packages/shim-timers"
   ],
   "scripts": {

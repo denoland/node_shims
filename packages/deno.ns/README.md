@@ -9,16 +9,13 @@ See
 
 ```js
 const {
-  alert,
   Blob,
-  confirm,
   crypto,
   Deno,
   fetch,
   File,
   FormData,
   Headers,
-  prompt,
   Request,
   Response,
 } = require("deno.ns");
