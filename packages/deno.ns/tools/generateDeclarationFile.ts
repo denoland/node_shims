@@ -13,15 +13,12 @@ import {
   SyntaxKind,
   WriterFunction,
 } from "./deps.ts";
-import { folders } from "./folders.ts";
 
 console.log("Generating declaration file...");
 const statements: (StatementStructures | WriterFunction)[] = [];
 const declarationProject = getDeclarationProject();
 
-const indexFile = declarationProject.getSourceFileOrThrow(
-  `${folders.denoNsRoot}/dist/index.d.ts`,
-);
+const indexFile = declarationProject.getSourceFileOrThrow(`./dist/index.d.ts`);
 
 // header
 statements.push((writer) => {
@@ -58,9 +55,11 @@ statements.push({
   name: `"deno.ns/test-internals"`,
   statements: [
     ...Array.from(
-      fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-        `${folders.denoNsRoot}/dist/deno/internal/test.d.ts`,
-      )),
+      fileExportsToStructures(
+        declarationProject.getSourceFileOrThrow(
+          `./dist/deno/internal/test.d.ts`,
+        ),
+      ),
     ).map((s) => exportAndStripAmbient(s)),
   ],
 });
@@ -72,14 +71,14 @@ const newProject = new Project({
     // limit to only node types
     types: ["node"],
   },
-  tsConfigFilePath: `${folders.denoNsRoot}/tsconfig.json`,
+  tsConfigFilePath: `./tsconfig.json`,
   skipAddingFilesFromTsConfig: true,
   manipulationSettings: {
     indentationText: IndentationText.TwoSpaces,
   },
 });
 const sourceFile = newProject.createSourceFile(
-  `${folders.denoNsRoot}/lib/deno.ns.lib.d.ts`,
+  `./lib/deno.ns.lib.d.ts`,
   { statements },
   { overwrite: true },
 );
@@ -93,7 +92,7 @@ function getMainStatements() {
 
   // add some types from lib.deno.d.ts to make compiling happy
   const denoStableDeclFile = declarationProject.getSourceFileOrThrow(
-    `${folders.denoNsRoot}/src/deno/stable/lib.deno.d.ts`,
+    `./src/deno/stable/lib.deno.d.ts`,
   );
   statements.push(...[
     "EventTarget",
@@ -147,12 +146,12 @@ function getDenoNamespace(): ModuleDeclarationStructure {
     statements: [
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `${folders.denoNsRoot}/dist/deno/stable/main.d.ts`,
+          `./dist/deno/stable/main.d.ts`,
         )),
       ),
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `${folders.denoNsRoot}/dist/deno/unstable/main.d.ts`,
+          `./dist/deno/unstable/main.d.ts`,
         )),
       ),
     ].map((s) => exportAndStripAmbient(s)),
@@ -281,7 +280,7 @@ function getDeclarationProject() {
     compilerOptions: {
       declaration: true,
     },
-    tsConfigFilePath: `${folders.denoNsRoot}/tsconfig.json`,
+    tsConfigFilePath: `./tsconfig.json`,
   });
 
   // exitIfDiagnostics(project, project.getPreEmitDiagnostics());
@@ -291,7 +290,7 @@ function getDeclarationProject() {
   });
 
   const declarationProject = new Project({
-    tsConfigFilePath: `${folders.denoNsRoot}/tsconfig.json`,
+    tsConfigFilePath: `./tsconfig.json`,
     skipAddingFilesFromTsConfig: true,
   });
   for (const item of dtsEmitResult.getFiles()) {
@@ -300,10 +299,10 @@ function getDeclarationProject() {
     });
   }
   declarationProject.addSourceFileAtPath(
-    `${folders.denoNsRoot}/src/deno/stable/lib.deno.d.ts`,
+    `./src/deno/stable/lib.deno.d.ts`,
   );
   declarationProject.addSourceFileAtPath(
-    `${folders.denoNsRoot}/src/deno/unstable/lib.deno.unstable.d.ts`,
+    `./src/deno/unstable/lib.deno.unstable.d.ts`,
   );
 
   return declarationProject;

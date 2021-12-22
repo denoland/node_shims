@@ -1,5 +1,4 @@
 import { Project } from "./deps.ts";
-import { folders } from "./folders.ts";
 
 if (!Deno.version.deno.startsWith("1.17")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
@@ -18,7 +17,7 @@ const version = (await run("deno --version")).trim().split("\n").map((line) =>
 );
 
 await Deno.writeTextFile(
-  `${folders.denoNsRoot}/src/deno/internal/version.ts`,
+  `./src/deno/internal/version.ts`,
   [
     `export const deno = "${version.deno}";\n`,
     `export const typescript = "${version.typescript}";\n`,
@@ -26,11 +25,11 @@ await Deno.writeTextFile(
 );
 
 await Deno.writeTextFile(
-  `${folders.denoNsRoot}/src/deno/stable/lib.deno.d.ts`,
+  `./src/deno/stable/lib.deno.d.ts`,
   removeDeclsFromStable(processDeclarationFileText(stableTypes)),
 );
 await Deno.writeTextFile(
-  `${folders.denoNsRoot}/src/deno/unstable/lib.deno.unstable.d.ts`,
+  `./src/deno/unstable/lib.deno.unstable.d.ts`,
   processDeclarationFileText(unstableTypes),
 );
 

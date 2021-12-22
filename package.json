@@ -4,11 +4,7 @@
     "packages/deno.ns"
   ],
   "scripts": {
-    "denolib": "deno run --allow-run --allow-write=packages/deno.ns/src/deno tools/denolib.ts",
-    "generate-declaration-file": "deno run --allow-write=packages/deno.ns/lib --allow-read=. tools/generateDeclarationFile.ts",
     "lint": "deno lint --config deno.json",
-    "fmt": "deno fmt --config deno.json",
-    "prepare": "npm run --silent denolib",
-    "update-progress": "deno run --allow-read tools/missing.ts > packages/deno.ns/PROGRESS.md"
+    "fmt": "deno fmt --config deno.json"
   }
 }

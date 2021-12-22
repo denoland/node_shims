@@ -33,14 +33,14 @@ jobs:
     - run: deno fmt --config deno.json --check
       if: matrix.os == 'ubuntu-latest'
     - run: npm ci  --ignore-scripts
-    - run: npm run --silent test
-    - run: npm run --silent prepare
-    - run: tools/missing.ts || echo "Some items are missing"
+    - run: npm run --silent test --workspaces
+    - run: npm run --silent prepare --workspaces
+    - run: cd packages/deno.ns && tools/missing.ts || echo "Some items are missing"
       if: matrix.os == 'ubuntu-latest'
-    - run: tools/untested.sh
+    - run: cd packages/deno.ns && tools/untested.sh
       if: matrix.os == 'ubuntu-latest'
     - name: npm publish
       if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/') && github.repository == 'denoland/deno.ns'
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npm publish --workspaces packages/deno.ns
+      run: cd packages/deno.ns && npm publish
