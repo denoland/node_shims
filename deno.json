@@ -3,12 +3,17 @@
     "files": {
       "exclude": [
         "node_modules",
-        "packages/deno.ns/node_modules",
-        "packages/deno.ns/dist",
-        "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
-        "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
-        "packages/deno.ns/lib",
-        "packages/deno.ns/third_party"
+        "dist",
+        "packages/shim-deno/dist",
+        "packages/shim-deno/node_modules",
+        "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
+        "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
+        "packages/shim-deno/lib",
+        "packages/shim-deno/third_party",
+        "packages/shim-prompts/dist",
+        "packages/shim-prompts/node_modules",
+        "packages/shim-timers/dist",
+        "packages/shim-timers/node_modules"
       ]
     },
     "rules": {
@@ -19,12 +24,17 @@
     "files": {
       "exclude": [
         "node_modules",
-        "packages/deno.ns/node_modules",
-        "packages/deno.ns/dist",
-        "packages/deno.ns/src/deno/stable/lib.deno.d.ts",
-        "packages/deno.ns/src/deno/unstable/lib.deno.unstable.d.ts",
-        "packages/deno.ns/lib",
-        "packages/deno.ns/third_party"
+        "dist",
+        "packages/shim-deno/dist",
+        "packages/shim-deno/node_modules",
+        "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
+        "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
+        "packages/shim-deno/lib",
+        "packages/shim-deno/third_party",
+        "packages/shim-prompts/dist",
+        "packages/shim-prompts/node_modules",
+        "packages/shim-timers/dist",
+        "packages/shim-timers/node_modules"
       ]
     }
   }

@@ -5,16 +5,16 @@
 			"path": "../"
 		},
 		{
-			"name": "deno.ns",
-			"path": "../packages/deno.ns/src/"
+			"name": "shim-deno",
+			"path": "../packages/shim-deno/src/"
 		},
 		{
-			"name": "deno.ns-tools",
-			"path": "../packages/deno.ns/tools"
+			"name": "shim-deno-tools",
+			"path": "../packages/shim-deno/tools"
 		},
 		{
 			"name": "third_party",
-			"path": "../packages/deno.ns/third_party"
+			"path": "../packages/shim-deno/third_party"
 		},
 		{
 			"name": "shim-timers",
@@ -28,9 +28,9 @@
 			"**/.hg": true,
 			"**/CVS": true,
 			"**/.DS_Store": true,
-			"packages/deno.ns/src/": true,
-			"packages/deno.ns/tools/": true,
-			"packages/deno.ns/third_party/": true
+			"packages/shim-deno/src/": true,
+			"packages/shim-deno/tools/": true,
+			"packages/shim-deno/third_party/": true
 		}
 	}
 }

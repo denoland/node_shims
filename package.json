@@ -1,7 +1,7 @@
 {
-  "name": "deno.ns-workspace",
+  "name": "node-shimsworkspace",
   "workspaces": [
-    "packages/deno.ns",
+    "packages/shim-deno",
     "packages/shim-prompts",
     "packages/shim-timers"
   ],

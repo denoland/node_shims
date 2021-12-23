@@ -2807,14 +2807,7 @@ export declare namespace Deno {
   export function sleepSync(millis: number): void;
 }
 
-declare module "deno.ns/deno" {
-  export = Deno;
-}
-
-declare module "deno.ns/global" {
-}
-
-declare module "deno.ns/test-internals" {
+declare module "@deno/shim-deno/test-internals" {
   /** Reference to the array that `Deno.test` calls insert their definition into. */
   export const testDefinitions: Deno.TestDefinition[];
 }

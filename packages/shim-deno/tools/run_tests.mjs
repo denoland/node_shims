@@ -64,7 +64,7 @@ const testsToSkip = new Set([
   "readDirPerm", // permissions
 
   // testing_test
-  "invalidStepArguments", // no test runner in deno.ns
+  "invalidStepArguments", // no test runner in shim-deno
 
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
