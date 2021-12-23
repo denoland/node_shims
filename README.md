@@ -1,4 +1,4 @@
-# node-shims
+# deno_node_shims
 
 Deno shims for Node.js
 

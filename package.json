@@ -1,5 +1,5 @@
 {
-  "name": "node-shimsworkspace",
+  "name": "deno_node_shimsworkspace",
   "workspaces": [
     "packages/shim-deno",
     "packages/shim-prompts",
