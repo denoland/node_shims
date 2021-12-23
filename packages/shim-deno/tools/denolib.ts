@@ -45,7 +45,7 @@ async function run(cmd: string) {
 function processDeclarationFileText(text: string) {
   return text.replace('/// <reference lib="deno.net" />\n', "")
     .replace(
-      `/// <reference lib="@deno/shim-deno" />`,
+      `/// <reference lib="deno.ns" />`,
       `/// <reference path="../stable/lib.deno.d.ts" />`,
     );
 }

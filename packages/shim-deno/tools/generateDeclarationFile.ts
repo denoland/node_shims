@@ -30,8 +30,6 @@ statements.push((writer) => {
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
     .writeLine(`import { URL } from "url";`)
-    .writeLine(`import * as undici from "undici";`)
-    .writeLine(`import { Blob as BufferBlob } from "buffer";`)
     .blankLine();
 });
 

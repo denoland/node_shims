@@ -169,5 +169,48 @@ async function setupTests() {
   // let Deno tests access third_party/deno/cli/tests/fixture.json
   process.chdir("third_party/deno/");
 
-  await import("../src/global.ts");
+  globalThis.Deno = (await import("../src/index.ts")).Deno;
+  globalThis.Blob = (await import("buffer")).Blob;
+  await webStreamHack();
+
+  globalThis.crypto = (await import("crypto")).webcrypto;
+}
+
+async function webStreamHack() {
+  // https://github.com/node-fetch/fetch-blob/blob/c5c2b5215446334bf496733d4cdb48a981b4c440/streams.cjs
+  // 64 KiB (same size chrome slice theirs blob into Uint8array's)
+  const POOL_SIZE = 65536;
+
+  try {
+    if (!globalThis.ReadableStream) {
+      Object.assign(globalThis, await import("stream/web"));
+    }
+    const { Blob } = await import("buffer");
+    if (Blob && !Blob.prototype.stream) {
+      Blob.prototype.stream = function name() {
+        let position = 0;
+        //deno-lint-ignore no-this-alias
+        const blob = this;
+
+        return new ReadableStream({
+          type: "bytes",
+          async pull(ctrl) {
+            const chunk = blob.slice(
+              position,
+              Math.min(blob.size, position + POOL_SIZE),
+            );
+            const buffer = await chunk.arrayBuffer();
+            position += buffer.byteLength;
+            ctrl.enqueue(new Uint8Array(buffer));
+
+            if (position === blob.size) {
+              ctrl.close();
+            }
+          },
+        });
+      };
+    }
+  } catch (_error) {
+    // ignore
+  }
 }
