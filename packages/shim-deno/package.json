@@ -19,7 +19,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denoland/deno_node_shims.git"
+    "url": "https://github.com/denoland/node_deno_shims.git"
   },
   "exports": {
     ".": "./dist/index.js",

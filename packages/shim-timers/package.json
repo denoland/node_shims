@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/denoland/deno_node_shims.git"
+    "url": "git+https://github.com/denoland/node_deno_shims.git"
   },
   "keywords": [
     "shim",
@@ -25,9 +25,9 @@
   "author": "The Deno authors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/denoland/deno_node_shims/issues"
+    "url": "https://github.com/denoland/node_deno_shims/issues"
   },
-  "homepage": "https://github.com/denoland/deno_node_shims#readme",
+  "homepage": "https://github.com/denoland/node_deno_shims#readme",
   "devDependencies": {
     "typescript": "^4.5.2",
     "ts-node": "^10.4.0"
