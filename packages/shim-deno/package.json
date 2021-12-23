@@ -1,6 +1,6 @@
 {
-  "name": "deno.ns",
-  "version": "0.8.0",
+  "name": "@deno/shim-deno",
+  "version": "0.1.0",
   "description": "Deno namespace shim for Node.js",
   "keywords": [
     "deno namespace",
@@ -10,7 +10,7 @@
     "shim"
   ],
   "main": "./dist/index.js",
-  "types": "./lib/deno.ns.lib.d.ts",
+  "types": "./lib/shim-deno.lib.d.ts",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
   "contributors": [
     "Wojciech Pawlik <woj.pawlik@gmail.com>",
@@ -19,17 +19,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/denoland/deno.ns.git"
+    "url": "https://github.com/denoland/node-shims.git"
   },
   "exports": {
     ".": "./dist/index.js",
-    "./global": "./dist/global.js",
-    "./deno": "./dist/deno.js",
     "./test-internals": "./dist/deno/internal/test.js"
   },
   "files": [
     "dist",
-    "lib/deno.ns.lib.d.ts"
+    "lib/shim-deno.lib.d.ts"
   ],
   "scripts": {
     "build": "tsc",
@@ -44,7 +42,6 @@
     "node": ">=16.7.0"
   },
   "dependencies": {
-    "undici": "^4.5.1",
     "which": "^2.0.2"
   },
   "devDependencies": {

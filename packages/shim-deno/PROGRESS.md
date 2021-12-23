@@ -1,6 +1,6 @@
 # Stable Progress
 
-91%. 13 stable members to go:
+90%. 15 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -17,7 +17,7 @@
 - [x] 👻 **`FsEventFlag`**
 - [x] 👻 **`FsWatcher`**
 - [x] 👻 **`HrtimePermissionDescriptor`**
-- [x] 👻 **`HttpConn`**
+- [ ] 👻 **`HttpConn`**
 - [x] 👻 **`InspectOptions`**
 - [x] 👻 **`ListenOptions`**
 - [x] 👻 **`ListenTlsOptions`**
@@ -45,7 +45,7 @@
 - [x] 👻 **`ReaderSync`**
 - [ ] 👻 **`RecordType`**
 - [x] 👻 **`RemoveOptions`**
-- [x] 👻 **`RequestEvent`**
+- [ ] 👻 **`RequestEvent`**
 - [ ] 👻 **`ResolveDnsOptions`**
 - [x] 👻 **`ResourceMap`**
 - [x] 👻 **`RunOptions`**
@@ -230,7 +230,7 @@
 - [ ] 🧪 **`removeSignalListener`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
-- [ ] 🧪 **`sleepSync`**
+- [x] 🧪 **`sleepSync`**
 - [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
 - [ ] 🧪 **`unrefTimer`**

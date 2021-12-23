@@ -3,8 +3,6 @@
 /// <reference types="node" />
 
 import { URL } from "url";
-import * as undici from "undici";
-import { Blob as BufferBlob } from "buffer";
 
 /**
  * EventTarget is a DOM interface implemented by objects that can receive events
@@ -162,28 +160,6 @@ interface EventListenerObject {
 
 declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
-export { webcrypto as crypto } from "crypto";
-declare type GlobalThisPrototypeType<TKey extends string, FallbackType> = (typeof globalThis) extends {
-      [P in TKey]: {
-          prototype: infer T;
-      };
-  } ? T : FallbackType;
-declare type GlobalThisType<TKey extends string, FallbackType> = (typeof globalThis) extends {
-      [P in TKey]: infer T;
-  } ? T : FallbackType;
-export declare type Blob = GlobalThisPrototypeType<"Blob", BufferBlob>;
-export declare const Blob: GlobalThisType<"Blob", typeof BufferBlob>;
-export declare const fetch: GlobalThisType<"fetch", typeof undici.fetch>;
-export declare type File = GlobalThisPrototypeType<"File", undici.File>;
-export declare const File: GlobalThisType<"File", typeof undici.File>;
-export declare type FormData = GlobalThisPrototypeType<"FormData", undici.FormData>;
-export declare const FormData: GlobalThisType<"FormData", typeof undici.FormData>;
-export declare type Headers = GlobalThisPrototypeType<"Headers", undici.Headers>;
-export declare const Headers: GlobalThisType<"Headers", typeof undici.Headers>;
-export declare type Request = GlobalThisPrototypeType<"Request", undici.Request>;
-export declare const Request: GlobalThisType<"Request", typeof undici.Request>;
-export declare type Response = GlobalThisPrototypeType<"Response", undici.Response>;
-export declare const Response: GlobalThisType<"Response", typeof undici.Response>;
 
 export declare namespace Deno {
   export class File implements Deno.File {
@@ -1816,12 +1792,6 @@ export declare namespace Deno {
     name: "hrtime";
   }
 
-  export interface HttpConn extends AsyncIterable<RequestEvent> {
-    readonly rid: number;
-    nextRequest(): Promise<RequestEvent | null>;
-    close(): void;
-  }
-
   export interface InspectOptions {
     /** Stylize output with ANSI colors. Defaults to false. */
     colors?: boolean;
@@ -2139,11 +2109,6 @@ export declare namespace Deno {
      * it's a non-empty directory.
      */
     recursive?: boolean;
-  }
-
-  export interface RequestEvent {
-    readonly request: Request;
-    respondWith(r: Response | Promise<Response>): Promise<void>;
   }
 
   export interface ResourceMap {
@@ -2807,14 +2772,7 @@ export declare namespace Deno {
   export function sleepSync(millis: number): void;
 }
 
-declare module "deno.ns/deno" {
-  export = Deno;
-}
-
-declare module "deno.ns/global" {
-}
-
-declare module "deno.ns/test-internals" {
+declare module "@deno/shim-deno/test-internals" {
   /** Reference to the array that `Deno.test` calls insert their definition into. */
   export const testDefinitions: Deno.TestDefinition[];
 }

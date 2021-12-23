@@ -24,7 +24,7 @@ export class Conn extends File implements Deno.Conn {
 
 export class TlsConn extends Conn implements Deno.TlsConn {
   handshake(): Promise<Deno.TlsHandshakeInfo> {
-    console.warn("deno.ns: Handshake is not supported.");
+    console.warn("@deno/shim-deno: Handshake is not supported.");
     return Promise.resolve({
       alpnProtocol: null,
     });

@@ -1,29 +1,9 @@
-# `deno.ns`
+# @deno/shim-deno
 
 [`Deno` namespace](https://doc.deno.land/builtin/stable) shim for Node.js.
 
 See
-[PROGRESS.md](https://github.com/denoland/deno.ns/blob/main/packages/deno.ns/PROGRESS.md)
-
-## Usage
-
-```js
-const {
-  Blob,
-  crypto,
-  Deno,
-  fetch,
-  File,
-  FormData,
-  Headers,
-  Request,
-  Response,
-} = require("deno.ns");
-```
-
-or `node --require=deno.ns/global <denoBundleOutput>`,
-
-or https://github.com/wojpawlik/deno2node#shimming
+[PROGRESS.md](https://github.com/denoland/node-shims/blob/main/packages/shim-deno/PROGRESS.md)
 
 ## Acknowledgements
 

@@ -30,8 +30,6 @@ statements.push((writer) => {
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
     .writeLine(`import { URL } from "url";`)
-    .writeLine(`import * as undici from "undici";`)
-    .writeLine(`import { Blob as BufferBlob } from "buffer";`)
     .blankLine();
 });
 
@@ -39,20 +37,7 @@ statements.push(...getMainStatements());
 
 statements.push({
   kind: StructureKind.Module,
-  name: `"deno.ns/deno"`,
-  statements: (writer) => {
-    writer.writeLine("export = Deno;");
-  },
-});
-
-statements.push({
-  kind: StructureKind.Module,
-  name: `"deno.ns/global"`,
-});
-
-statements.push({
-  kind: StructureKind.Module,
-  name: `"deno.ns/test-internals"`,
+  name: `"@deno/shim-deno/test-internals"`,
   statements: [
     ...Array.from(
       fileExportsToStructures(
@@ -78,7 +63,7 @@ const newProject = new Project({
   },
 });
 const sourceFile = newProject.createSourceFile(
-  `./lib/deno.ns.lib.d.ts`,
+  `./lib/shim-deno.lib.d.ts`,
   { statements },
   { overwrite: true },
 );
