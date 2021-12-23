@@ -4,6 +4,8 @@
       "exclude": [
         "node_modules",
         "dist",
+        "packages/shim-crypto/dist",
+        "packages/shim-crypto/node_modules",
         "packages/shim-deno/dist",
         "packages/shim-deno/node_modules",
         "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
@@ -25,6 +27,8 @@
       "exclude": [
         "node_modules",
         "dist",
+        "packages/shim-crypto/dist",
+        "packages/shim-crypto/node_modules",
         "packages/shim-deno/dist",
         "packages/shim-deno/node_modules",
         "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
