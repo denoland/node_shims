@@ -1,0 +1,35 @@
+{
+  "name": "@deno/shim-crypto",
+  "version": "0.1.0",
+  "description": "Node shim for the web's `crypto` global.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "echo \"Prepared.\"",
+    "build": "tsc",
+    "test": "echo \"None at the moment\""
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denoland/node_deno_shims.git"
+  },
+  "keywords": [
+    "shim",
+    "deno",
+    "node.js",
+    "crypto"
+  ],
+  "author": "The Deno authors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denoland/node_deno_shims/issues"
+  },
+  "homepage": "https://github.com/denoland/node_deno_shims#readme",
+  "devDependencies": {
+    "typescript": "^4.5.2",
+    "ts-node": "^10.4.0"
+  }
+}

@@ -5,6 +5,10 @@
 			"path": "../"
 		},
 		{
+			"name": "shim-crypto",
+			"path": "../packages/shim-crypto"
+		},
+		{
 			"name": "shim-deno",
 			"path": "../packages/shim-deno/src/"
 		},
