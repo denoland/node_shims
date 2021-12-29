@@ -1,27 +1,32 @@
-import { open } from './open.ts'
+import { open } from "./open.ts"
 import assert from "assert/strict";
-import path from 'path';
+import path from "path";
 
+const withTempDir = (test: (tempDirPath: string) => Promise<void>) => async () => {
+    const tempDirPath = await Deno.makeTempDir();
+    try {
+        await test(tempDirPath);
+    } finally {
+        await Deno.remove(tempDirPath, { recursive: true });
+    }
+}
 
-const tempDir = await Deno.makeTempDir();
+Deno.test("creates file when createNew is set to true and file does not exist",
+    withTempDir(async (tempDirPath) => {
+        const filePath = path.join(tempDirPath, "some")
 
-Deno.test('creates file when createNew is set to true and file does not exist', async () => {
+        const fileHandle = await open(filePath, { createNew: true, write: true });
+        fileHandle.close();
 
-    const filePath = path.join(tempDir, 'some')
+        assert.ok(await Deno.stat(filePath));
+    }));
 
-    const fileHandle = await open(filePath, { createNew: true, write: true });
-    fileHandle.close();
+Deno.test("errors when createNew is set to true and file exists", withTempDir(async (tempDirPath) => {
 
-    assert.ok(await Deno.stat(filePath));
-});
+    const testFile = await Deno.makeTempFile({ dir: tempDirPath });
 
-Deno.test('errors when createNew is set to true and file exists', async () => {
-
-    const testFile = await Deno.makeTempFile({ dir: tempDir });
-
-    await assert.rejects(async () => {
-        await open(testFile, { createNew: true, write: true });
-    }, { message: `EEXIST: file already exists, open '${testFile}'` });
-});
-
-Deno.remove(tempDir, { recursive: true });
+    await assert.rejects(
+        open(testFile, { createNew: true, write: true }),
+        { message: `EEXIST: file already exists, open '${testFile}'` }
+    );
+}));
