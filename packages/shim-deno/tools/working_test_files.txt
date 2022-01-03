@@ -1,5 +1,5 @@
-src/deno/stable/functions/open.test.ts
 src/deno/internal/streams.test.ts
+src/deno/stable/functions/open.test.ts
 src/deno/stable/functions/run.test.ts
 third_party/deno/cli/tests/unit/abort_controller_test.ts
 third_party/deno/cli/tests/unit/blob_test.ts
