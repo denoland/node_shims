@@ -64,7 +64,7 @@ export function getCreationFlag(opts: Opts<CreationModes>) {
   if (opts.create && opts.truncate && !opts.createNew) {
     return O_CREAT | O_TRUNC;
   }
-  if (!opts.createNew) return O_CREAT | O_EXCL;
+  if (opts.createNew) return O_CREAT | O_EXCL;
 
   throw new errors.BadResource("EINVAL: Invalid fs flags.");
 }
