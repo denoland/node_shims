@@ -28,6 +28,8 @@ statements.push(
   "// DO NOT EDIT - This file is automatically maintained by `npm run generate-crypto-types`",
 );
 
+// ignore this bug in deno_lint (will be fixed in a future version)
+// deno-lint-ignore ban-types
 const visitedSymbols = new Set<Symbol>();
 const visitedNodes = new Set<Node>();
 const crypto = domDtsFile.getInterfaceOrThrow("Crypto");
@@ -40,6 +42,8 @@ project.createSourceFile(
   { overwrite: true },
 ).saveSync();
 
+// ignore this bug in deno_lint (will be fixed in a future version)
+// deno-lint-ignore ban-types
 function visitSymbol(symbol: Symbol) {
   if (visitedSymbols.has(symbol)) {
     return;
