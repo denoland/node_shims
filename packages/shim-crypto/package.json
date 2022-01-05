@@ -1,12 +1,13 @@
 {
   "name": "@deno/shim-crypto",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Node shim for the web's `crypto` global.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "echo \"Prepared.\"",
+    "prepare": "npm run generate-crypto-types",
     "build": "tsc",
+    "generate-crypto-types": "deno run --allow-read --allow-write ./scripts/generateCryptoTypes.ts",
     "test": "echo \"None at the moment\""
   },
   "files": [
