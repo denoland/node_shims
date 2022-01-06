@@ -32,6 +32,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
     - run: deno fmt --config deno.json --check
       if: matrix.os == 'ubuntu-latest'
+    - run: npm -v
     - run: npm ci  --ignore-scripts
     - run: npm run --silent test --workspaces
     - run: npm run --silent prepare --workspaces
