@@ -23,11 +23,12 @@ jobs:
       shell: bash
     - uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: 14
         registry-url: 'https://registry.npmjs.org'
     - uses: denoland/setup-deno@v1
       with:
         deno-version: ~1.17
+    - run: npm install --global npm@7
     - run: deno lint --config deno.json
       if: matrix.os == 'ubuntu-latest'
     - run: deno fmt --config deno.json --check
