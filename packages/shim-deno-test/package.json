@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "npm run generate-deno-types && npm run build",
-    "build": "tsc",
+    "build": "npm run generate-deno-types && tsc",
     "generate-deno-types": "deno run --allow-read --allow-write=. ./scripts/generateDenoTypes.ts",
     "test": "echo 'tested by shim-deno package.'"
   },
