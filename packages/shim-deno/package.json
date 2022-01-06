@@ -1,6 +1,6 @@
 {
   "name": "@deno/shim-deno",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Deno namespace shim for Node.js",
   "keywords": [
     "deno namespace",
@@ -37,9 +37,6 @@
     "denolib": "deno run --allow-run --allow-write=src/deno tools/denolib.ts",
     "generate-declaration-file": "deno run --allow-write=lib --allow-read=. tools/generateDeclarationFile.ts",
     "update-progress": "deno run --allow-read tools/missing.ts > PROGRESS.md"
-  },
-  "engines": {
-    "node": ">=16.7.0"
   },
   "dependencies": {
     "which": "^2.0.2"
