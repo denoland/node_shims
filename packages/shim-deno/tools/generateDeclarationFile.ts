@@ -1,5 +1,4 @@
 import {
-  Diagnostic,
   ExportedDeclarations,
   IndentationText,
   ModuleDeclarationStructure,
