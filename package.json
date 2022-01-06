@@ -3,6 +3,7 @@
   "workspaces": [
     "packages/shim-crypto",
     "packages/shim-deno",
+    "packages/shim-deno-test",
     "packages/shim-prompts",
     "packages/shim-timers"
   ],

@@ -13,6 +13,10 @@
 			"path": "../packages/shim-deno/src/"
 		},
 		{
+			"name": "shim-deno-test",
+			"path": "../packages/shim-deno-test/src/"
+		},
+		{
 			"name": "shim-deno-tools",
 			"path": "../packages/shim-deno/tools"
 		},

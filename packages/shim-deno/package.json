@@ -39,6 +39,7 @@
     "update-progress": "deno run --allow-read tools/missing.ts > PROGRESS.md"
   },
   "dependencies": {
+    "@deno/shim-deno-test": "^0.1.0",
     "which": "^2.0.2"
   },
   "devDependencies": {
