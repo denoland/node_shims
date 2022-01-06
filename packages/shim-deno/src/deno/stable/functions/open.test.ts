@@ -1,5 +1,5 @@
 import { open } from "./open.ts";
-import assert from "assert/strict";
+import assert from "assert";
 import path from "path";
 
 const withTempDir = (test: (tempDirPath: string) => Promise<void>) =>

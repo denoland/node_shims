@@ -1,6 +1,6 @@
 import { BufferStreamReader, StreamWriter } from "./streams.js";
 import fs from "fs";
-import assert from "assert/strict";
+import assert from "assert";
 
 // use a small buffer size for testing to cause many reads and writes
 const highWaterMark = 128;
@@ -20,7 +20,7 @@ Deno.test("reader should read", async () => {
   stream.close();
   const result = Buffer.concat(chunks);
   const expectedBytes = fs.readFileSync("README.md");
-  assert.deepEqual(expectedBytes, result);
+  assert.deepStrictEqual(expectedBytes, result);
 });
 
 Deno.test("reader should read all", async () => {
@@ -29,7 +29,7 @@ Deno.test("reader should read all", async () => {
   const result = await reader.readAll();
   stream.close();
   const expectedBytes = fs.readFileSync("README.md");
-  assert.deepEqual(expectedBytes, Buffer.from(result));
+  assert.deepStrictEqual(expectedBytes, Buffer.from(result));
 });
 
 Deno.test("writer should write", async () => {
@@ -50,7 +50,7 @@ Deno.test("writer should write", async () => {
     writeStream.close();
     readStream.close();
 
-    assert.deepEqual(
+    assert.deepStrictEqual(
       fs.readFileSync("README.md"),
       fs.readFileSync(tempFile),
     );
