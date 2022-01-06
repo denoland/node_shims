@@ -169,6 +169,7 @@ async function setupTests() {
   // let Deno tests access third_party/deno/cli/tests/fixture.json
   process.chdir("third_party/deno/");
 
+  globalThis.AbortController = require("abort-controller");
   globalThis.Deno = (await import("../src/index.ts")).Deno;
   globalThis.Blob = (await import("buffer")).Blob;
   await webStreamHack();
