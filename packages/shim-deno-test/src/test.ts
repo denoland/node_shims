@@ -1,4 +1,4 @@
-import { definitions } from "./definitions.js";
+import { testDefinitions } from "./definitions.js";
 import * as Deno from "./deno.types.gen.js";
 
 export const test: typeof Deno.test = function test() {
@@ -73,5 +73,5 @@ export const test: typeof Deno.test = function test() {
     throw new TypeError("The test name can't be empty");
   }
 
-  definitions.push(testDef);
+  testDefinitions.push(testDef);
 };
