@@ -111,6 +111,11 @@ const testsToSkip = new Set([
   "utimeSyncLargeNumberSuccess", // node.js cannot handle such a large value
   "utimeSyncPerm", // permissions
 ]);
+
+if (process.version < "v16.7") {
+  testsToSkip.add("blobStream");
+}
+
 const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
   .trim().split(/\s/);
 
