@@ -1,4 +1,5 @@
 {
+  "deno.enable": false,
   "deno.lint": true,
   "deno.config": "./deno.json",
   "editor.defaultFormatter": "denoland.vscode-deno",

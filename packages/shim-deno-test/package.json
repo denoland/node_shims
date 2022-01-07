@@ -1,13 +1,13 @@
 {
-  "name": "@deno/shim-crypto",
-  "version": "0.2.0",
-  "description": "Node shim for the web's `crypto` global.",
+  "name": "@deno/shim-deno-test",
+  "version": "0.1.0",
+  "description": "Deno.test only shim.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run generate-crypto-types && tsc",
-    "generate-crypto-types": "deno run --allow-read --allow-write ./scripts/generateCryptoTypes.ts",
-    "test": "echo \"None at the moment\""
+    "build": "npm run generate-deno-types && tsc",
+    "generate-deno-types": "deno run --allow-read --allow-write=. ./scripts/generateDenoTypes.ts",
+    "test": "echo 'tested by shim-deno package.'"
   },
   "files": [
     "dist"
@@ -19,8 +19,8 @@
   "keywords": [
     "shim",
     "deno",
-    "node.js",
-    "crypto"
+    "test",
+    "node.js"
   ],
   "author": "The Deno authors",
   "license": "MIT",
@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/denoland/node_deno_shims#readme",
   "devDependencies": {
-    "typescript": "^4.5.2",
-    "ts-node": "^10.4.0"
+    "typescript": "^4.5.2"
   }
 }

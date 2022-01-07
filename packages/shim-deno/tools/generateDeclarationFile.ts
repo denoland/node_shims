@@ -1,5 +1,4 @@
 import {
-  Diagnostic,
   ExportedDeclarations,
   IndentationText,
   ModuleDeclarationStructure,
@@ -12,7 +11,8 @@ import {
   StructureKind,
   SyntaxKind,
   WriterFunction,
-} from "./deps.ts";
+} from "../../../scripts/ts_morph.ts";
+import { exitIfDiagnostics } from "../../../scripts/helpers.ts";
 
 console.log("Generating declaration file...");
 const statements: (StatementStructures | WriterFunction)[] = [];
@@ -291,12 +291,4 @@ function getDeclarationProject() {
   );
 
   return declarationProject;
-}
-
-function exitIfDiagnostics(project: Project, diagnostics: Diagnostic[]) {
-  if (diagnostics.length > 0) {
-    console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
-    console.error(`Had ${diagnostics.length} diagnostic(s).`);
-    Deno.exit(1);
-  }
 }

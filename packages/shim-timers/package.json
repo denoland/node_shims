@@ -5,7 +5,6 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "echo \"Prepared.\"",
     "build": "tsc",
     "test": "ts-node --project tsconfig.json src/index.test.ts"
   },
