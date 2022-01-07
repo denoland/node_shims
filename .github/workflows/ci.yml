@@ -34,6 +34,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
     - run: npm -v
     - run: npm ci  --ignore-scripts
+    - run: npm run --silent build --workspaces
     - run: npm run --silent test --workspaces
     - run: cd packages/shim-deno && tools/missing.ts || echo "Some items are missing"
       if: matrix.os == 'ubuntu-latest'
