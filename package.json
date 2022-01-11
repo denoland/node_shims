@@ -1,6 +1,7 @@
 {
   "name": "node_deno_shimsworkspace",
   "workspaces": [
+    "packages/sham-weakref",
     "packages/shim-crypto",
     "packages/shim-deno-test",
     "packages/shim-deno",
