@@ -4,6 +4,8 @@
       "exclude": [
         "node_modules",
         "dist",
+        "packages/sham-weakref/dist",
+        "packages/sham-weakref/node_modules",
         "packages/shim-crypto/dist",
         "packages/shim-crypto/node_modules",
         "packages/shim-deno/dist",
@@ -29,6 +31,8 @@
       "exclude": [
         "node_modules",
         "dist",
+        "packages/sham-weakref/dist",
+        "packages/sham-weakref/node_modules",
         "packages/shim-crypto/dist",
         "packages/shim-crypto/node_modules",
         "packages/shim-deno/dist",

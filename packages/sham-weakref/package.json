@@ -1,0 +1,34 @@
+{
+  "name": "@deno/sham-weakref",
+  "version": "0.1.0",
+  "description": "WeakRef sham that uses the global WeakRef if it exists.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-node --project tsconfig.json src/index.test.ts"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denoland/node_deno_shims.git"
+  },
+  "keywords": [
+    "shim",
+    "deno",
+    "node.js",
+    "timers"
+  ],
+  "author": "The Deno authors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denoland/node_deno_shims/issues"
+  },
+  "homepage": "https://github.com/denoland/node_deno_shims#readme",
+  "devDependencies": {
+    "typescript": "^4.5.2",
+    "ts-node": "^10.4.0"
+  }
+}

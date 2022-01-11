@@ -5,6 +5,10 @@
 			"path": "../"
 		},
 		{
+			"name": "sham-weakref",
+			"path": "../packages/sham-weakref"
+		},
+		{
 			"name": "shim-crypto",
 			"path": "../packages/shim-crypto"
 		},
