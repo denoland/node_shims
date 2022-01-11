@@ -12,4 +12,4 @@ Deno shims for Node.js
 - [@deno/shim-timers](packages/shim-timers) - Shims for `setTimeout` and
   `setInterval`.
 - [@deno/sham-weakref](packages/sham-weakref) - Sham for the `WeakRef` global
-  that falls back to `WeakRef` if it exists.
+  that uses the global `WeakRef` if it exists.
