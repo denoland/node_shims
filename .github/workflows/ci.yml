@@ -36,7 +36,8 @@ jobs:
     - run: npm ci  --ignore-scripts
     - run: npm run --silent build --workspaces
     - run: npm run --silent test --workspaces
-    - run: cd packages/shim-deno && tools/missing.ts || echo "Some items are missing"
+    - name: Try running on Node 14
+      run: cd packages/shim-deno && npx node@14 dist/index.js
       if: matrix.os == 'ubuntu-latest'
     - run: cd packages/shim-deno && tools/untested.sh
       if: matrix.os == 'ubuntu-latest'
