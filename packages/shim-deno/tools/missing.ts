@@ -53,7 +53,6 @@ function getDenoMembersFromFile(filePath: string) {
     .sort((a, b) => Number(a.name > b.name) - Number(a.name < b.name));
 }
 
-// deno-lint-ignore ban-types
 function processExport(symbol: Symbol) {
   const deprecated = symbol.getJsDocTags().some((tag) =>
     tag.getName() === "deprecated"

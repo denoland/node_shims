@@ -13,14 +13,10 @@ import {
 } from "./ts_morph.ts";
 
 export function extractTypesFromSymbol(opts: {
-  // ignore this bug in deno_lint (will be fixed in a future version)
-  // deno-lint-ignore ban-types
   symbol: Symbol;
   /** If this declaration should be included and analyzed. */
   isContainedDeclaration: (node: Node) => boolean;
 }) {
-  // ignore this bug in deno_lint (will be fixed in a future version)
-  // deno-lint-ignore ban-types
   const visitedSymbols = new Set<Symbol>();
   const visitedNodes = new Set<Node>();
   const statements: (StatementStructures | string)[] = [];
@@ -29,8 +25,6 @@ export function extractTypesFromSymbol(opts: {
 
   return statements;
 
-  // ignore this bug in deno_lint (will be fixed in a future version)
-  // deno-lint-ignore ban-types
   function visitSymbol(symbol: Symbol) {
     if (visitedSymbols.has(symbol)) {
       return;
