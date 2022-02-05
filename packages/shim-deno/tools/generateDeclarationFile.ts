@@ -39,6 +39,12 @@ statements.push({
   kind: StructureKind.Module,
   name: `"@deno/shim-deno/test-internals"`,
   statements: [
+    {
+      // to make the code below compile
+      kind: StructureKind.TypeAlias,
+      name: "TestDefinition",
+      type: "Deno.TestDefinition",
+    },
     ...Array.from(
       fileExportsToStructures(
         declarationProject.getSourceFileOrThrow(

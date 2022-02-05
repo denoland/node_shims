@@ -1518,7 +1518,7 @@ export declare namespace Deno {
    *
    * Returns the number of bytes written.  This function is one of the lowest
    * level APIs and most users should not work with this directly, but rather use
-   * Deno.writeAllSync() instead.
+   * `writeAllSync()` from https://deno.land/std/streams/conversion.ts instead.
    *
    * **It is not guaranteed that the full buffer will be written in a single
    * call.**
@@ -2637,47 +2637,42 @@ export declare namespace Deno {
   /** A handle for `stderr`. */
   export const stderr: Writer & WriterSync & Closer & { readonly rid: number };
 
-  /** *UNSTABLE**: New option, yet to be vetted. */
-  export interface TestContext {
-  }
-
-  /** *UNSTABLE**: New option, yet to be vetted. */
   export interface TestContext {
     /**
-     * Run a sub step of the parent test with a given name. Returns a promise
+     * Run a sub step of the parent test or step. Returns a promise
      * that resolves to a boolean signifying if the step completed successfully.
      * The returned promise never rejects unless the arguments are invalid.
-     * If the test was ignored, the promise returns `false`.
+     * If the test was ignored the promise returns `false`.
      */
     step(t: TestStepDefinition): Promise<boolean>;
     /**
-     * Run a sub step of the parent test with a given name. Returns a promise
+     * Run a sub step of the parent test or step. Returns a promise
      * that resolves to a boolean signifying if the step completed successfully.
      * The returned promise never rejects unless the arguments are invalid.
-     * If the test was ignored, the promise returns `false`.
+     * If the test was ignored the promise returns `false`.
      */
     step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
   }
 
-  /** *UNSTABLE**: New option, yet to be vetted. */
   export interface TestStepDefinition {
     fn: (t: TestContext) => void | Promise<void>;
     name: string;
     ignore?: boolean;
     /**
-     * Check that the number of async completed ops after the test is the same
-     * as number of dispatched ops. Defaults to true.
+     * Check that the number of async completed ops after the test step is the same
+     * as number of dispatched ops. Defaults to the parent test or step's value.
      */
     sanitizeOps?: boolean;
     /**
-     * Ensure the test case does not "leak" resources - ie. the resource table
+     * Ensure the test step does not "leak" resources - ie. the resource table
      * after the test has exactly the same contents as before the test. Defaults
-     * to true.
+     * to the parent test or step's value.
      */
     sanitizeResources?: boolean;
     /**
-     * Ensure the test case does not prematurely cause the process to exit,
-     * for example via a call to `Deno.exit`. Defaults to true.
+     * Ensure the test step does not prematurely cause the process to exit,
+     * for example via a call to `Deno.exit`. Defaults to the parent test or
+     * step's value.
      */
     sanitizeExit?: boolean;
   }
@@ -2760,7 +2755,7 @@ export declare namespace Deno {
    */
   export function utimeSync(path: string | URL, atime: number | Date, mtime: number | Date): void;
   /**
-   * UNSTABLE**: new API, yet to be vetted.
+   * *UNSTABLE**: new API, yet to be vetted.
    *
    * SleepSync puts the main thread to sleep synchronously for a given amount of
    * time in milliseconds.
@@ -2773,6 +2768,7 @@ export declare namespace Deno {
 }
 
 declare module "@deno/shim-deno/test-internals" {
+  type TestDefinition = Deno.TestDefinition;
   /** Reference to the array that `Deno.test` calls insert their definition into. */
-  export const testDefinitions: Deno.TestDefinition[];
+  export const testDefinitions: TestDefinition[];
 }

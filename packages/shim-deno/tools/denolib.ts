@@ -1,6 +1,6 @@
 import { Project } from "./deps.ts";
 
-if (!Deno.version.deno.startsWith("1.17")) {
+if (!Deno.version.deno.startsWith("1.18")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
