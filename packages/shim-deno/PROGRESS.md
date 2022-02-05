@@ -57,8 +57,9 @@
 - [x] 👻 **`Signal`**
 - [ ] 👻 **`StartTlsOptions`**
 - [x] 👻 **`SymlinkOptions`**
-- [x] 🧪 👻 **`TestContext`**
+- [x] 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
+- [x] 👻 **`TestStepDefinition`**
 - [x] 👻 **`TlsConn`**
 - [x] 👻 **`TlsHandshakeInfo`**
 - [x] 👻 **`TlsListener`**
@@ -174,10 +175,11 @@
 
 # Unstable Progress
 
-30%. 16 unstable members to go:
+20%. 27 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
+- [ ] 👻 **`ConditionalAsync`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
@@ -188,22 +190,29 @@
 - [ ] 🧪 👻 **`EmitOptions`**
 - [ ] 🧪 👻 **`EmitResult`**
 - [ ] 👻 **`ForeignFunction`**
+- [ ] 👻 **`ForeignFunctionInterface`**
 - [ ] 🧪 **`HttpClient`**
 - [ ] 👻 **`ImportMap`**
 - [x] 👻 **`ListenTlsOptions`**
 - [ ] 🧪 👻 **`Location`**
 - [ ] 👻 **`NativeType`**
+- [ ] 👻 **`NetworkInterfaceInfo`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
 - [ ] 👻 **`StartTlsOptions`**
+- [ ] 👻 **`StaticForeignFunction`**
+- [ ] 👻 **`StaticForeignFunctionInterface`**
+- [ ] 👻 **`StaticForeignFunctionParameter`**
+- [ ] 👻 **`StaticForeignFunctionParameters`**
+- [ ] 👻 **`StaticForeignFunctionResult`**
+- [ ] 👻 **`StaticNativeNumberType`**
 - [ ] 👻 **`SystemMemoryInfo`**
-- [x] 🧪 👻 **`TestContext`**
-- [x] 🧪 👻 **`TestStepDefinition`**
 - [x] 👻 **`TlsConn`**
 - [x] 👻 **`TlsHandshakeInfo`**
 - [ ] 👻 **`TypedArray`**
 - [x] 👻 **`UnixConnectOptions`**
 - [x] 👻 **`UnixListenOptions`**
+- [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
 - [ ] 🧪 **`addSignalListener`**
@@ -221,10 +230,12 @@
 - [ ] 🧪 **`funlockSync`**
 - [x] 🧪 **`futime`**
 - [x] 🧪 **`futimeSync`**
+- [ ] **`getUid`**
 - [ ] 🧪 **`hostname`**
 - [x] 🧪 **`listen`**
 - [ ] 🧪 **`listenDatagram`**
 - [ ] **`loadavg`**
+- [ ] **`networkInterfaces`**
 - [ ] **`osRelease`**
 - [ ] 🧪 **`refTimer`**
 - [ ] 🧪 **`removeSignalListener`**

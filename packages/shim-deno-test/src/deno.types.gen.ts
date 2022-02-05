@@ -203,47 +203,42 @@ export interface TestDefinition {
         };
 }
 
-/** *UNSTABLE**: New option, yet to be vetted. */
-export interface TestContext {
-}
-
-/** *UNSTABLE**: New option, yet to be vetted. */
 export interface TestContext {
   /**
-   * Run a sub step of the parent test with a given name. Returns a promise
+   * Run a sub step of the parent test or step. Returns a promise
    * that resolves to a boolean signifying if the step completed successfully.
    * The returned promise never rejects unless the arguments are invalid.
-   * If the test was ignored, the promise returns `false`.
+   * If the test was ignored the promise returns `false`.
    */
   step(t: TestStepDefinition): Promise<boolean>;
   /**
-   * Run a sub step of the parent test with a given name. Returns a promise
+   * Run a sub step of the parent test or step. Returns a promise
    * that resolves to a boolean signifying if the step completed successfully.
    * The returned promise never rejects unless the arguments are invalid.
-   * If the test was ignored, the promise returns `false`.
+   * If the test was ignored the promise returns `false`.
    */
   step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
 }
 
-/** *UNSTABLE**: New option, yet to be vetted. */
 export interface TestStepDefinition {
   fn: (t: TestContext) => void | Promise<void>;
   name: string;
   ignore?: boolean;
   /**
-   * Check that the number of async completed ops after the test is the same
-   * as number of dispatched ops. Defaults to true.
+   * Check that the number of async completed ops after the test step is the same
+   * as number of dispatched ops. Defaults to the parent test or step's value.
    */
   sanitizeOps?: boolean;
   /**
-   * Ensure the test case does not "leak" resources - ie. the resource table
+   * Ensure the test step does not "leak" resources - ie. the resource table
    * after the test has exactly the same contents as before the test. Defaults
-   * to true.
+   * to the parent test or step's value.
    */
   sanitizeResources?: boolean;
   /**
-   * Ensure the test case does not prematurely cause the process to exit,
-   * for example via a call to `Deno.exit`. Defaults to true.
+   * Ensure the test step does not prematurely cause the process to exit,
+   * for example via a call to `Deno.exit`. Defaults to the parent test or
+   * step's value.
    */
   sanitizeExit?: boolean;
 }
