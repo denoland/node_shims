@@ -1,7 +1,7 @@
 import { testDefinitions } from "./definitions.js";
 import * as Deno from "./deno.types.gen.js";
 
-export {
+export type {
   TestContext,
   TestDefinition,
   TestStepDefinition,
