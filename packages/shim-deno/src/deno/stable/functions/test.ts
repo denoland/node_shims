@@ -1,1 +1,6 @@
-export { test } from "@deno/shim-deno-test";
+export {
+  test,
+  TestContext,
+  TestDefinition,
+  TestStepDefinition,
+} from "@deno/shim-deno-test";

@@ -1,6 +1,12 @@
 import { testDefinitions } from "./definitions.js";
 import * as Deno from "./deno.types.gen.js";
 
+export {
+  TestContext,
+  TestDefinition,
+  TestStepDefinition,
+} from "./deno.types.gen.js";
+
 export const test: typeof Deno.test = function test() {
   let testDef: Deno.TestDefinition;
   const firstArg = arguments[0];
