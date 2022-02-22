@@ -79,6 +79,7 @@ const testsToSkip = new Set([
   "unrefTimer - unref then ref 1", // can't use execCode
   "unrefTimer - unref then ref", // can't use execCode
   "unrefTimer - invalid calls do nothing", // todo: add unrefTimer
+  "timerMaxCpuBug", // uses metrics
   "stringifyAndEvalNonFunctions",
   "testFunctionParamsLength",
   "timeoutBindThis",

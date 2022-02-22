@@ -2,9 +2,9 @@
 
 import { Socket } from "net";
 
-import { File } from "../stable/classes/File.js";
+import { FsFile } from "../stable/classes/FsFile.js";
 
-export class Conn extends File implements Deno.Conn {
+export class Conn extends FsFile implements Deno.Conn {
   #socket: Socket;
 
   constructor(
@@ -19,6 +19,14 @@ export class Conn extends File implements Deno.Conn {
 
   async closeWrite() {
     await new Promise<void>((resolve) => this.#socket.end(resolve));
+  }
+
+  setNoDelay(enable?: boolean) {
+    this.#socket.setNoDelay(enable);
+  }
+
+  setKeepAlive(enable?: boolean) {
+    this.#socket.setKeepAlive(enable);
   }
 }
 

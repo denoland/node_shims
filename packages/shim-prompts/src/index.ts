@@ -1,7 +1,7 @@
 import { writeSync } from "fs";
 import { readlineSync } from "./readlineSync.js";
 
-export const alert: (typeof globalThis) extends { [P in "alert"]: infer T } ? T
+export const alert: typeof globalThis extends { alert: infer T } ? T
   : (message?: any) => void = (globalThis as any)["alert"] ??
     function alert(message) {
       writeSync(
@@ -11,8 +11,7 @@ export const alert: (typeof globalThis) extends { [P in "alert"]: infer T } ? T
       readlineSync();
     };
 
-export const confirm: (typeof globalThis) extends { [P in "confirm"]: infer T }
-  ? T
+export const confirm: typeof globalThis extends { confirm: infer T } ? T
   : (message?: string) => boolean = (globalThis as any)["confirm"] ??
     function confirm(message) {
       writeSync(
@@ -23,8 +22,7 @@ export const confirm: (typeof globalThis) extends { [P in "confirm"]: infer T }
       return ["y", "Y"].includes(result);
     };
 
-export const prompt: (typeof globalThis) extends { [P in "prompt"]: infer T }
-  ? T
+export const prompt: typeof globalThis extends { prompt: infer T } ? T
   : (message?: string, _default?: string) => string | null =
     (globalThis as any)["prompt"] ??
       function prompt(

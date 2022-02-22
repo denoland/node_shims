@@ -4,8 +4,6 @@ import fs from "fs";
 import mapError from "../internal/errorMap.js";
 import { errors } from "../stable/variables.js";
 
-export type TestContext = Deno.TestContext;
-export type TestStepDefinition = Deno.TestStepDefinition;
 export type TlsHandshakeInfo = Deno.TlsHandshakeInfo;
 export type UnixConnectOptions = Deno.UnixConnectOptions;
 export type UnixListenOptions = Deno.UnixListenOptions;

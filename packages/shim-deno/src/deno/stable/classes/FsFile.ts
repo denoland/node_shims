@@ -10,7 +10,7 @@ import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
 import { writeSync } from "../functions/writeSync.js";
 
-export class File implements Deno.File {
+export class FsFile implements Deno.FsFile {
   constructor(readonly rid: number) {}
 
   async write(p: Uint8Array): Promise<number> {
@@ -37,13 +37,11 @@ export class File implements Deno.File {
     return readSync(this.rid, p);
   }
 
-  // deno-lint-ignore no-unused-vars
-  seek(offset: number, whence: Deno.SeekMode): Promise<number> {
+  seek(_offset: number, _whence: Deno.SeekMode): Promise<number> {
     throw new Error("Method not implemented.");
   }
 
-  // deno-lint-ignore no-unused-vars
-  seekSync(offset: number, whence: Deno.SeekMode): number {
+  seekSync(_offset: number, _whence: Deno.SeekMode): number {
     throw new Error("Method not implemented.");
   }
 
@@ -58,4 +56,16 @@ export class File implements Deno.File {
   close(): void {
     fs.closeSync(this.rid);
   }
+
+  get readable(): ReadableStream<Uint8Array> {
+    throw new Error("Not implemented.");
+  }
+
+  get writable(): WritableStream<Uint8Array> {
+    throw new Error("Not implemented.");
+  }
 }
+
+const File = FsFile;
+
+export { File };

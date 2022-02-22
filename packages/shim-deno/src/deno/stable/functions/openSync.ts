@@ -2,7 +2,7 @@
 
 import { openSync as nodeOpenSync } from "fs";
 
-import { File } from "../classes/File.js";
+import { File } from "../classes/FsFile.js";
 import { getFsFlag } from "../../internal/fs_flags.js";
 
 export const openSync: typeof Deno.openSync = function openSync(
