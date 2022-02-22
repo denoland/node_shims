@@ -1,6 +1,6 @@
 import { Project } from "./deps.ts";
 
-if (!Deno.version.deno.startsWith("1.18")) {
+if (!Deno.version.deno.startsWith("1.19.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
@@ -26,7 +26,7 @@ await Deno.writeTextFile(
 
 await Deno.writeTextFile(
   `./src/deno/stable/lib.deno.d.ts`,
-  removeDeclsFromStable(processDeclarationFileText(stableTypes)),
+  processDeclsFromStable(processDeclarationFileText(stableTypes)),
 );
 await Deno.writeTextFile(
   `./src/deno/unstable/lib.deno.unstable.d.ts`,
@@ -50,7 +50,7 @@ function processDeclarationFileText(text: string) {
     );
 }
 
-function removeDeclsFromStable(text: string) {
+function processDeclsFromStable(text: string) {
   const project = new Project({ useInMemoryFileSystem: true });
   const sourceFile = project.createSourceFile("deno.lib.d.ts", text);
 
@@ -59,6 +59,62 @@ function removeDeclsFromStable(text: string) {
   sourceFile.getInterfaceOrThrow("AbortSignal").remove();
   sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
   sourceFile.getVariableStatementOrThrow("AbortSignal").remove();
+
+  // use web streams from @types/node
+  [
+    "ReadableStreamReader",
+    "ReadableStream",
+    "WritableStream",
+    "ReadableStreamBYOBReader",
+    "ReadableByteStreamController",
+    "UnderlyingSource",
+    "UnderlyingByteSource",
+    "ReadableStreamBYOBRequest",
+    "ReadableByteStreamControllerCallback",
+    "ReadableStreamReadDoneResult",
+    "ReadableStreamReadValueResult",
+    "ReadableStreamBYOBReadDoneResult",
+    "ReadableStreamBYOBReadValueResult",
+    "ReadableStreamDefaultReader",
+    "ReadableStreamErrorCallback",
+    "ReadableStreamDefaultControllerCallback",
+    "ReadableStreamDefaultController",
+    "UnderlyingSink",
+    "WritableStreamErrorCallback",
+    "WritableStreamDefaultControllerCloseCallback",
+    "WritableStreamDefaultControllerStartCallback",
+    "WritableStreamDefaultControllerWriteCallback",
+    "WritableStreamDefaultController",
+    "WritableStreamDefaultWriter",
+  ].forEach((name) => {
+    sourceFile.getInterfaceOrThrow(name).remove();
+  });
+  [
+    "ReadableStreamBYOBReadResult",
+    "ReadableStreamReadResult",
+  ].forEach((name) => {
+    sourceFile.getTypeAliasOrThrow(name).remove();
+  });
+  [
+    "ReadableStream",
+    "ReadableStreamReader",
+    "WritableStream",
+    "ReadableStreamDefaultReader",
+    "ReadableByteStreamController",
+    "ReadableStreamDefaultController",
+    "WritableStreamDefaultController",
+    "WritableStreamDefaultWriter",
+  ].forEach((name) => {
+    sourceFile.getVariableStatementOrThrow(name).remove();
+  });
+  sourceFile.addStatements((writer) => {
+    writer.writeLine(
+      `type ReadableStream<R = any> = import("node:stream/web").ReadableStream<R>;`,
+    );
+    writer.write(
+      `type WritableStream<W = any> = import("node:stream/web").WritableStream<W>;`,
+    );
+  });
 
   return sourceFile.getFullText();
 }

@@ -30,6 +30,9 @@ statements.push((writer) => {
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
     .writeLine(`import { URL } from "url";`)
+    .writeLine(
+      `import { ReadableStream, WritableStream } from "node:stream/web";`,
+    )
     .blankLine();
 });
 
@@ -253,6 +256,7 @@ function* declToStructures(
       throw new Error("Unhandled.");
     }
     if (!Node.hasName(decl) || decl.getName() !== name) {
+      console.error(decl.getFullText());
       throw new Error("Unhandled.");
     }
 

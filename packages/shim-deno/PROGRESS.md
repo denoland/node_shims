@@ -1,6 +1,6 @@
 # Stable Progress
 
-90%. 15 stable members to go:
+89%. 17 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
@@ -11,10 +11,11 @@
 - [x] 👻 **`DirEntry`**
 - [x] 👻 **`EnvPermissionDescriptor`**
 - [x] 👻 **`FfiPermissionDescriptor`**
-- [x] **`File`**
+- [x] 👎 **`File`**
 - [x] 👻 **`FileInfo`**
 - [x] 👻 **`FsEvent`**
 - [x] 👻 **`FsEventFlag`**
+- [x] **`FsFile`**
 - [x] 👻 **`FsWatcher`**
 - [x] 👻 **`HrtimePermissionDescriptor`**
 - [ ] 👻 **`HttpConn`**
@@ -70,6 +71,7 @@
 - [x] 👻 **`WritePermissionDescriptor`**
 - [x] 👻 **`Writer`**
 - [x] 👻 **`WriterSync`**
+- [ ] **`addSignalListener`**
 - [x] **`args`**
 - [x] **`build`**
 - [x] **`chdir`**
@@ -140,6 +142,7 @@
 - [x] **`realPath`**
 - [x] **`realPathSync`**
 - [x] **`remove`**
+- [ ] **`removeSignalListener`**
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
@@ -175,11 +178,12 @@
 
 # Unstable Progress
 
-20%. 27 unstable members to go:
+22%. 27 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 🧪 👻 **`CompilerOptions`**
 - [ ] 👻 **`ConditionalAsync`**
+- [x] 👻 **`Conn`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
@@ -215,7 +219,6 @@
 - [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
-- [ ] 🧪 **`addSignalListener`**
 - [ ] 🧪 **`applySourceMap`**
 - [x] 🧪 **`connect`**
 - [x] 🧪 **`connectTls`**
@@ -238,7 +241,6 @@
 - [ ] **`networkInterfaces`**
 - [ ] **`osRelease`**
 - [ ] 🧪 **`refTimer`**
-- [ ] 🧪 **`removeSignalListener`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
 - [x] 🧪 **`sleepSync`**

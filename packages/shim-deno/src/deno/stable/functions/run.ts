@@ -232,6 +232,14 @@ class ProcessReadStream implements Deno.Reader, Deno.Closer {
     this.#closed = true;
     this.#stream.destroy();
   }
+
+  get readable(): ReadableStream<Uint8Array> {
+    throw new Error("Not implemented.");
+  }
+
+  get writable(): WritableStream<Uint8Array> {
+    throw new Error("Not implemented.");
+  }
 }
 
 class ProcessWriteStream implements Deno.Writer, Deno.Closer {

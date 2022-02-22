@@ -1,13 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
 export const metrics: typeof Deno.metrics = function metrics() {
-  console.warn(
-    [
-      "Deno.metrics() shim returns a dummy object that does not update.",
-      "If you think this is a mistake, raise an issue at https://github.com/denoland/node_deno_shims/issues",
-    ].join("\n"),
-  );
-
   return {
     opsDispatched: 0,
     opsDispatchedSync: 0,

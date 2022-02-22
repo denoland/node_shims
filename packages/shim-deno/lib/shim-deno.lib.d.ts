@@ -3,6 +3,7 @@
 /// <reference types="node" />
 
 import { URL } from "url";
+import { ReadableStream, WritableStream } from "node:stream/web";
 
 /**
  * EventTarget is a DOM interface implemented by objects that can receive events
@@ -162,17 +163,21 @@ declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
 
 export declare namespace Deno {
-  export class File implements Deno.File {
+  export const File: typeof FsFile;
+
+  export class FsFile implements Deno.FsFile {
     readonly rid: number;
     constructor(rid: number);
+    get readable(): ReadableStream<Uint8Array>;
+    get writable(): WritableStream<Uint8Array>;
     write(p: Uint8Array): Promise<number>;
     writeSync(p: Uint8Array): number;
     truncate(len?: number): Promise<void>;
     truncateSync(len?: number): void;
     read(p: Uint8Array): Promise<number | null>;
     readSync(p: Uint8Array): number | null;
-    seek(offset: number, whence: Deno.SeekMode): Promise<number>;
-    seekSync(offset: number, whence: Deno.SeekMode): number;
+    seek(_offset: number, _whence: Deno.SeekMode): Promise<number>;
+    seekSync(_offset: number, _whence: Deno.SeekMode): number;
     stat(): Promise<Deno.FileInfo>;
     statSync(): Deno.FileInfo;
     close(): void;
@@ -426,7 +431,7 @@ export declare namespace Deno {
   export function copyFileSync(fromPath: string | URL, toPath: string | URL): void;
   /**
    * Creates a file if none exists or truncates an existing file and resolves to
-   *  an instance of `Deno.File`.
+   *  an instance of `Deno.FsFile`.
    *
    * ```ts
    * const file = await Deno.create("/foo/bar.txt");
@@ -434,10 +439,10 @@ export declare namespace Deno {
    *
    * Requires `allow-read` and `allow-write` permissions.
    */
-  export function create(path: string | URL): Promise<File>;
+  export function create(path: string | URL): Promise<FsFile>;
   /**
    * Creates a file if none exists or truncates an existing file and returns
-   *  an instance of `Deno.File`.
+   *  an instance of `Deno.FsFile`.
    *
    * ```ts
    * const file = Deno.createSync("/foo/bar.txt");
@@ -445,7 +450,7 @@ export declare namespace Deno {
    *
    * Requires `allow-read` and `allow-write` permissions.
    */
-  export function createSync(path: string | URL): File;
+  export function createSync(path: string | URL): FsFile;
   /**
    * Return a string representing the current working directory.
    *
@@ -838,7 +843,7 @@ export declare namespace Deno {
    */
   export function mkdirSync(path: string | URL, options?: MkdirOptions): void;
   /**
-   * Open a file and resolve to an instance of `Deno.File`.  The
+   * Open a file and resolve to an instance of `Deno.FsFile`.  The
    * file does not need to previously exist if using the `create` or `createNew`
    * open options.  It is the callers responsibility to close the file when finished
    * with it.
@@ -851,9 +856,9 @@ export declare namespace Deno {
    *
    * Requires `allow-read` and/or `allow-write` permissions depending on options.
    */
-  export function open(path: string | URL, options?: OpenOptions): Promise<File>;
+  export function open(path: string | URL, options?: OpenOptions): Promise<FsFile>;
   /**
-   * Synchronously open a file and return an instance of `Deno.File`.  The
+   * Synchronously open a file and return an instance of `Deno.FsFile`.  The
    * file does not need to previously exist if using the `create` or `createNew`
    * open options.  It is the callers responsibility to close the file when finished
    * with it.
@@ -866,7 +871,7 @@ export declare namespace Deno {
    *
    * Requires `allow-read` and/or `allow-write` permissions depending on options.
    */
-  export function openSync(path: string | URL, options?: OpenOptions): File;
+  export function openSync(path: string | URL, options?: OpenOptions): FsFile;
   /**
    * Read from a resource ID (`rid`) into an array buffer (`buffer`).
    *
@@ -1126,9 +1131,21 @@ export declare namespace Deno {
     #private;
     get rid(): number;
     get pid(): number;
-    get stdin(): T["stdin"] extends "piped" ? Deno.Writer & Deno.Closer : (Deno.Writer & Deno.Closer) | null;
-    get stdout(): T["stdout"] extends "piped" ? Deno.Reader & Deno.Closer : (Deno.Reader & Deno.Closer) | null;
-    get stderr(): T["stderr"] extends "piped" ? Deno.Reader & Deno.Closer : (Deno.Reader & Deno.Closer) | null;
+    get stdin(): T["stdin"] extends "piped" ? Deno.Writer & Deno.Closer & {
+          writable: import("stream/web").WritableStream<Uint8Array>;
+      } : (Deno.Writer & Deno.Closer & {
+          writable: import("stream/web").WritableStream<Uint8Array>;
+      }) | null;
+    get stdout(): T["stdout"] extends "piped" ? Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      } : (Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      }) | null;
+    get stderr(): T["stderr"] extends "piped" ? Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      } : (Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      }) | null;
     status(): Promise<Deno.ProcessStatus>;
     output(): Promise<Uint8Array>;
     stderrOutput(): Promise<Uint8Array>;
@@ -1578,11 +1595,28 @@ export declare namespace Deno {
     readonly remoteAddr: Addr;
     /** The resource ID of the connection. */
     readonly rid: number;
+    readonly readable: ReadableStream<Uint8Array>;
+    readonly writable: WritableStream<Uint8Array>;
     /**
      * Shuts down (`shutdown(2)`) the write side of the connection. Most
      * callers should just use `close()`.
      */
     closeWrite(): Promise<void>;
+  }
+
+  export interface Conn {
+    /**
+     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
+     *
+     * Enable/disable the use of Nagle's algorithm. Defaults to true.
+     */
+    setNoDelay(nodelay?: boolean): void;
+    /**
+     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
+     *
+     * Enable/disable keep-alive functionality.
+     */
+    setKeepAlive(keepalive?: boolean): void;
   }
 
   export interface ConnectOptions {
@@ -2368,6 +2402,46 @@ export declare namespace Deno {
           };
   }
 
+  export interface TestStepDefinition {
+    fn: (t: TestContext) => void | Promise<void>;
+    name: string;
+    ignore?: boolean;
+    /**
+     * Check that the number of async completed ops after the test step is the same
+     * as number of dispatched ops. Defaults to the parent test or step's value.
+     */
+    sanitizeOps?: boolean;
+    /**
+     * Ensure the test step does not "leak" resources - ie. the resource table
+     * after the test has exactly the same contents as before the test. Defaults
+     * to the parent test or step's value.
+     */
+    sanitizeResources?: boolean;
+    /**
+     * Ensure the test step does not prematurely cause the process to exit,
+     * for example via a call to `Deno.exit`. Defaults to the parent test or
+     * step's value.
+     */
+    sanitizeExit?: boolean;
+  }
+
+  export interface TestContext {
+    /**
+     * Run a sub step of the parent test or step. Returns a promise
+     * that resolves to a boolean signifying if the step completed successfully.
+     * The returned promise never rejects unless the arguments are invalid.
+     * If the test was ignored the promise returns `false`.
+     */
+    step(t: TestStepDefinition): Promise<boolean>;
+    /**
+     * Run a sub step of the parent test or step. Returns a promise
+     * that resolves to a boolean signifying if the step completed successfully.
+     * The returned promise never rejects unless the arguments are invalid.
+     * If the test was ignored the promise returns `false`.
+     */
+    step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
+  }
+
   export interface TlsConn extends Conn {
     /**
      * Runs the client or server handshake protocol to completion if that has
@@ -2631,51 +2705,20 @@ export declare namespace Deno {
     typescript: string;
     };
   /** A handle for `stdin`. */
-  export const stdin: Reader & ReaderSync & Closer & { readonly rid: number };
+  export const stdin: Reader & ReaderSync & Closer & {
+    readonly rid: number;
+    readonly readable: ReadableStream<Uint8Array>;
+    };
   /** A handle for `stdout`. */
-  export const stdout: Writer & WriterSync & Closer & { readonly rid: number };
+  export const stdout: Writer & WriterSync & Closer & {
+    readonly rid: number;
+    readonly writable: WritableStream<Uint8Array>;
+    };
   /** A handle for `stderr`. */
-  export const stderr: Writer & WriterSync & Closer & { readonly rid: number };
-
-  export interface TestContext {
-    /**
-     * Run a sub step of the parent test or step. Returns a promise
-     * that resolves to a boolean signifying if the step completed successfully.
-     * The returned promise never rejects unless the arguments are invalid.
-     * If the test was ignored the promise returns `false`.
-     */
-    step(t: TestStepDefinition): Promise<boolean>;
-    /**
-     * Run a sub step of the parent test or step. Returns a promise
-     * that resolves to a boolean signifying if the step completed successfully.
-     * The returned promise never rejects unless the arguments are invalid.
-     * If the test was ignored the promise returns `false`.
-     */
-    step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
-  }
-
-  export interface TestStepDefinition {
-    fn: (t: TestContext) => void | Promise<void>;
-    name: string;
-    ignore?: boolean;
-    /**
-     * Check that the number of async completed ops after the test step is the same
-     * as number of dispatched ops. Defaults to the parent test or step's value.
-     */
-    sanitizeOps?: boolean;
-    /**
-     * Ensure the test step does not "leak" resources - ie. the resource table
-     * after the test has exactly the same contents as before the test. Defaults
-     * to the parent test or step's value.
-     */
-    sanitizeResources?: boolean;
-    /**
-     * Ensure the test step does not prematurely cause the process to exit,
-     * for example via a call to `Deno.exit`. Defaults to the parent test or
-     * step's value.
-     */
-    sanitizeExit?: boolean;
-  }
+  export const stderr: Writer & WriterSync & Closer & {
+    readonly rid: number;
+    readonly writable: WritableStream<Uint8Array>;
+    };
 
   export interface TlsHandshakeInfo {
   }

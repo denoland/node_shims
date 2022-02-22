@@ -3,7 +3,7 @@
 import { open as _open } from "fs";
 import { promisify } from "util";
 
-import { File } from "../classes/File.js";
+import { File } from "../classes/FsFile.js";
 import { getFsFlag } from "../../internal/fs_flags.js";
 
 const nodeOpen = promisify(_open);
