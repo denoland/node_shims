@@ -36,7 +36,7 @@ export function getCreationFlag(opts: Opts<CreationModes>) {
   if (!opts.write && !opts.append) {
     if (opts.truncate || opts.create || opts.createNew) {
       throw new errors.BadResource(
-        "EINVAL: One of 'truncate', 'create', 'createNew' is required when 'write' and 'append' are false.",
+        "EINVAL: One of 'write', 'append' is required to 'truncate', 'create' or 'createNew' file.",
       );
     }
   }
