@@ -24,7 +24,7 @@ const indexFile = declarationProject.getSourceFileOrThrow(`./dist/index.d.ts`);
 statements.push((writer) => {
   writer
     .writeLine(
-      `// Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.`,
+      `// Copyright 2018-2022 the Deno authors. All rights reserved. MIT license.`,
     )
     .blankLine()
     .writeLine(`/// <reference types="node" />`)
