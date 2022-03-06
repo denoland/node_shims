@@ -2,6 +2,7 @@
 
 import { stat as nodeStat } from "fs/promises";
 import type { Stats } from "fs";
+import mapError from "../../internal/errorMap.js";
 
 export function denoifyFileInfo(s: Stats): Deno.FileInfo {
   return {
@@ -24,5 +25,10 @@ export function denoifyFileInfo(s: Stats): Deno.FileInfo {
   };
 }
 
-export const stat: typeof Deno.stat = async (path) =>
-  denoifyFileInfo(await nodeStat(path));
+export const stat: typeof Deno.stat = async (path) => {
+  try {
+    return denoifyFileInfo(await nodeStat(path));
+  } catch (e) {
+    throw mapError(e);
+  }
+};
