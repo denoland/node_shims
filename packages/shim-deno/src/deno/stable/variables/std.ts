@@ -15,17 +15,21 @@ function defer<T>(): Deferred<T> {
 export const stdin: typeof Deno.stdin = {
   rid: 0,
   read(p) {
-    const result = defer<number | null>();
+    const deferred = defer<number | null>();
     p.fill(0);
     process.stdin.resume();
     process.stdin.once("readable", () => {
       const data = process.stdin.read(p.length) ?? process.stdin.read();
-      p.set(data);
-      result.resolve(data.length > 0 ? data.length : null);
+      if (data) {
+        p.set(data);
+        deferred.resolve(data.length > 0 ? data.length : null);
+      } else {
+        deferred.resolve(null);
+      }
     });
-    return result.then((res) => {
+    return deferred.then((result) => {
       process.stdin.pause();
-      return res;
+      return result;
     });
   },
   get readable(): ReadableStream<Uint8Array> {
