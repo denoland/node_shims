@@ -78,7 +78,7 @@ export const stderr: typeof Deno.stderr = {
     throw new Error("Not implemented.");
   },
   writeSync() {
-    // Node.js doesn't support readSync for stderr
+    // Node.js doesn't support writeSync for stderr
     throw new Error("Not implemented");
   },
   close() {
