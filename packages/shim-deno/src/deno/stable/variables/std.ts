@@ -1,37 +1,47 @@
 ///<reference path="../lib.deno.d.ts" />
 
-interface Deferred<T> extends Promise<T> {
-  resolve(value: T): void;
-  reject(reason?: any): void;
-}
-function defer<T>(): Deferred<T> {
-  const transit: any = {};
-  const result = new Promise((resolve, reject) =>
-    Object.assign(transit, { resolve, reject })
-  );
-  return Object.assign(result, transit);
+function chain<T extends (...args: any[]) => Promise<any>>(
+  fn: T,
+  cleanup?: () => void
+): T {
+  let prev: Promise<any> | undefined;
+  return function _fn(...args) {
+    const curr = (prev || Promise.resolve())
+      .then(() => fn(...args))
+      .finally(cleanup || (() => {}))
+      .then((result) => {
+        if (prev === curr) prev = undefined;
+        return result;
+      });
+    return (prev = curr);
+  } as T;
 }
 
 export const stdin: typeof Deno.stdin = {
   rid: 0,
-  read(p) {
-    const deferred = defer<number | null>();
-    p.fill(0);
-    process.stdin.resume();
-    process.stdin.once("readable", () => {
-      const data = process.stdin.read(p.length) ?? process.stdin.read();
-      if (data) {
-        p.set(data);
-        deferred.resolve(data.length > 0 ? data.length : null);
-      } else {
-        deferred.resolve(null);
-      }
-    });
-    return deferred.then((result) => {
-      process.stdin.pause();
-      return result;
-    });
-  },
+  read: chain(
+    (p) => {
+      return new Promise((resolve, reject) => {
+        process.stdin.resume();
+        process.stdin.on("error", onerror);
+        process.stdin.once("readable", () => {
+          process.stdin.off("error", onerror);
+          const data = process.stdin.read(p.length) ?? process.stdin.read();
+          if (data) {
+            p.set(data);
+            resolve(data.length > 0 ? data.length : null);
+          } else {
+            resolve(null);
+          }
+        });
+        function onerror(error: Error) {
+          reject(error);
+          process.stdin.off("error", onerror);
+        }
+      });
+    },
+    () => process.stdin.pause()
+  ),
   get readable(): ReadableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
@@ -45,16 +55,16 @@ export const stdin: typeof Deno.stdin = {
 };
 export const stdout: typeof Deno.stdout = {
   rid: 1,
-  write(p) {
-    const deferred = defer<number>();
-    const result = process.stdout.write(p);
-    if (!result) {
-      process.stdout.once("drain", () => deferred.resolve(p.length));
-    } else {
-      deferred.resolve(p.length);
-    }
-    return deferred;
-  },
+  write: chain((p) => {
+    return new Promise((resolve) => {
+      const result = process.stdout.write(p);
+      if (!result) {
+        process.stdout.once("drain", () => resolve(p.length));
+      } else {
+        resolve(p.length);
+      }
+    });
+  }),
   get writable(): WritableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
@@ -68,16 +78,16 @@ export const stdout: typeof Deno.stdout = {
 };
 export const stderr: typeof Deno.stderr = {
   rid: 2,
-  write(p) {
-    const deferred = defer<number>();
-    const result = process.stderr.write(p);
-    if (!result) {
-      process.stderr.once("drain", () => deferred.resolve(p.length));
-    } else {
-      deferred.resolve(p.length);
-    }
-    return deferred;
-  },
+  write: chain((p) => {
+    return new Promise((resolve) => {
+      const result = process.stderr.write(p);
+      if (!result) {
+        process.stderr.once("drain", () => resolve(p.length));
+      } else {
+        resolve(p.length);
+      }
+    });
+  }),
   get writable(): WritableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
