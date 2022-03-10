@@ -2,7 +2,7 @@
 
 function chain<T extends (...args: any[]) => Promise<any>>(
   fn: T,
-  cleanup?: () => void
+  cleanup?: () => void,
 ): T {
   let prev: Promise<any> | undefined;
   return function _fn(...args) {
@@ -40,7 +40,7 @@ export const stdin: typeof Deno.stdin = {
         }
       });
     },
-    () => process.stdin.pause()
+    () => process.stdin.pause(),
   ),
   get readable(): ReadableStream<Uint8Array> {
     throw new Error("Not implemented.");
