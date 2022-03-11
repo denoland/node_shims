@@ -41,8 +41,3 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
     - run: cd packages/shim-deno && tools/untested.sh
       if: matrix.os == 'ubuntu-latest'
-    - name: npm publish
-      if: matrix.os == 'ubuntu-latest' && startsWith(github.ref, 'refs/tags/') && github.repository == 'denoland/node_deno_shims'
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: cd packages/shim-deno && npm publish
