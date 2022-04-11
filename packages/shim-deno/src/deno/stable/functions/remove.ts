@@ -1,10 +1,21 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { rm } from "fs/promises";
+import { rm, rmdir } from "fs/promises";
 
-export const remove: typeof Deno.remove = function remove(
+export const remove: typeof Deno.remove = async function remove(
   path,
   options = {},
 ) {
-  return rm(path, options.recursive ? { recursive: true, force: true } : {});
+  const innerOptions = options.recursive
+    ? { recursive: true, force: true }
+    : {};
+  try {
+    return await rm(path, innerOptions);
+  } catch (err) {
+    if ((err as any).code === "ERR_FS_EISDIR") {
+      return await rmdir(path, innerOptions);
+    } else {
+      throw err;
+    }
+  }
 };
