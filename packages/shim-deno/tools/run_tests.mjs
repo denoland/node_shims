@@ -36,6 +36,7 @@ const testsToSkip = new Set([
   "openOptions", // todo
   "openMode", // depends on umask
   "openSyncMode", // depends on umask
+  "openSyncUrl", // depends on umask
   "readPermFailure", // permissions
   "readWritePermFailure", // permissions
   "openNotFound", // todo
