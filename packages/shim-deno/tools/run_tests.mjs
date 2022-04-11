@@ -34,6 +34,7 @@ const testsToSkip = new Set([
   "readerIterSync", // deprecated
   "writePermFailure", // permissions
   "openOptions", // todo
+  "openMode", // depends on umask
   "openSyncMode", // depends on umask
   "readPermFailure", // permissions
   "readWritePermFailure", // permissions
