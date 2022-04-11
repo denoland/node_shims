@@ -25,6 +25,34 @@ const testsToSkip = new Set([
   // event_target_test
   "eventTargetThisShouldDefaultToWindow", // window
 
+  // files_test
+  "filesIter", // deprecated
+  "filesIterCustomBufSize", // deprecated
+  "filesIterSync", // deprecated
+  "filesIterSyncCustomBufSize", // deprecated
+  "readerIter", // deprecated
+  "readerIterSync", // deprecated
+  "writePermFailure", // permissions
+  "openOptions", // todo
+  "openMode", // depends on umask
+  "openSyncMode", // depends on umask
+  "openSyncUrl", // depends on umask
+  "openUrl", // depends on umask
+  "readPermFailure", // permissions
+  "readWritePermFailure", // permissions
+  "openNotFound", // todo
+  "openModeWriteRead", // not implemented
+  "seekStart", // not implemented
+  "seekSyncStart", // not implemented
+  "seekCurrent", // not implemented
+  "seekSyncCurrent", // not implemented
+  "seekEnd", // not implemented
+  "seekSyncEnd", // not implemented
+  "seekMode", // not implemented
+  "readableStream", // not implemented
+  "readableStreamTextEncoderPipe", // not implemented
+  "writableStream", // not implemented
+
   // mkdir_test
   "mkdirMode", // depends on Deno.umask
   "mkdirRecursiveIfExists", // depends on Deno.umask
