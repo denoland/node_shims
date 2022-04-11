@@ -48,6 +48,14 @@ export class Listener<TConn extends Deno.Conn> implements Deno.Listener {
     close(this.rid);
   }
 
+  ref() {
+    throw new Error("Not implemented");
+  }
+
+  unref() {
+    throw new Error("Not implemented");
+  }
+
   [Symbol.asyncIterator]() {
     return this;
   }

@@ -47,7 +47,9 @@ export const listenTls: typeof Deno.listenTls = function listen(
     throw new Error("Deno.listen is only implemented for transport: tcp");
   }
 
-  const [cert, key] = [certFile, keyFile].map(readTextFileSync);
+  const [cert, key] = [certFile, keyFile].map((f) =>
+    f == null ? undefined : readTextFileSync(f)
+  );
 
   const server = createServer({ cert, key });
 

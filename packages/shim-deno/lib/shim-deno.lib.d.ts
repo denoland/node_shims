@@ -1,4 +1,4 @@
-// Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.
+// Copyright 2018-2022 the Deno authors. All rights reserved. MIT license.
 
 /// <reference types="node" />
 
@@ -329,7 +329,7 @@ export declare namespace Deno {
    *
    * Requires `allow-net` permission for "tcp".
    */
-  export function connect(options: ConnectOptions): Promise<Conn>;
+  export function connect(options: ConnectOptions): Promise<TcpConn>;
   /**
    * *UNSTABLE**:  The unix socket transport is unstable as a new API yet to
    * be vetted.  The TCP transport is considered stable.
@@ -347,7 +347,8 @@ export declare namespace Deno {
    *
    * Requires `allow-net` permission for "tcp" and `allow-read` for "unix".
    */
-  export function connect(options: ConnectOptions | UnixConnectOptions): Promise<Conn>;
+  export function connect(options: ConnectOptions): Promise<TcpConn>;
+  export function connect(options: UnixConnectOptions): Promise<UnixConn>;
   /**
    * Establishes a secure connection over TLS (transport layer security) using
    * an optional cert file, hostname (default is "127.0.0.1") and port.  The
@@ -636,11 +637,13 @@ export declare namespace Deno {
    * If `pid` is negative, the signal will be sent to the process group
    * identified by `pid`.
    *
-   *      const p = Deno.run({
-   *        cmd: ["sleep", "10000"]
-   *      });
+   * ```ts
+   * const p = Deno.run({
+   *   cmd: ["sleep", "10000"]
+   * });
    *
-   *      Deno.kill(p.pid, "SIGINT");
+   * Deno.kill(p.pid, "SIGINT");
+   * ```
    *
    * Requires `allow-run` permission.
    */
@@ -1604,21 +1607,6 @@ export declare namespace Deno {
     closeWrite(): Promise<void>;
   }
 
-  export interface Conn {
-    /**
-     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
-     *
-     * Enable/disable the use of Nagle's algorithm. Defaults to true.
-     */
-    setNoDelay(nodelay?: boolean): void;
-    /**
-     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
-     *
-     * Enable/disable keep-alive functionality.
-     */
-    setKeepAlive(keepalive?: boolean): void;
-  }
-
   export interface ConnectOptions {
     /** The port to connect to. */
     port: number;
@@ -1866,6 +1854,24 @@ export declare namespace Deno {
     [Symbol.asyncIterator](): AsyncIterableIterator<Conn>;
   }
 
+  export interface Listener extends AsyncIterable<Conn> {
+    /**
+     * *UNSTABLE**: new API, yet to be vetted.
+     *
+     * Make the listener block the event loop from finishing.
+     *
+     * Note: the listener blocks the event loop from finishing by default.
+     * This method is only meaningful after `.unref()` is called.
+     */
+    ref(): void;
+    /**
+     * *UNSTABLE**: new API, yet to be vetted.
+     *
+     * Make the listener not block the event loop from finishing.
+     */
+    unref(): void;
+  }
+
   export interface ListenOptions {
     /** The port to listen on. */
     port: number;
@@ -1882,13 +1888,23 @@ export declare namespace Deno {
   }
 
   export interface ListenTlsOptions extends ListenOptions {
+    /** Server private key in PEM format */
+    key?: string;
+    /** Cert chain in PEM format */
+    cert?: string;
     /**
      * Path to a file containing a PEM formatted CA certificate. Requires
      * `--allow-read`.
+     *
+     * @deprecated This option is deprecated and will be removed in Deno 2.0.
      */
-    certFile: string;
-    /** Server public key file. Requires `--allow-read`. */
-    keyFile: string;
+    certFile?: string;
+    /**
+     * Server private key file. Requires `--allow-read`.
+     *
+     * @deprecated This option is deprecated and will be removed in Deno 2.0.
+     */
+    keyFile?: string;
     transport?: "tcp";
   }
 
@@ -2052,6 +2068,142 @@ export declare namespace Deno {
         | "env"
         | "ffi"
         | "hrtime";
+  export type PermissionOptions = "inherit" | "none" | PermissionOptionsObject;
+
+  export interface PermissionOptionsObject {
+    /**
+     * Specifies if the `env` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `env` permission will be inherited.
+     * If set to `true`, the global `env` permission will be requested.
+     * If set to `false`, the global `env` permission will be revoked.
+     *
+     * Defaults to `false`.
+     */
+    env?: "inherit" | boolean | string[];
+    /**
+     * Specifies if the `hrtime` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `hrtime` permission will be inherited.
+     * If set to `true`, the global `hrtime` permission will be requested.
+     * If set to `false`, the global `hrtime` permission will be revoked.
+     *
+     * Defaults to `false`.
+     */
+    hrtime?: "inherit" | boolean;
+    /**
+     * Specifies if the `net` permission should be requested or revoked.
+     * if set to `"inherit"`, the current `net` permission will be inherited.
+     * if set to `true`, the global `net` permission will be requested.
+     * if set to `false`, the global `net` permission will be revoked.
+     * if set to `string[]`, the `net` permission will be requested with the
+     * specified host strings with the format `"<host>[:<port>]`.
+     *
+     * Defaults to `false`.
+     *
+     * Examples:
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test({
+     *   name: "inherit",
+     *   permissions: {
+     *     net: "inherit",
+     *   },
+     *   async fn() {
+     *     const status = await Deno.permissions.query({ name: "net" })
+     *     assertEquals(status.state, "granted");
+     *   },
+     * });
+     * ```
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test({
+     *   name: "true",
+     *   permissions: {
+     *     net: true,
+     *   },
+     *   async fn() {
+     *     const status = await Deno.permissions.query({ name: "net" });
+     *     assertEquals(status.state, "granted");
+     *   },
+     * });
+     * ```
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test({
+     *   name: "false",
+     *   permissions: {
+     *     net: false,
+     *   },
+     *   async fn() {
+     *     const status = await Deno.permissions.query({ name: "net" });
+     *     assertEquals(status.state, "denied");
+     *   },
+     * });
+     * ```
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test({
+     *   name: "localhost:8080",
+     *   permissions: {
+     *     net: ["localhost:8080"],
+     *   },
+     *   async fn() {
+     *     const status = await Deno.permissions.query({ name: "net", host: "localhost:8080" });
+     *     assertEquals(status.state, "granted");
+     *   },
+     * });
+     * ```
+     */
+    net?: "inherit" | boolean | string[];
+    /**
+     * Specifies if the `ffi` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `ffi` permission will be inherited.
+     * If set to `true`, the global `ffi` permission will be requested.
+     * If set to `false`, the global `ffi` permission will be revoked.
+     *
+     * Defaults to `false`.
+     */
+    ffi?: "inherit" | boolean | Array<string | URL>;
+    /**
+     * Specifies if the `read` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `read` permission will be inherited.
+     * If set to `true`, the global `read` permission will be requested.
+     * If set to `false`, the global `read` permission will be revoked.
+     * If set to `Array<string | URL>`, the `read` permission will be requested with the
+     * specified file paths.
+     *
+     * Defaults to `false`.
+     */
+    read?: "inherit" | boolean | Array<string | URL>;
+    /**
+     * Specifies if the `run` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `run` permission will be inherited.
+     * If set to `true`, the global `run` permission will be requested.
+     * If set to `false`, the global `run` permission will be revoked.
+     *
+     * Defaults to `false`.
+     */
+    run?: "inherit" | boolean | Array<string | URL>;
+    /**
+     * Specifies if the `write` permission should be requested or revoked.
+     * If set to `"inherit"`, the current `write` permission will be inherited.
+     * If set to `true`, the global `write` permission will be requested.
+     * If set to `false`, the global `write` permission will be revoked.
+     * If set to `Array<string | URL>`, the `write` permission will be requested with the
+     * specified file paths.
+     *
+     * Defaults to `false`.
+     */
+    write?: "inherit" | boolean | Array<string | URL>;
+  }
+
   /** The current status of the permission. */
   export type PermissionState = "granted" | "denied" | "prompt";
 
@@ -2154,7 +2306,7 @@ export declare namespace Deno {
      * Arguments to pass. Note, the first element needs to be a path to the
      * binary
      */
-    cmd: string[] | [URL, ...string[]];
+    cmd: readonly string[] | [URL, ...string[]];
     cwd?: string;
     env?: {
         [key: string]: string;
@@ -2268,138 +2420,7 @@ export declare namespace Deno {
      *
      * Defaults to "inherit".
      */
-    permissions?: "inherit" | "none" | {
-            /** Specifies if the `net` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `env` permission will be inherited.
-             * If set to `true`, the global `net` permission will be requested.
-             * If set to `false`, the global `net` permission will be revoked.
-             *
-             * Defaults to "inherit".
-             */
-            env?: "inherit" | boolean | string[];
-
-            /** Specifies if the `hrtime` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `hrtime` permission will be inherited.
-             * If set to `true`, the global `hrtime` permission will be requested.
-             * If set to `false`, the global `hrtime` permission will be revoked.
-             *
-             * Defaults to "inherit".
-             */
-            hrtime?: "inherit" | boolean;
-
-            /** Specifies if the `net` permission should be requested or revoked.
-             * if set to `"inherit"`, the current `net` permission will be inherited.
-             * if set to `true`, the global `net` permission will be requested.
-             * if set to `false`, the global `net` permission will be revoked.
-             * if set to `string[]`, the `net` permission will be requested with the
-             * specified host strings with the format `"<host>[:<port>]`.
-             *
-             * Defaults to "inherit".
-             *
-             * Examples:
-             *
-             * ```ts
-             * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-             *
-             * Deno.test({
-             *   name: "inherit",
-             *   permissions: {
-             *     net: "inherit",
-             *   },
-             *   async fn() {
-             *     const status = await Deno.permissions.query({ name: "net" })
-             *     assertEquals(status.state, "granted");
-             *   },
-             * });
-             * ```
-             *
-             * ```ts
-             * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-             *
-             * Deno.test({
-             *   name: "true",
-             *   permissions: {
-             *     net: true,
-             *   },
-             *   async fn() {
-             *     const status = await Deno.permissions.query({ name: "net" });
-             *     assertEquals(status.state, "granted");
-             *   },
-             * });
-             * ```
-             *
-             * ```ts
-             * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-             *
-             * Deno.test({
-             *   name: "false",
-             *   permissions: {
-             *     net: false,
-             *   },
-             *   async fn() {
-             *     const status = await Deno.permissions.query({ name: "net" });
-             *     assertEquals(status.state, "denied");
-             *   },
-             * });
-             * ```
-             *
-             * ```ts
-             * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-             *
-             * Deno.test({
-             *   name: "localhost:8080",
-             *   permissions: {
-             *     net: ["localhost:8080"],
-             *   },
-             *   async fn() {
-             *     const status = await Deno.permissions.query({ name: "net", host: "localhost:8080" });
-             *     assertEquals(status.state, "granted");
-             *   },
-             * });
-             * ```
-             */
-            net?: "inherit" | boolean | string[];
-
-            /** Specifies if the `ffi` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `ffi` permission will be inherited.
-             * If set to `true`, the global `ffi` permission will be requested.
-             * If set to `false`, the global `ffi` permission will be revoked.
-             *
-             * Defaults to "inherit".
-             */
-            ffi?: "inherit" | boolean | Array<string | URL>;
-
-            /** Specifies if the `read` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `read` permission will be inherited.
-             * If set to `true`, the global `read` permission will be requested.
-             * If set to `false`, the global `read` permission will be revoked.
-             * If set to `Array<string | URL>`, the `read` permission will be requested with the
-             * specified file paths.
-             *
-             * Defaults to "inherit".
-             */
-            read?: "inherit" | boolean | Array<string | URL>;
-
-            /** Specifies if the `run` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `run` permission will be inherited.
-             * If set to `true`, the global `run` permission will be requested.
-             * If set to `false`, the global `run` permission will be revoked.
-             *
-             * Defaults to "inherit".
-             */
-            run?: "inherit" | boolean | Array<string | URL>;
-
-            /** Specifies if the `write` permission should be requested or revoked.
-             * If set to `"inherit"`, the current `write` permission will be inherited.
-             * If set to `true`, the global `write` permission will be requested.
-             * If set to `false`, the global `write` permission will be revoked.
-             * If set to `Array<string | URL>`, the `write` permission will be requested with the
-             * specified file paths.
-             *
-             * Defaults to "inherit".
-             */
-            write?: "inherit" | boolean | Array<string | URL>;
-          };
+    permissions?: PermissionOptions;
   }
 
   export interface TestStepDefinition {
@@ -2442,6 +2463,21 @@ export declare namespace Deno {
     step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
   }
 
+  export interface TcpConn extends Conn {
+    /**
+     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
+     *
+     * Enable/disable the use of Nagle's algorithm. Defaults to true.
+     */
+    setNoDelay(nodelay?: boolean): void;
+    /**
+     * **UNSTABLE**: new API, see https://github.com/denoland/deno/issues/13617.
+     *
+     * Enable/disable keep-alive functionality.
+     */
+    setKeepAlive(keepalive?: boolean): void;
+  }
+
   export interface TlsConn extends Conn {
     /**
      * Runs the client or server handshake protocol to completion if that has
@@ -2470,6 +2506,9 @@ export declare namespace Deno {
   export interface UnixAddr {
     transport: "unix" | "unixpacket";
     path: string;
+  }
+
+  export interface UnixConn extends Conn {
   }
 
   /** Options for writing to a file. */

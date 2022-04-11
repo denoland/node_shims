@@ -100,6 +100,8 @@ const testsToSkip = new Set([
   "callbackTakesLongerThanInterval", // Deno.sleepSync works differently than Atomics.wait unfortunately
   "sleepSyncShorterPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
   "sleepSyncLongerPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
+  "AbortSignal.timeout() with listeners", // can't use execCode
+  "AbortSignal.timeout() with removed listeners", // can't use execCode
   "unrefTimer", // can't use execCode
   "unrefTimer - mix ref and unref 1", // can't use execCode
   "unrefTimer - mix ref and unref 2", // can't use execCode
