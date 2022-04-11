@@ -34,6 +34,8 @@
 - [x] 👻 **`OpenOptions`**
 - [x] 👻 **`PermissionDescriptor`**
 - [x] 👻 **`PermissionName`**
+- [x] 👻 **`PermissionOptions`**
+- [x] 👻 **`PermissionOptionsObject`**
 - [x] 👻 **`PermissionState`**
 - [x] **`PermissionStatus`**
 - [x] 👻 **`PermissionStatusEventMap`**
@@ -58,6 +60,7 @@
 - [x] 👻 **`Signal`**
 - [ ] 👻 **`StartTlsOptions`**
 - [x] 👻 **`SymlinkOptions`**
+- [x] 👻 **`TcpConn`**
 - [x] 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
 - [x] 👻 **`TestStepDefinition`**
@@ -65,6 +68,7 @@
 - [x] 👻 **`TlsHandshakeInfo`**
 - [x] 👻 **`TlsListener`**
 - [x] 👻 **`UnixAddr`**
+- [x] 👻 **`UnixConn`**
 - [ ] 👻 **`UpgradeWebSocketOptions`**
 - [ ] 👻 **`WebSocketUpgrade`**
 - [x] 👻 **`WriteFileOptions`**
@@ -178,12 +182,12 @@
 
 # Unstable Progress
 
-22%. 27 unstable members to go:
+21%. 30 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
+- [ ] 👻 **`BenchDefinition`**
 - [ ] 🧪 👻 **`CompilerOptions`**
 - [ ] 👻 **`ConditionalAsync`**
-- [x] 👻 **`Conn`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
@@ -194,21 +198,23 @@
 - [ ] 🧪 👻 **`EmitOptions`**
 - [ ] 🧪 👻 **`EmitResult`**
 - [ ] 👻 **`ForeignFunction`**
-- [ ] 👻 **`ForeignFunctionInterface`**
+- [ ] 👻 **`ForeignLibraryInterface`**
+- [ ] 👻 **`ForeignStatic`**
 - [ ] 🧪 **`HttpClient`**
 - [ ] 👻 **`ImportMap`**
 - [x] 👻 **`ListenTlsOptions`**
+- [x] 👻 **`Listener`**
 - [ ] 🧪 👻 **`Location`**
 - [ ] 👻 **`NativeType`**
 - [ ] 👻 **`NetworkInterfaceInfo`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
 - [ ] 👻 **`StartTlsOptions`**
-- [ ] 👻 **`StaticForeignFunction`**
-- [ ] 👻 **`StaticForeignFunctionInterface`**
 - [ ] 👻 **`StaticForeignFunctionParameter`**
 - [ ] 👻 **`StaticForeignFunctionParameters`**
 - [ ] 👻 **`StaticForeignFunctionResult`**
+- [ ] 👻 **`StaticForeignLibraryInterface`**
+- [ ] 👻 **`StaticForeignSymbol`**
 - [ ] 👻 **`StaticNativeNumberType`**
 - [ ] 👻 **`SystemMemoryInfo`**
 - [x] 👻 **`TlsConn`**
@@ -220,6 +226,7 @@
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
 - [ ] 🧪 **`applySourceMap`**
+- [ ] **`bench`**
 - [x] 🧪 **`connect`**
 - [x] 🧪 **`connectTls`**
 - [ ] 🧪 **`consoleSize`**
@@ -247,5 +254,6 @@
 - [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
 - [ ] 🧪 **`unrefTimer`**
+- [ ] 🧪 **`upgradeHttp`**
 - [x] 🧪 **`utime`**
 - [x] 🧪 **`utimeSync`**
