@@ -28,7 +28,7 @@ jobs:
     - uses: denoland/setup-deno@v1
       with:
         deno-version: ~1.22
-    - run: deno lint deno.json
+    - run: deno lint
       if: matrix.os == 'ubuntu-latest'
     - run: deno fmt --check
       if: matrix.os == 'ubuntu-latest'
