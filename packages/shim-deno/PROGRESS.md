@@ -1,9 +1,10 @@
 # Stable Progress
 
-89%. 17 stable members to go:
+88%. 20 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
+- [ ] 👻 **`CAARecord`**
 - [x] 👻 **`Closer`**
 - [x] 👻 **`Conn`**
 - [x] 👻 **`ConnectOptions`**
@@ -28,6 +29,7 @@
 - [x] 👻 **`MemoryUsage`**
 - [x] 👻 **`Metrics`**
 - [x] 👻 **`MkdirOptions`**
+- [ ] 👻 **`NAPTRRecord`**
 - [x] 👻 **`NetAddr`**
 - [x] 👻 **`NetPermissionDescriptor`**
 - [x] 👻 **`OpMetrics`**
@@ -53,6 +55,7 @@
 - [x] 👻 **`ResourceMap`**
 - [x] 👻 **`RunOptions`**
 - [x] 👻 **`RunPermissionDescriptor`**
+- [ ] 👻 **`SOARecord`**
 - [ ] 👻 **`SRVRecord`**
 - [x] **`SeekMode`**
 - [x] 👻 **`Seeker`**
@@ -182,11 +185,12 @@
 
 # Unstable Progress
 
-21%. 30 unstable members to go:
+18%. 36 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 👻 **`BenchDefinition`**
-- [ ] 🧪 👻 **`CompilerOptions`**
+- [ ] **`Child`**
+- [ ] 👻 **`ChildStatus`**
 - [ ] 👻 **`ConditionalAsync`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
@@ -195,20 +199,18 @@
 - [ ] **`DiagnosticCategory`**
 - [ ] 👻 **`DiagnosticMessageChain`**
 - [ ] 👻 **`DynamicLibrary`**
-- [ ] 🧪 👻 **`EmitOptions`**
-- [ ] 🧪 👻 **`EmitResult`**
 - [ ] 👻 **`ForeignFunction`**
 - [ ] 👻 **`ForeignLibraryInterface`**
 - [ ] 👻 **`ForeignStatic`**
 - [ ] 🧪 **`HttpClient`**
-- [ ] 👻 **`ImportMap`**
 - [x] 👻 **`ListenTlsOptions`**
 - [x] 👻 **`Listener`**
-- [ ] 🧪 👻 **`Location`**
 - [ ] 👻 **`NativeType`**
 - [ ] 👻 **`NetworkInterfaceInfo`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
+- [ ] 👻 **`SpawnOptions`**
+- [ ] 👻 **`SpawnOutput`**
 - [ ] 👻 **`StartTlsOptions`**
 - [ ] 👻 **`StaticForeignFunctionParameter`**
 - [ ] 👻 **`StaticForeignFunctionParameters`**
@@ -225,17 +227,14 @@
 - [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
-- [ ] 🧪 **`applySourceMap`**
 - [ ] **`bench`**
 - [x] 🧪 **`connect`**
 - [x] 🧪 **`connectTls`**
 - [ ] 🧪 **`consoleSize`**
 - [ ] 🧪 **`createHttpClient`**
 - [ ] 🧪 **`dlopen`**
-- [ ] 🧪 **`emit`**
 - [ ] 🧪 **`flock`**
 - [ ] 🧪 **`flockSync`**
-- [ ] 🧪 **`formatDiagnostics`**
 - [ ] 🧪 **`funlock`**
 - [ ] 🧪 **`funlockSync`**
 - [x] 🧪 **`futime`**
@@ -251,6 +250,9 @@
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
 - [x] 🧪 **`sleepSync`**
+- [ ] **`spawn`**
+- [ ] **`spawnChild`**
+- [ ] **`spawnSync`**
 - [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
 - [ ] 🧪 **`unrefTimer`**

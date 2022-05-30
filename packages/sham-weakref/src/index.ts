@@ -23,7 +23,7 @@ export interface WeakRefConstructor {
 
 export const WeakRef: WeakRefConstructor = (globalThis as any).WeakRef ??
   class WeakRef<T extends object> {
-    readonly [Symbol.toStringTag]: "WeakRef";
+    readonly [Symbol.toStringTag] = "WeakRef";
 
     constructor(_target: T) {
     }

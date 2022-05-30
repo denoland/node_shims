@@ -1836,6 +1836,8 @@ export declare namespace Deno {
     getters?: boolean;
     /** Show an object's non-enumerable properties. Defaults to false. */
     showHidden?: boolean;
+    /** The maximum length of a string before it is truncated with an ellipsis */
+    strAbbreviateSize?: number;
   }
 
   /** A generic network listener for stream-oriented protocols. */
@@ -2390,6 +2392,9 @@ export declare namespace Deno {
 
   export interface TestDefinition {
     fn: (t: TestContext) => void | Promise<void>;
+    /**
+     * The current test name.
+     */
     name: string;
     ignore?: boolean;
     /**
@@ -2425,6 +2430,9 @@ export declare namespace Deno {
 
   export interface TestStepDefinition {
     fn: (t: TestContext) => void | Promise<void>;
+    /**
+     * The current test name.
+     */
     name: string;
     ignore?: boolean;
     /**
@@ -2447,6 +2455,18 @@ export declare namespace Deno {
   }
 
   export interface TestContext {
+    /**
+     * The current test name.
+     */
+    name: string;
+    /**
+     * File Uri of the current test code.
+     */
+    origin: string;
+    /**
+     * Parent test context.
+     */
+    parent?: TestContext;
     /**
      * Run a sub step of the parent test or step. Returns a promise
      * that resolves to a boolean signifying if the step completed successfully.
