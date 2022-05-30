@@ -1,6 +1,6 @@
 {
   "name": "@deno/shim-crypto",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Node shim for the web's `crypto` global.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
