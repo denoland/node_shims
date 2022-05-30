@@ -7,6 +7,8 @@ export interface Crypto {
   /** Available only in secure contexts. */
   readonly subtle: SubtleCrypto;
   getRandomValues<T extends ArrayBufferView | null>(array: T): T;
+  /** Available only in secure contexts. */
+  randomUUID(): string;
 }
 
 /**
@@ -155,8 +157,8 @@ export interface EcKeyGenParams extends Algorithm {
 export type NamedCurve = string;
 
 export interface CryptoKeyPair {
-  privateKey?: CryptoKey;
-  publicKey?: CryptoKey;
+  privateKey: CryptoKey;
+  publicKey: CryptoKey;
 }
 
 export interface AesKeyGenParams extends Algorithm {

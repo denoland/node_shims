@@ -1,7 +1,12 @@
 {
-  "deno.enable": false,
   "deno.lint": true,
-  "deno.config": "./deno.json",
+  "deno.unstable": true,
+  "deno.enablePaths": [
+    "./scripts",
+    "./packages/shim-crypto/scripts",
+    "./packages/shim-deno/tools",
+    "./packages/shim-deno-test/scripts"
+  ],
   "editor.defaultFormatter": "denoland.vscode-deno",
   "editor.formatOnSave": true
 }

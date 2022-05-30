@@ -8,10 +8,11 @@ export const build: typeof Deno.build = {
     os.platform(),
   ),
   vendor: "pc",
-  target: ((p) =>
-    p === "win32"
-      ? "x86_64-pc-windows-msvc"
-      : p === "darwin"
-      ? "x86_64-apple-darwin"
-      : "x86_64-unknown-linux-gnu")(os.platform()),
+  target:
+    ((p) =>
+      p === "win32"
+        ? "x86_64-pc-windows-msvc"
+        : p === "darwin"
+        ? "x86_64-apple-darwin"
+        : "x86_64-unknown-linux-gnu")(os.platform()),
 };

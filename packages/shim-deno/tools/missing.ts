@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read='.'
 
-import { Project, Symbol, SymbolFlags } from "./deps.ts";
+import { Project, Symbol, SymbolFlags } from "../../../scripts/ts_morph.ts";
 
 let exitCode = 0;
 const ExitCodes = {
