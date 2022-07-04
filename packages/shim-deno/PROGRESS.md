@@ -185,7 +185,7 @@
 
 # Unstable Progress
 
-18%. 36 unstable members to go:
+13%. 53 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 👻 **`BenchDefinition`**
@@ -202,28 +202,45 @@
 - [ ] 👻 **`ForeignFunction`**
 - [ ] 👻 **`ForeignLibraryInterface`**
 - [ ] 👻 **`ForeignStatic`**
+- [ ] 👻 **`FromForeignFunction`**
+- [ ] 👻 **`FromNativeParameterTypes`**
+- [ ] 👻 **`FromNativeResultType`**
+- [ ] 👻 **`FromNativeResultTypeMap`**
+- [ ] 👻 **`FromNativeType`**
+- [ ] 👻 **`FromNativeTypeMap`**
 - [ ] 🧪 **`HttpClient`**
 - [x] 👻 **`ListenTlsOptions`**
 - [x] 👻 **`Listener`**
+- [ ] 👻 **`NativeBigIntType`**
+- [ ] 👻 **`NativeFunctionType`**
+- [ ] 👻 **`NativeNumberType`**
+- [ ] 👻 **`NativePointerType`**
+- [ ] 👻 **`NativeResultType`**
 - [ ] 👻 **`NativeType`**
+- [ ] 👻 **`NativeVoidType`**
 - [ ] 👻 **`NetworkInterfaceInfo`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
 - [ ] 👻 **`SpawnOptions`**
 - [ ] 👻 **`SpawnOutput`**
 - [ ] 👻 **`StartTlsOptions`**
-- [ ] 👻 **`StaticForeignFunctionParameter`**
-- [ ] 👻 **`StaticForeignFunctionParameters`**
-- [ ] 👻 **`StaticForeignFunctionResult`**
 - [ ] 👻 **`StaticForeignLibraryInterface`**
 - [ ] 👻 **`StaticForeignSymbol`**
-- [ ] 👻 **`StaticNativeNumberType`**
+- [ ] 👻 **`StaticForeignSymbolReturnType`**
 - [ ] 👻 **`SystemMemoryInfo`**
 - [x] 👻 **`TlsConn`**
 - [x] 👻 **`TlsHandshakeInfo`**
+- [ ] 👻 **`ToNativeParameterTypes`**
+- [ ] 👻 **`ToNativeResultType`**
+- [ ] 👻 **`ToNativeResultTypeMap`**
+- [ ] 👻 **`ToNativeType`**
+- [ ] 👻 **`ToNativeTypeMap`**
 - [ ] 👻 **`TypedArray`**
 - [x] 👻 **`UnixConnectOptions`**
 - [x] 👻 **`UnixListenOptions`**
+- [ ] 🧪 **`UnsafeCallback`**
+- [ ] 👻 **`UnsafeCallbackDefinition`**
+- [ ] 👻 **`UnsafeCallbackFunction`**
 - [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
@@ -239,6 +256,7 @@
 - [ ] 🧪 **`funlockSync`**
 - [x] 🧪 **`futime`**
 - [x] 🧪 **`futimeSync`**
+- [ ] **`getGid`**
 - [ ] **`getUid`**
 - [ ] 🧪 **`hostname`**
 - [x] 🧪 **`listen`**
@@ -249,7 +267,6 @@
 - [ ] 🧪 **`refTimer`**
 - [x] **`run`**
 - [ ] 🧪 **`setRaw`**
-- [x] 🧪 **`sleepSync`**
 - [ ] **`spawn`**
 - [ ] **`spawnChild`**
 - [ ] **`spawnSync`**
