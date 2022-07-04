@@ -93,6 +93,9 @@ const testsToSkip = new Set([
 
   // testing_test
   "invalidStepArguments", // no test runner in shim-deno
+  "nameOnTextContext", // no test runner in shim-deno
+  "originOnTextContext", // no test runner in shim-deno
+  "parentOnTextContext", // no test runner in shim-deno
 
   // timers_test
   "clearTimeoutShouldConvertToNumber", // Timeout is an object, not a number
@@ -102,6 +105,8 @@ const testsToSkip = new Set([
   "sleepSyncLongerPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
   "AbortSignal.timeout() with listeners", // can't use execCode
   "AbortSignal.timeout() with removed listeners", // can't use execCode
+  "AbortSignal.timeout() with no listeners", // Deno.spawn is not implemented yet
+  "AbortSignal.timeout() with listener for a non-abort event", // Deno.spawn is not implemented yet
   "unrefTimer", // can't use execCode
   "unrefTimer - mix ref and unref 1", // can't use execCode
   "unrefTimer - mix ref and unref 2", // can't use execCode

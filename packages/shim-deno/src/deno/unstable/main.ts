@@ -58,10 +58,3 @@ export const utimeSync: typeof Deno.utimeSync = function (path, atime, mtime) {
     throw mapError(error);
   }
 };
-
-export const sleepSync: typeof Deno.sleepSync = function (
-  milliseconds: number,
-) {
-  // https://github.com/sindresorhus/sleep-synchronously/blob/main/index.js
-  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
-};
