@@ -1,6 +1,6 @@
 {
   "name": "@deno/shim-deno-test",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Deno.test only shim.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
