@@ -2856,17 +2856,6 @@ export declare namespace Deno {
    * Requires `allow-write` permission.
    */
   export function utimeSync(path: string | URL, atime: number | Date, mtime: number | Date): void;
-  /**
-   * *UNSTABLE**: new API, yet to be vetted.
-   *
-   * SleepSync puts the main thread to sleep synchronously for a given amount of
-   * time in milliseconds.
-   *
-   * ```ts
-   * Deno.sleepSync(10);
-   * ```
-   */
-  export function sleepSync(millis: number): void;
 }
 
 declare module "@deno/shim-deno/test-internals" {

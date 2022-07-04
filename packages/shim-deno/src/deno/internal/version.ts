@@ -1,2 +1,2 @@
-export const deno = "1.22.1";
-export const typescript = "4.6.2";
+export const deno = "1.23.2";
+export const typescript = "4.7.2";

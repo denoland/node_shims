@@ -39,6 +39,9 @@ export declare function test(t: TestDefinition): void;
 
 export interface TestDefinition {
   fn: (t: TestContext) => void | Promise<void>;
+  /**
+   * The current test name.
+   */
   name: string;
   ignore?: boolean;
   /**
@@ -74,6 +77,18 @@ export interface TestDefinition {
 
 export interface TestContext {
   /**
+   * The current test name.
+   */
+  name: string;
+  /**
+   * File Uri of the current test code.
+   */
+  origin: string;
+  /**
+   * Parent test context.
+   */
+  parent?: TestContext;
+  /**
    * Run a sub step of the parent test or step. Returns a promise
    * that resolves to a boolean signifying if the step completed successfully.
    * The returned promise never rejects unless the arguments are invalid.
@@ -91,6 +106,9 @@ export interface TestContext {
 
 export interface TestStepDefinition {
   fn: (t: TestContext) => void | Promise<void>;
+  /**
+   * The current test name.
+   */
   name: string;
   ignore?: boolean;
   /**
