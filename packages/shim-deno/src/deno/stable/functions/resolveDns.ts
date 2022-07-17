@@ -7,25 +7,32 @@ export const resolveDns: typeof Deno.resolveDns = async function resolveDns(
     recordType,
     options,
 ): Promise<any[]> {
+    if (options)
+        throw Error(`resolveDns option not implemnted yet`);
     switch (recordType) {
         case "A":
+        case "AAAA":
+        // case "ANAME":
+        case "CNAME":
+        case "NS":
+        case "PTR":
             return new Promise((resolve, reject) => {
-                dns.resolve4(query, { ttl: false }, (err, addresses) => {
+                dns.resolve(query, recordType, (err, addresses) => {
                     if (err)
                         reject(err);
                     else
-                        resolve(addresses);
+                        resolve(addresses as string[]);
                 });
             });
-        case "AAAA":
-            return new Promise((resolve, reject) => {
-                dns.resolve4(query, { ttl: false }, (err, addresses) => {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(addresses);
-                });
-            })
+        case "ANAME":
+        case "CAA":
+        case "MX":
+        case "NAPTR":
+        case "SOA":
+        case "SRV":
+        case "TXT":
+        default:
+            throw Error(`resolveDns type ${recordType} not implemnted yet`);
     }
     return [] as string[];
 };
