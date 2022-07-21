@@ -13,3 +13,23 @@ Deno shims for Node.js
   `setInterval`.
 - [@deno/sham-weakref](packages/sham-weakref) - Sham for the `WeakRef` global
   that uses the global `WeakRef` if it exists.
+
+## Contributing
+
+Commands:
+
+```sh
+# npm install
+npm i --ignore-scripts
+# build all packages
+npm run build --workspaces
+# test all packages
+npm run test --workspaces
+# format
+deno fmt
+# lint
+deno lint
+```
+
+For package specific development commands, see the package.json scripts in each
+package.
