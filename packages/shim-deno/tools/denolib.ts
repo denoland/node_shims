@@ -1,6 +1,6 @@
 import { Project } from "../../../scripts/ts_morph.ts";
 
-if (!Deno.version.deno.startsWith("1.23.")) {
+if (!Deno.version.deno.startsWith("1.24.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
@@ -59,6 +59,11 @@ function processDeclsFromStable(text: string) {
   sourceFile.getInterfaceOrThrow("AbortSignal").remove();
   sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
   sourceFile.getVariableStatementOrThrow("AbortSignal").remove();
+  sourceFile
+    .getInterfaceOrThrow("ImportMeta")
+    .getMethodOrThrow("resolve")
+    // make optional to not conflict with @types/node
+    .setHasQuestionToken(true);
 
   // use web streams from @types/node
   [
