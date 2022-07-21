@@ -2,8 +2,8 @@ import { open } from "./open.ts";
 import assert from "assert/strict";
 import path from "path";
 
-const withTempDir = (test: (tempDirPath: string) => Promise<void>) =>
-  async () => {
+const withTempDir =
+  (test: (tempDirPath: string) => Promise<void>) => async () => {
     const tempDirPath = await Deno.makeTempDir();
     try {
       await test(tempDirPath);

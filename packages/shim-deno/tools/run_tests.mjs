@@ -24,6 +24,7 @@ const testsToSkip = new Set([
 
   // event_target_test
   "eventTargetThisShouldDefaultToWindow", // window
+  "eventTargetAddEventListenerGlobalAbort", // global addEventListener
 
   // files_test
   "filesIter", // deprecated
