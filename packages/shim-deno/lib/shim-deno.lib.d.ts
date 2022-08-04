@@ -149,6 +149,7 @@ interface EventListenerOptions {
 interface AddEventListenerOptions extends EventListenerOptions {
   once?: boolean;
   passive?: boolean;
+  signal?: AbortSignal;
 }
 
 interface EventListener {
@@ -160,7 +161,7 @@ interface EventListenerObject {
 }
 
 declare type EventListenerOrEventListenerObject = | EventListener
-  | EventListenerObject;
+    | EventListenerObject;
 
 export declare namespace Deno {
   export const File: typeof FsFile;
@@ -402,8 +403,8 @@ export declare namespace Deno {
    * @param options Can be used to tune size of the buffer. Default size is 32kB
    */
   export function copy(src: Reader, dst: Writer, options?: {
-    bufSize?: number;
-  }): Promise<number>;
+      bufSize?: number;
+    }): Promise<number>;
   /**
    * Copies the contents and permissions of one file to another specified path,
    * by default creating a new file if needed, else overwriting. Fails if target
@@ -480,6 +481,8 @@ export declare namespace Deno {
   /**
    * Exit the Deno process with optional exit code. If no exit code is supplied
    * then Deno will exit with return code of 0.
+   *
+   * In worker contexts this is an alias to `self.close();`.
    *
    * ```ts
    * Deno.exit(5);
@@ -635,7 +638,8 @@ export declare namespace Deno {
    * Send a signal to process under given `pid`.
    *
    * If `pid` is negative, the signal will be sent to the process group
-   * identified by `pid`.
+   * identified by `pid`. An error will be thrown if a negative
+   * `pid` is used on Windows.
    *
    * ```ts
    * const p = Deno.run({
@@ -885,7 +889,8 @@ export declare namespace Deno {
    * not indicate EOF.
    *
    * This function is one of the lowest level APIs and most users should not
-   * work with this directly, but rather use Deno.readAll() instead.
+   * work with this directly, but rather use
+   * `readAll()` from https://deno.land/std/streams/conversion.ts instead.
    *
    * **It is not guaranteed that the full buffer will be read in a single call.**
    *
@@ -993,7 +998,8 @@ export declare namespace Deno {
    * not indicate EOF.
    *
    * This function is one of the lowest level APIs and most users should not
-   * work with this directly, but rather use Deno.readAllSync() instead.
+   * work with this directly, but rather use
+   * `readAllSync()` from https://deno.land/std/streams/conversion.ts instead.
    *
    * **It is not guaranteed that the full buffer will be read in a single call.**
    *
@@ -1129,163 +1135,59 @@ export declare namespace Deno {
    * Requires `allow-read` and `allow-write` permissions.
    */
   export function renameSync(oldpath: string | URL, newpath: string | URL): void;
+  export function resolveDns(query: string, recordType: "A" | "AAAA" | "ANAME" | "CNAME" | "NS" | "PTR", options?: ResolveDnsOptions): Promise<string[]>;
+  export function resolveDns(query: string, recordType: "CAA", options?: ResolveDnsOptions): Promise<CAARecord[]>;
+  export function resolveDns(query: string, recordType: "MX", options?: ResolveDnsOptions): Promise<MXRecord[]>;
+  export function resolveDns(query: string, recordType: "NAPTR", options?: ResolveDnsOptions): Promise<NAPTRRecord[]>;
+  export function resolveDns(query: string, recordType: "SOA", options?: ResolveDnsOptions): Promise<SOARecord[]>;
+  export function resolveDns(query: string, recordType: "SRV", options?: ResolveDnsOptions): Promise<SRVRecord[]>;
+  export function resolveDns(query: string, recordType: "TXT", options?: ResolveDnsOptions): Promise<string[][]>;
   /**
-   * The name server to be used for lookups. If not specified, defaults to the system configuration e.g. /etc/resolv.conf on Unix.
-   */
-  interface ResolveDnsOptions {
-    nameServer?: {
-      ipAddr: string;
-      port?: number;
-    };
-  }
-  /**
-   * If resolveDns is called with "CAA" record type specified, it will return an array of this interface.
-   */
-  interface CAARecord {
-    critical: boolean;
-    tag: string;
-    value: string;
-  }
-  /**
-   * If resolveDns is called with "MX" record type specified, it will return an array of this interface.
-   */
-  interface MXRecord {
-    exchange: string;
-    preference: number;
-  }
-  /**
-   * If resolveDns is called with "NAPTR" record type specified, it will return an array of this interface.
-   */
-  interface NAPTRRecord {
-    flags: string;
-    order: number;
-    preference: number;
-    regexp: string;
-    replacement: string;
-    services: string;
-  }
-  /**
-   * If resolveDns is called with "SOA" record type specified, it will return an array of this interface.
-   */
-  interface SOARecord {
-    expire: number;
-    minimum: number;
-    mname: string;
-    refresh: number;
-    retry: number;
-    rname: string;
-    serial: number;
-  }
-  /**
-   * If resolveDns is called with "SRV" record type specified, it will return an array of this interface.
-   */
-  interface SRVRecord {
-    port: number;
-    priority: number;
-    target: string;
-    weight: number;
-  }
-  /**
-   * The type of the resource record. Only the listed types are supported currently.
-   */
-  type RecordType =
-    | "A"
-    | "AAAA"
-    | "ANAME"
-    | "CAA"
-    | "CNAME"
-    | "MX"
-    | "NAPTR"
-    | "NS"
-    | "PTR"
-    | "SOA"
-    | "SRV"
-    | "TXT";
-  /**
-   * Performs DNS resolution against the given query, returning resolved records. Fails in the cases such as:
-   * 
-   * the query is in invalid format
-   * the options have an invalid parameter, e.g. nameServer.port is beyond the range of 16-bit unsigned integer
-   * timed out
+   * Performs DNS resolution against the given query, returning resolved records.
+   * Fails in the cases such as:
+   * - the query is in invalid format
+   * - the options have an invalid parameter, e.g. `nameServer.port` is beyond the range of 16-bit unsigned integer
+   * - timed out
+   *
    * ```ts
    * const a = await Deno.resolveDns("example.com", "A");
-   * 
+   *
    * const aaaa = await Deno.resolveDns("example.com", "AAAA", {
-   * nameServer: { ipAddr: "8.8.8.8", port: 53 },
+   *   nameServer: { ipAddr: "8.8.8.8", port: 53 },
    * });
    * ```
-   * Requires allow-net permission.
-   * @param query 
-   * @param recordType 
-   * @param options 
+   *
+   * Requires `allow-net` permission.
    */
-  function resolveDns(
-    query: string,
-    recordType:
-      | "A"
-      | "AAAA"
-      | "ANAME"
-      | "CNAME"
-      | "NS"
-      | "PTR"
-    ,
-    options?: ResolveDnsOptions,
-  ): Promise<string[]>;
-  function resolveDns(
-    query: string,
-    recordType: "CAA",
-    options?: ResolveDnsOptions,
-  ): Promise<CAARecord[]>;
-  function resolveDns(
-    query: string,
-    recordType: "MX",
-    options?: ResolveDnsOptions,
-  ): Promise<MXRecord[]>;
-  function resolveDns(
-    query: string,
-    recordType: "NAPTR",
-    options?: ResolveDnsOptions,
-  ): Promise<NAPTRRecord[]>;
-  function resolveDns(
-    query: string,
-    recordType: "SOA",
-    options?: ResolveDnsOptions,
-  ): Promise<SOARecord[]>;
-  function resolveDns(
-    query: string,
-    recordType: "SRV",
-    options?: ResolveDnsOptions,
-  ): Promise<SRVRecord[]>;
-  function resolveDns(
-    query: string,
-    recordType: "TXT",
-    options?: ResolveDnsOptions,
-  ): Promise<string[][]>;
-  function resolveDns(
-    query: string,
-    recordType: RecordType,
-    options?: ResolveDnsOptions,
-  ): Promise<string[] | CAARecord[] | MXRecord[] | NAPTRRecord[] | SOARecord[] | SRVRecord[] | string[][]>;
+  export function resolveDns(query: string, recordType: RecordType, options?: ResolveDnsOptions): Promise<
+    | string[]
+    | CAARecord[]
+    | MXRecord[]
+    | NAPTRRecord[]
+    | SOARecord[]
+    | SRVRecord[]
+    | string[][]
+    >;
 
   export class Process<T extends Deno.RunOptions = Deno.RunOptions> implements Deno.Process<T> {
     #private;
     get rid(): number;
     get pid(): number;
     get stdin(): T["stdin"] extends "piped" ? Deno.Writer & Deno.Closer & {
-      writable: import("stream/web").WritableStream<Uint8Array>;
-    } : (Deno.Writer & Deno.Closer & {
-      writable: import("stream/web").WritableStream<Uint8Array>;
-    }) | null;
+          writable: import("stream/web").WritableStream<Uint8Array>;
+      } : (Deno.Writer & Deno.Closer & {
+          writable: import("stream/web").WritableStream<Uint8Array>;
+      }) | null;
     get stdout(): T["stdout"] extends "piped" ? Deno.Reader & Deno.Closer & {
-      readable: import("stream/web").ReadableStream<Uint8Array>;
-    } : (Deno.Reader & Deno.Closer & {
-      readable: import("stream/web").ReadableStream<Uint8Array>;
-    }) | null;
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      } : (Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      }) | null;
     get stderr(): T["stderr"] extends "piped" ? Deno.Reader & Deno.Closer & {
-      readable: import("stream/web").ReadableStream<Uint8Array>;
-    } : (Deno.Reader & Deno.Closer & {
-      readable: import("stream/web").ReadableStream<Uint8Array>;
-    }) | null;
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      } : (Deno.Reader & Deno.Closer & {
+          readable: import("stream/web").ReadableStream<Uint8Array>;
+      }) | null;
     status(): Promise<Deno.ProcessStatus>;
     output(): Promise<Uint8Array>;
     stderrOutput(): Promise<Uint8Array>;
@@ -1294,13 +1196,14 @@ export declare namespace Deno {
   }
 
   /**
-   * Spawns new subprocess.  RunOptions must contain at a minimum the `opt.cmd`,
+   * Spawns new subprocess. RunOptions must contain at a minimum the `opt.cmd`,
    * an array of program arguments, the first of which is the binary.
    *
    * ```ts
    * const p = Deno.run({
-   *   cmd: ["echo", "hello"],
+   *   cmd: ["curl", "https://example.com"],
    * });
+   * const status = await p.status();
    * ```
    *
    * Subprocess uses same working directory as parent process unless `opt.cwd`
@@ -1339,14 +1242,14 @@ export declare namespace Deno {
    */
   export function run<T extends RunOptions = RunOptions>(opt: T): Process<T>;
   export function run<T extends RunOptions & {
-    clearEnv?: boolean;
-    gid?: number;
-    uid?: number;
-  } = RunOptions & {
-    clearEnv?: boolean;
-    gid?: number;
-    uid?: number;
-  }>(opt: T): Process<T>;
+      clearEnv?: boolean;
+      gid?: number;
+      uid?: number;
+    } = RunOptions & {
+      clearEnv?: boolean;
+      gid?: number;
+      uid?: number;
+    }>(opt: T): Process<T>;
   /**
    * Shutdown socket send operations.
    *
@@ -1622,7 +1525,7 @@ export declare namespace Deno {
    *
    * Resolves to the number of bytes written.  This function is one of the lowest
    * level APIs and most users should not work with this directly, but rather use
-   * Deno.writeAll() instead.
+   * `writeAll()` from https://deno.land/std/streams/conversion.ts instead.
    *
    * **It is not guaranteed that the full buffer will be written in a single
    * call.**
@@ -2193,20 +2096,20 @@ export declare namespace Deno {
    * requested, or revoked.
    */
   export type PermissionDescriptor = | RunPermissionDescriptor
-    | ReadPermissionDescriptor
-    | WritePermissionDescriptor
-    | NetPermissionDescriptor
-    | EnvPermissionDescriptor
-    | FfiPermissionDescriptor
-    | HrtimePermissionDescriptor;
+        | ReadPermissionDescriptor
+        | WritePermissionDescriptor
+        | NetPermissionDescriptor
+        | EnvPermissionDescriptor
+        | FfiPermissionDescriptor
+        | HrtimePermissionDescriptor;
   /** The name of a "powerful feature" which needs permission. */
   export type PermissionName = | "run"
-    | "read"
-    | "write"
-    | "net"
-    | "env"
-    | "ffi"
-    | "hrtime";
+        | "read"
+        | "write"
+        | "net"
+        | "env"
+        | "ffi"
+        | "hrtime";
   export type PermissionOptions = "inherit" | "none" | PermissionOptionsObject;
 
   export interface PermissionOptionsObject {
@@ -2351,15 +2254,15 @@ export declare namespace Deno {
   }
 
   export type ProcessStatus = | {
-    success: true;
-    code: 0;
-    signal?: undefined;
-  }
-    | {
-      success: false;
-      code: number;
-      signal?: number;
-    };
+          success: true;
+          code: 0;
+          signal?: undefined;
+        }
+        | {
+          success: false;
+          code: number;
+          signal?: number;
+        };
 
   export interface Reader {
     /**
@@ -2382,8 +2285,8 @@ export declare namespace Deno {
      *
      * Implementations should not retain a reference to `p`.
      *
-     * Use iter() from https://deno.land/std/io/util.ts to turn a Reader into an
-     * AsyncIterator.
+     * Use `itereateReader` from from https://deno.land/std/streams/conversion.ts to
+     * turn a Reader into an AsyncIterator.
      */
     read(p: Uint8Array): Promise<number | null>;
   }
@@ -2408,8 +2311,8 @@ export declare namespace Deno {
      *
      * Implementations should not retain a reference to `p`.
      *
-     * Use iterSync() from https://deno.land/std/io/util.ts to turn a ReaderSync
-     * into an Iterator.
+     * Use `iterateReaderSync()` from from https://deno.land/std/streams/conversion.ts
+     * to turn a ReaderSync into an Iterator.
      */
     readSync(p: Uint8Array): number | null;
   }
@@ -2448,8 +2351,8 @@ export declare namespace Deno {
     cmd: readonly string[] | [URL, ...string[]];
     cwd?: string;
     env?: {
-      [key: string]: string;
-    };
+        [key: string]: string;
+      };
     stdout?: "inherit" | "piped" | "null" | number;
     stderr?: "inherit" | "piped" | "null" | number;
     stdin?: "inherit" | "piped" | "null" | number;
@@ -2491,41 +2394,42 @@ export declare namespace Deno {
   }
 
   export type Signal = | "SIGABRT"
-    | "SIGALRM"
-    | "SIGBUS"
-    | "SIGCHLD"
-    | "SIGCONT"
-    | "SIGEMT"
-    | "SIGFPE"
-    | "SIGHUP"
-    | "SIGILL"
-    | "SIGINFO"
-    | "SIGINT"
-    | "SIGIO"
-    | "SIGKILL"
-    | "SIGPIPE"
-    | "SIGPROF"
-    | "SIGPWR"
-    | "SIGQUIT"
-    | "SIGSEGV"
-    | "SIGSTKFLT"
-    | "SIGSTOP"
-    | "SIGSYS"
-    | "SIGTERM"
-    | "SIGTRAP"
-    | "SIGTSTP"
-    | "SIGTTIN"
-    | "SIGTTOU"
-    | "SIGURG"
-    | "SIGUSR1"
-    | "SIGUSR2"
-    | "SIGVTALRM"
-    | "SIGWINCH"
-    | "SIGXCPU"
-    | "SIGXFSZ";
+        | "SIGALRM"
+        | "SIGBREAK"
+        | "SIGBUS"
+        | "SIGCHLD"
+        | "SIGCONT"
+        | "SIGEMT"
+        | "SIGFPE"
+        | "SIGHUP"
+        | "SIGILL"
+        | "SIGINFO"
+        | "SIGINT"
+        | "SIGIO"
+        | "SIGKILL"
+        | "SIGPIPE"
+        | "SIGPROF"
+        | "SIGPWR"
+        | "SIGQUIT"
+        | "SIGSEGV"
+        | "SIGSTKFLT"
+        | "SIGSTOP"
+        | "SIGSYS"
+        | "SIGTERM"
+        | "SIGTRAP"
+        | "SIGTSTP"
+        | "SIGTTIN"
+        | "SIGTTOU"
+        | "SIGURG"
+        | "SIGUSR1"
+        | "SIGUSR2"
+        | "SIGVTALRM"
+        | "SIGWINCH"
+        | "SIGXCPU"
+        | "SIGXFSZ";
   export type SymlinkOptions = {
-    type: "file" | "dir";
-  };
+        type: "file" | "dir";
+      };
 
   export interface TestDefinition {
     fn: (t: TestContext) => void | Promise<void>;
@@ -2723,6 +2627,78 @@ export declare namespace Deno {
     writeSync(p: Uint8Array): number;
   }
 
+  /** If `resolveDns` is called with "CAA" record type specified, it will return an array of this interface. */
+  export interface CAARecord {
+    critical: boolean;
+    tag: string;
+    value: string;
+  }
+
+  /** If `resolveDns` is called with "MX" record type specified, it will return an array of this interface. */
+  export interface MXRecord {
+    preference: number;
+    exchange: string;
+  }
+
+  /** If `resolveDns` is called with "NAPTR" record type specified, it will return an array of this interface. */
+  export interface NAPTRRecord {
+    order: number;
+    preference: number;
+    flags: string;
+    services: string;
+    regexp: string;
+    replacement: string;
+  }
+
+  export interface ResolveDnsOptions {
+    /**
+     * The name server to be used for lookups.
+     * If not specified, defaults to the system configuration e.g. `/etc/resolv.conf` on Unix.
+     */
+    nameServer?: {
+        /** The IP address of the name server */
+        ipAddr: string;
+        /** The port number the query will be sent to.
+         * If not specified, defaults to 53. */
+        port?: number;
+      };
+  }
+
+  /** If `resolveDns` is called with "SOA" record type specified, it will return an array of this interface. */
+  export interface SOARecord {
+    mname: string;
+    rname: string;
+    serial: number;
+    refresh: number;
+    retry: number;
+    expire: number;
+    minimum: number;
+  }
+
+  /** If `resolveDns` is called with "SRV" record type specified, it will return an array of this interface. */
+  export interface SRVRecord {
+    priority: number;
+    weight: number;
+    port: number;
+    target: string;
+  }
+
+  /**
+   * The type of the resource record.
+   * Only the listed types are supported currently.
+   */
+  export type RecordType = | "A"
+        | "AAAA"
+        | "ANAME"
+        | "CAA"
+        | "CNAME"
+        | "MX"
+        | "NAPTR"
+        | "NS"
+        | "PTR"
+        | "SOA"
+        | "SRV"
+        | "TXT";
   /** Build related information. */
   export const build: {
     /** The LLVM target triple */
@@ -2735,52 +2711,52 @@ export declare namespace Deno {
     vendor: string;
     /** Optional environment */
     env?: string;
-  };
+    };
   export const customInspect: unique symbol;
   export const env: {
-    /** Retrieve the value of an environment variable. Returns `undefined` if that
-     * key doesn't exist.
-     *
-     * ```ts
-     * console.log(Deno.env.get("HOME"));  // e.g. outputs "/home/alice"
-     * console.log(Deno.env.get("MADE_UP_VAR"));  // outputs "undefined"
-     * ```
-     * Requires `allow-env` permission. */
-    get(key: string): string | undefined;
+        /** Retrieve the value of an environment variable. Returns `undefined` if that
+         * key doesn't exist.
+         *
+         * ```ts
+         * console.log(Deno.env.get("HOME"));  // e.g. outputs "/home/alice"
+         * console.log(Deno.env.get("MADE_UP_VAR"));  // outputs "undefined"
+         * ```
+         * Requires `allow-env` permission. */
+        get(key: string): string | undefined;
 
-    /** Set the value of an environment variable.
-     *
-     * ```ts
-     * Deno.env.set("SOME_VAR", "Value");
-     * Deno.env.get("SOME_VAR");  // outputs "Value"
-     * ```
-     *
-     * Requires `allow-env` permission. */
-    set(key: string, value: string): void;
+        /** Set the value of an environment variable.
+         *
+         * ```ts
+         * Deno.env.set("SOME_VAR", "Value");
+         * Deno.env.get("SOME_VAR");  // outputs "Value"
+         * ```
+         *
+         * Requires `allow-env` permission. */
+        set(key: string, value: string): void;
 
-    /** Delete the value of an environment variable.
-     *
-     * ```ts
-     * Deno.env.set("SOME_VAR", "Value");
-     * Deno.env.delete("SOME_VAR");  // outputs "undefined"
-     * ```
-     *
-     * Requires `allow-env` permission. */
-    delete(key: string): void;
+        /** Delete the value of an environment variable.
+         *
+         * ```ts
+         * Deno.env.set("SOME_VAR", "Value");
+         * Deno.env.delete("SOME_VAR");  // outputs "undefined"
+         * ```
+         *
+         * Requires `allow-env` permission. */
+        delete(key: string): void;
 
-    /** Returns a snapshot of the environment variables at invocation.
-     *
-     * ```ts
-     * Deno.env.set("TEST_VAR", "A");
-     * const myEnv = Deno.env.toObject();
-     * console.log(myEnv.SHELL);
-     * Deno.env.set("TEST_VAR", "B");
-     * console.log(myEnv.TEST_VAR);  // outputs "A"
-     * ```
-     *
-     * Requires `allow-env` permission. */
-    toObject(): { [index: string]: string };
-  };
+        /** Returns a snapshot of the environment variables at invocation.
+         *
+         * ```ts
+         * Deno.env.set("TEST_VAR", "A");
+         * const myEnv = Deno.env.toObject();
+         * console.log(myEnv.SHELL);
+         * Deno.env.set("TEST_VAR", "B");
+         * console.log(myEnv.TEST_VAR);  // outputs "A"
+         * ```
+         *
+         * Requires `allow-env` permission. */
+        toObject(): { [index: string]: string };
+      };
 
   export namespace errors {
     export class AddrInUse extends Error {
@@ -2899,22 +2875,22 @@ export declare namespace Deno {
     v8: string;
     /** The TypeScript version used by Deno. For example: `"4.0.0"` */
     typescript: string;
-  };
+    };
   /** A handle for `stdin`. */
   export const stdin: Reader & ReaderSync & Closer & {
     readonly rid: number;
     readonly readable: ReadableStream<Uint8Array>;
-  };
+    };
   /** A handle for `stdout`. */
   export const stdout: Writer & WriterSync & Closer & {
     readonly rid: number;
     readonly writable: WritableStream<Uint8Array>;
-  };
+    };
   /** A handle for `stderr`. */
   export const stderr: Writer & WriterSync & Closer & {
     readonly rid: number;
     readonly writable: WritableStream<Uint8Array>;
-  };
+    };
 
   export interface TlsHandshakeInfo {
   }

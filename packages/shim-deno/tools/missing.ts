@@ -97,9 +97,6 @@ function outputInfo(opts: {
     const flask = member.unstable ? " 🧪" : "";
     const down = member.deprecated ? " 👎" : "";
     const checkmark = member.implemented ? `[x]` : "[ ]";
-    if (member.typeOnly && member.stable && !member.implemented) {
-      exitCode ||= ExitCodes.missingType;
-    }
     console.log(`- ${checkmark}${down}${flask}${ghost} **\`${member.name}\`**`);
   }
 }
