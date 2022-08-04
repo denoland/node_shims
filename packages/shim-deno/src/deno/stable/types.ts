@@ -55,3 +55,11 @@ export type WriteFileOptions = Deno.WriteFileOptions;
 export type WritePermissionDescriptor = Deno.WritePermissionDescriptor;
 export type Writer = Deno.Writer;
 export type WriterSync = Deno.WriterSync;
+
+export type CAARecord = Deno.CAARecord;
+export type MXRecord = Deno.MXRecord;
+export type NAPTRRecord = Deno.NAPTRRecord;
+export type ResolveDnsOptions = Deno.ResolveDnsOptions;
+export type SOARecord = Deno.SOARecord;
+export type SRVRecord = Deno.SRVRecord;
+export type RecordType = Deno.RecordType;

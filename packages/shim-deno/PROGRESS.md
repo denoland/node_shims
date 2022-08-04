@@ -1,10 +1,10 @@
 # Stable Progress
 
-88%. 20 stable members to go:
+92%. 12 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👎 **`Buffer`**
-- [ ] 👻 **`CAARecord`**
+- [x] 👻 **`CAARecord`**
 - [x] 👻 **`Closer`**
 - [x] 👻 **`Conn`**
 - [x] 👻 **`ConnectOptions`**
@@ -24,12 +24,12 @@
 - [x] 👻 **`ListenOptions`**
 - [x] 👻 **`ListenTlsOptions`**
 - [x] 👻 **`Listener`**
-- [ ] 👻 **`MXRecord`**
+- [x] 👻 **`MXRecord`**
 - [x] 👻 **`MakeTempOptions`**
 - [x] 👻 **`MemoryUsage`**
 - [x] 👻 **`Metrics`**
 - [x] 👻 **`MkdirOptions`**
-- [ ] 👻 **`NAPTRRecord`**
+- [x] 👻 **`NAPTRRecord`**
 - [x] 👻 **`NetAddr`**
 - [x] 👻 **`NetPermissionDescriptor`**
 - [x] 👻 **`OpMetrics`**
@@ -48,15 +48,15 @@
 - [x] 👻 **`ReadPermissionDescriptor`**
 - [x] 👻 **`Reader`**
 - [x] 👻 **`ReaderSync`**
-- [ ] 👻 **`RecordType`**
+- [x] 👻 **`RecordType`**
 - [x] 👻 **`RemoveOptions`**
 - [ ] 👻 **`RequestEvent`**
-- [ ] 👻 **`ResolveDnsOptions`**
+- [x] 👻 **`ResolveDnsOptions`**
 - [x] 👻 **`ResourceMap`**
 - [x] 👻 **`RunOptions`**
 - [x] 👻 **`RunPermissionDescriptor`**
-- [ ] 👻 **`SOARecord`**
-- [ ] 👻 **`SRVRecord`**
+- [x] 👻 **`SOARecord`**
+- [x] 👻 **`SRVRecord`**
 - [x] **`SeekMode`**
 - [x] 👻 **`Seeker`**
 - [x] 👻 **`SeekerSync`**
@@ -153,7 +153,7 @@
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**
-- [ ] **`resolveDns`**
+- [x] **`resolveDns`**
 - [x] **`resources`**
 - [x] **`run`**
 - [ ] **`seek`**
@@ -185,13 +185,12 @@
 
 # Unstable Progress
 
-13%. 53 unstable members to go:
+20%. 31 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 👻 **`BenchDefinition`**
 - [ ] **`Child`**
 - [ ] 👻 **`ChildStatus`**
-- [ ] 👻 **`ConditionalAsync`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
@@ -202,45 +201,24 @@
 - [ ] 👻 **`ForeignFunction`**
 - [ ] 👻 **`ForeignLibraryInterface`**
 - [ ] 👻 **`ForeignStatic`**
-- [ ] 👻 **`FromForeignFunction`**
-- [ ] 👻 **`FromNativeParameterTypes`**
-- [ ] 👻 **`FromNativeResultType`**
-- [ ] 👻 **`FromNativeResultTypeMap`**
-- [ ] 👻 **`FromNativeType`**
-- [ ] 👻 **`FromNativeTypeMap`**
 - [ ] 🧪 **`HttpClient`**
 - [x] 👻 **`ListenTlsOptions`**
 - [x] 👻 **`Listener`**
-- [ ] 👻 **`NativeBigIntType`**
-- [ ] 👻 **`NativeFunctionType`**
-- [ ] 👻 **`NativeNumberType`**
-- [ ] 👻 **`NativePointerType`**
 - [ ] 👻 **`NativeResultType`**
 - [ ] 👻 **`NativeType`**
-- [ ] 👻 **`NativeVoidType`**
 - [ ] 👻 **`NetworkInterfaceInfo`**
 - [ ] 👻 **`Proxy`**
 - [ ] 👻 **`SetRawOptions`**
 - [ ] 👻 **`SpawnOptions`**
 - [ ] 👻 **`SpawnOutput`**
 - [ ] 👻 **`StartTlsOptions`**
-- [ ] 👻 **`StaticForeignLibraryInterface`**
-- [ ] 👻 **`StaticForeignSymbol`**
-- [ ] 👻 **`StaticForeignSymbolReturnType`**
 - [ ] 👻 **`SystemMemoryInfo`**
 - [x] 👻 **`TlsConn`**
 - [x] 👻 **`TlsHandshakeInfo`**
-- [ ] 👻 **`ToNativeParameterTypes`**
-- [ ] 👻 **`ToNativeResultType`**
-- [ ] 👻 **`ToNativeResultTypeMap`**
-- [ ] 👻 **`ToNativeType`**
-- [ ] 👻 **`ToNativeTypeMap`**
-- [ ] 👻 **`TypedArray`**
 - [x] 👻 **`UnixConnectOptions`**
 - [x] 👻 **`UnixListenOptions`**
 - [ ] 🧪 **`UnsafeCallback`**
 - [ ] 👻 **`UnsafeCallbackDefinition`**
-- [ ] 👻 **`UnsafeCallbackFunction`**
 - [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**

@@ -30,7 +30,7 @@
     "lib/shim-deno.lib.d.ts"
   ],
   "scripts": {
-    "build": "npm run denolib && tsc",
+    "build": "npm run denolib && tsc && npm run generate-declaration-file",
     "prepublishOnly": "npm run build",
     "clean": "git clean -fXde !node_modules/",
     "test": "node --loader=ts-node/esm tools/run_tests.mjs",
