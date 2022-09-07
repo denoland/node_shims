@@ -185,7 +185,7 @@
 
 # Unstable Progress
 
-20%. 31 unstable members to go:
+19%. 33 unstable members to go:
 
 - [ ] 👻 **`BasicAuth`**
 - [ ] 👻 **`BenchDefinition`**
@@ -194,9 +194,6 @@
 - [x] 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
-- [ ] 👻 **`Diagnostic`**
-- [ ] **`DiagnosticCategory`**
-- [ ] 👻 **`DiagnosticMessageChain`**
 - [ ] 👻 **`DynamicLibrary`**
 - [ ] 👻 **`ForeignFunction`**
 - [ ] 👻 **`ForeignLibraryInterface`**
@@ -207,7 +204,12 @@
 - [ ] 👻 **`NativeResultType`**
 - [ ] 👻 **`NativeType`**
 - [ ] 👻 **`NetworkInterfaceInfo`**
+- [ ] 👻 **`PointerValue`**
 - [ ] 👻 **`Proxy`**
+- [ ] 👻 **`ServeHandler`**
+- [ ] 👻 **`ServeInit`**
+- [ ] 👻 **`ServeOptions`**
+- [ ] 👻 **`ServeTlsOptions`**
 - [ ] 👻 **`SetRawOptions`**
 - [ ] 👻 **`SpawnOptions`**
 - [ ] 👻 **`SpawnOutput`**
@@ -244,6 +246,7 @@
 - [ ] **`osRelease`**
 - [ ] 🧪 **`refTimer`**
 - [x] **`run`**
+- [ ] 🧪 **`serve`**
 - [ ] 🧪 **`setRaw`**
 - [ ] **`spawn`**
 - [ ] **`spawnChild`**
@@ -252,5 +255,6 @@
 - [ ] 🧪 **`umask`**
 - [ ] 🧪 **`unrefTimer`**
 - [ ] 🧪 **`upgradeHttp`**
+- [ ] 🧪 **`upgradeHttpRaw`**
 - [x] 🧪 **`utime`**
 - [x] 🧪 **`utimeSync`**

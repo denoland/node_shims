@@ -1,6 +1,6 @@
 import { Project } from "../../../scripts/ts_morph.ts";
 
-if (!Deno.version.deno.startsWith("1.24.")) {
+if (!Deno.version.deno.startsWith("1.25.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
