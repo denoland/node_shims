@@ -87,6 +87,8 @@ const testsToSkip = new Set([
   "readTextFileWithAbortSignal", //TODO, rq: issue #64
   "readTextFileWithAbortSignalReason", //TODO, rq: issue #64
   "readTextFileWithAbortSignalPrimitiveReason", //TODO, rq: issue #64
+  "readTextFileSyncV8LimitError", // edge case
+  "readTextFileV8LimitError", // edge case
 
   // read_dir_test
   "readDirSyncPerm", // permissions
