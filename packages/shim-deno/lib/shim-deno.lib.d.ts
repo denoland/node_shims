@@ -1825,13 +1825,15 @@ export declare namespace Deno {
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required.
+   *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
    *
    * Deno.test({
    *   name: "example test",
-   *   fn(): void {
+   *   fn() {
    *     assertEquals("world", "world");
    *   },
    * });
@@ -1839,7 +1841,7 @@ export declare namespace Deno {
    * Deno.test({
    *   name: "example ignored test",
    *   ignore: Deno.build.os === "windows",
-   *   fn(): void {
+   *   fn() {
    *     // This test is ignored only on Windows machines
    *   },
    * });
@@ -1853,51 +1855,60 @@ export declare namespace Deno {
    *   }
    * });
    * ```
+   *
+   * @category Testing
    */
   export function test(t: TestDefinition): void;
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required.
    *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
    *
-   * Deno.test("My test description", (): void => {
+   * Deno.test("My test description", () => {
    *   assertEquals("hello", "hello");
    * });
    *
-   * Deno.test("My async test description", async (): Promise<void> => {
+   * Deno.test("My async test description", async () => {
    *   const decoder = new TextDecoder("utf-8");
    *   const data = await Deno.readFile("hello_world.txt");
    *   assertEquals(decoder.decode(data), "Hello world");
    * });
    * ```
+   *
+   * @category Testing
    */
   export function test(name: string, fn: (t: TestContext) => void | Promise<void>): void;
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required. Declared function must have a name.
    *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
    *
-   * Deno.test(function myTestName(): void {
+   * Deno.test(function myTestName() {
    *   assertEquals("hello", "hello");
    * });
    *
-   * Deno.test(async function myOtherTestName(): Promise<void> {
+   * Deno.test(async function myOtherTestName() {
    *   const decoder = new TextDecoder("utf-8");
    *   const data = await Deno.readFile("hello_world.txt");
    *   assertEquals(decoder.decode(data), "Hello world");
    * });
    * ```
+   *
+   * @category Testing
    */
   export function test(fn: (t: TestContext) => void | Promise<void>): void;
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required.
    *
    * ```ts
@@ -1913,46 +1924,72 @@ export declare namespace Deno {
    *   assertEquals(decoder.decode(data), "Hello world");
    * });
    * ```
+   *
+   * @category Testing
    */
   export function test(name: string, options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required.
    *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
    *
-   * Deno.test({ name: "My test description", permissions: { read: true } }, (): void => {
-   *   assertEquals("hello", "hello");
-   * });
+   * Deno.test(
+   *   {
+   *     name: "My test description",
+   *     permissions: { read: true },
+   *   },
+   *   () => {
+   *     assertEquals("hello", "hello");
+   *   },
+   * );
    *
-   * Deno.test({ name: "My async test description", permissions: { read: false } }, async (): Promise<void> => {
-   *   const decoder = new TextDecoder("utf-8");
-   *   const data = await Deno.readFile("hello_world.txt");
-   *   assertEquals(decoder.decode(data), "Hello world");
-   * });
+   * Deno.test(
+   *   {
+   *     name: "My async test description",
+   *     permissions: { read: false },
+   *   },
+   *   async () => {
+   *     const decoder = new TextDecoder("utf-8");
+   *     const data = await Deno.readFile("hello_world.txt");
+   *     assertEquals(decoder.decode(data), "Hello world");
+   *   },
+   * );
    * ```
+   *
+   * @category Testing
    */
   export function test(options: Omit<TestDefinition, "fn">, fn: (t: TestContext) => void | Promise<void>): void;
   /**
    * Register a test which will be run when `deno test` is used on the command
    * line and the containing module looks like a test module.
+   *
    * `fn` can be async if required. Declared function must have a name.
    *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
    *
-   * Deno.test({ permissions: { read: true } }, function myTestName(): void {
-   *   assertEquals("hello", "hello");
-   * });
+   * Deno.test(
+   *   { permissions: { read: true } },
+   *   function myTestName() {
+   *     assertEquals("hello", "hello");
+   *   },
+   * );
    *
-   * Deno.test({ permissions: { read: false } }, async function myOtherTestName(): Promise<void> {
-   *   const decoder = new TextDecoder("utf-8");
-   *   const data = await Deno.readFile("hello_world.txt");
-   *   assertEquals(decoder.decode(data), "Hello world");
-   * });
+   * Deno.test(
+   *   { permissions: { read: false } },
+   *   async function myOtherTestName() {
+   *     const decoder = new TextDecoder("utf-8");
+   *     const data = await Deno.readFile("hello_world.txt");
+   *     assertEquals(decoder.decode(data), "Hello world");
+   *   },
+   * );
    * ```
+   *
+   * @category Testing
    */
   export function test(options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
   /**
