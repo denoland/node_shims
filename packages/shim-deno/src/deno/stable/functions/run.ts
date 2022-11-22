@@ -189,7 +189,7 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
     this.#process.kill();
   }
 
-  kill(signo: string = "SIGTERM") {
+  kill(signo = "SIGTERM") {
     if (this.#receivedStatus) {
       throw new errors.NotFound("entity not found");
     }
