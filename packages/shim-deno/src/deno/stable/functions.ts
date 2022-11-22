@@ -60,6 +60,7 @@ export { rename } from "./functions/rename.js";
 export { renameSync } from "./functions/renameSync.js";
 export { resolveDns } from "./functions/resolveDns.js";
 export { Process, run } from "./functions/run.js";
+export type { UnstableRunOptions } from "./functions/run.js";
 export { shutdown } from "./functions/shutdown.js";
 export { stat } from "./functions/stat.js";
 export { statSync } from "./functions/statSync.js";

@@ -13,7 +13,7 @@ import { RunOptions } from "../types.js";
 
 type SignalName = keyof typeof os.constants.signals;
 
-type UnstableRunOptions = RunOptions & {
+export type UnstableRunOptions = RunOptions & {
   clearEnv?: boolean;
   gid?: number;
   uid?: number;
@@ -189,7 +189,7 @@ export class Process<T extends Deno.RunOptions = Deno.RunOptions>
     this.#process.kill();
   }
 
-  kill(signo: string) {
+  kill(signo: string = "SIGTERM") {
     if (this.#receivedStatus) {
       throw new errors.NotFound("entity not found");
     }

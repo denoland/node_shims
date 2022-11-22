@@ -23,9 +23,9 @@ starting this project and for their contributions—specifically
 1. Update version in `./tools/denolib.ts`
 1. Go into `./third_party/deno` and update the submodule (there's probably
    better instructions):
-   - `git fetch`
-   - `git pull --recurse-submodules`
+   - `git fetch --tags`
    - `git checkout v1.x.x` -- replace with version
+   - `git submodule update`
 1. In this package ensure the following work and if not, fix any issues:
    - `npm run build`
    - `npm run test`

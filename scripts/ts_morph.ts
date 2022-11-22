@@ -1,1 +1,1 @@
-export * from "https://deno.land/x/ts_morph@15.1.0/mod.ts";
+export * from "https://deno.land/x/ts_morph@17.0.1/mod.ts";
