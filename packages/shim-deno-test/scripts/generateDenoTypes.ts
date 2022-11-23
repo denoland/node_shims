@@ -31,9 +31,18 @@ const testFunc = denoNs.getFunctionOrThrow("test");
 
 statements.push(...extractTypesFromSymbol({
   symbol: testFunc.getSymbolOrThrow(),
-  isContainedDeclaration: (node) =>
-    node.getSourceFile() === libDenoFile ||
-    node.getSourceFile() === unstableFile,
+  isContainedDeclaration: (node) => {
+    if (tsMorph.Node.isModuleDeclaration(node) && node.getName() === "Deno") {
+      return false;
+    }
+    if (tsMorph.Node.isFunctionDeclaration(node) && node.getName() === "exit") {
+      return false;
+    }
+
+    const inDeclFile = node.getSourceFile() === libDenoFile ||
+      node.getSourceFile() === unstableFile;
+    return inDeclFile;
+  },
 }));
 
 const outputFile = project.createSourceFile(

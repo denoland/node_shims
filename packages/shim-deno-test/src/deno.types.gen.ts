@@ -6,13 +6,15 @@ import { URL } from "url";
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required.
+ *
  * ```ts
- * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
  * Deno.test({
  *   name: "example test",
- *   fn(): void {
+ *   fn() {
  *     assertEquals("world", "world");
  *   },
  * });
@@ -20,7 +22,7 @@ import { URL } from "url";
  * Deno.test({
  *   name: "example ignored test",
  *   ignore: Deno.build.os === "windows",
- *   fn(): void {
+ *   fn() {
  *     // This test is ignored only on Windows machines
  *   },
  * });
@@ -34,104 +36,184 @@ import { URL } from "url";
  *   }
  * });
  * ```
+ *
+ * @category Testing
  */
 export declare function test(t: TestDefinition): void;
 
+/** @category Testing */
 export interface TestDefinition {
   fn: (t: TestContext) => void | Promise<void>;
-  /**
-   * The current test name.
-   */
+  /** The name of the test. */
   name: string;
+  /**
+   * If truthy the current test step will be ignored.
+   *
+   * It is a quick way to skip over a step, but also can be used for
+   * conditional logic, like determining if an environment feature is present.
+   */
   ignore?: boolean;
   /**
-   * If at least one test has `only` set to true, only run tests that have
-   * `only` set to true and fail the test suite.
+   * If at least one test has `only` set to `true`, only run tests that have
+   * `only` set to `true` and fail the test suite.
    */
   only?: boolean;
   /**
-   * Check that the number of async completed ops after the test is the same
-   * as number of dispatched ops. Defaults to true.
+   * Check that the number of async completed operations after the test step
+   * is the same as number of dispatched operations. This ensures that the
+   * code tested does not start async operations which it then does
+   * not await. This helps in preventing logic errors and memory leaks
+   * in the application code.
+   *
+   * Defaults to `true`.
    */
   sanitizeOps?: boolean;
   /**
-   * Ensure the test case does not "leak" resources - ie. the resource table
-   * after the test has exactly the same contents as before the test. Defaults
-   * to true.
+   * Ensure the test step does not "leak" resources - like open files or
+   * network connections - by ensuring the open resources at the start of the
+   * test match the open resources at the end of the test.
+   *
+   * Defaults to `true`.
    */
   sanitizeResources?: boolean;
   /**
    * Ensure the test case does not prematurely cause the process to exit,
-   * for example via a call to `Deno.exit`. Defaults to true.
+   * for example via a call to {@linkcode Deno.exit}.
+   *
+   * Defaults to `true`.
    */
   sanitizeExit?: boolean;
   /**
    * Specifies the permissions that should be used to run the test.
-   * Set this to "inherit" to keep the calling thread's permissions.
-   * Set this to "none" to revoke all permissions.
    *
-   * Defaults to "inherit".
+   * Set this to "inherit" to keep the calling runtime permissions, set this
+   * to "none" to revoke all permissions, or set a more specific set of
+   * permissions using a {@linkcode PermissionOptionsObject}.
+   *
+   * Defaults to `"inherit"`.
    */
   permissions?: PermissionOptions;
 }
 
+/**
+ * Context that is passed to a testing function, which can be used to either
+ * gain information about the current test, or register additional test
+ * steps within the current test.
+ *
+ * @category Testing
+ */
 export interface TestContext {
-  /**
-   * The current test name.
-   */
+  /** The current test name. */
   name: string;
-  /**
-   * File Uri of the current test code.
-   */
+  /** The string URL of the current test. */
   origin: string;
   /**
-   * Parent test context.
+   * If the current test is a step of another test, the parent test context
+   * will be set here.
    */
   parent?: TestContext;
   /**
    * Run a sub step of the parent test or step. Returns a promise
    * that resolves to a boolean signifying if the step completed successfully.
+   *
    * The returned promise never rejects unless the arguments are invalid.
+   *
    * If the test was ignored the promise returns `false`.
+   *
+   * ```ts
+   * Deno.test({
+   *   name: "a parent test",
+   *   async fn(t) {
+   *     console.log("before the step");
+   *     await t.step({
+   *       name: "step 1",
+   *       fn(t) {
+   *         console.log("current step:", t.name);
+   *       }
+   *     });
+   *     console.log("after the step");
+   *   }
+   * });
+   * ```
    */
-  step(t: TestStepDefinition): Promise<boolean>;
+  step(definition: TestStepDefinition): Promise<boolean>;
   /**
    * Run a sub step of the parent test or step. Returns a promise
    * that resolves to a boolean signifying if the step completed successfully.
+   *
    * The returned promise never rejects unless the arguments are invalid.
+   *
    * If the test was ignored the promise returns `false`.
+   *
+   * ```ts
+   * Deno.test(
+   *   "a parent test",
+   *   async (t) => {
+   *     console.log("before the step");
+   *     await t.step(
+   *       "step 1",
+   *       (t) => {
+   *         console.log("current step:", t.name);
+   *       }
+   *     );
+   *     console.log("after the step");
+   *   }
+   * );
+   * ```
    */
   step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
 }
 
+/** @category Testing */
 export interface TestStepDefinition {
-  fn: (t: TestContext) => void | Promise<void>;
   /**
-   * The current test name.
+   * The test function that will be tested when this step is executed. The
+   * function can take an argument which will provide information about the
+   * current step's context.
    */
+  fn: (t: TestContext) => void | Promise<void>;
+  /** The name of the step. */
   name: string;
+  /**
+   * If truthy the current test step will be ignored.
+   *
+   * This is a quick way to skip over a step, but also can be used for
+   * conditional logic, like determining if an environment feature is present.
+   */
   ignore?: boolean;
   /**
-   * Check that the number of async completed ops after the test step is the same
-   * as number of dispatched ops. Defaults to the parent test or step's value.
+   * Check that the number of async completed operations after the test step
+   * is the same as number of dispatched operations. This ensures that the
+   * code tested does not start async operations which it then does
+   * not await. This helps in preventing logic errors and memory leaks
+   * in the application code.
+   *
+   * Defaults to the parent test or step's value.
    */
   sanitizeOps?: boolean;
   /**
-   * Ensure the test step does not "leak" resources - ie. the resource table
-   * after the test has exactly the same contents as before the test. Defaults
-   * to the parent test or step's value.
+   * Ensure the test step does not "leak" resources - like open files or
+   * network connections - by ensuring the open resources at the start of the
+   * step match the open resources at the end of the step.
+   *
+   * Defaults to the parent test or step's value.
    */
   sanitizeResources?: boolean;
   /**
    * Ensure the test step does not prematurely cause the process to exit,
-   * for example via a call to `Deno.exit`. Defaults to the parent test or
-   * step's value.
+   * for example via a call to {@linkcode Deno.exit}.
+   *
+   * Defaults to the parent test or step's value.
    */
   sanitizeExit?: boolean;
 }
 
-export type PermissionOptions = "inherit" | "none" | PermissionOptionsObject;
-
+/**
+ * A set of options which can define the permissions within a test or worker
+ * context at a highly specific level.
+ *
+ * @category Permissions
+ */
 export interface PermissionOptionsObject {
   /**
    * Specifies if the `env` permission should be requested or revoked.
@@ -142,6 +224,15 @@ export interface PermissionOptionsObject {
    * Defaults to `false`.
    */
   env?: "inherit" | boolean | string[];
+  /**
+   * Specifies if the `sys` permission should be requested or revoked.
+   * If set to `"inherit"`, the current `sys` permission will be inherited.
+   * If set to `true`, the global `sys` permission will be requested.
+   * If set to `false`, the global `sys` permission will be revoked.
+   *
+   * Defaults to `false`.
+   */
+  sys?: "inherit" | boolean | string[];
   /**
    * Specifies if the `hrtime` permission should be requested or revoked.
    * If set to `"inherit"`, the current `hrtime` permission will be inherited.
@@ -267,50 +358,71 @@ export interface PermissionOptionsObject {
 }
 
 /**
+ * Options which define the permissions within a test or worker context.
+ *
+ * `"inherit"` ensures that all permissions of the parent process will be
+ * applied to the test context. `"none"` ensures the test context has no
+ * permissions. A `PermissionOptionsObject` provides a more specific
+ * set of permissions to the test context.
+ *
+ * @category Permissions
+ */
+export type PermissionOptions = | "inherit"
+      | "none"
+      | PermissionOptionsObject;
+
+/**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required.
  *
  * ```ts
- * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
- * Deno.test("My test description", (): void => {
+ * Deno.test("My test description", () => {
  *   assertEquals("hello", "hello");
  * });
  *
- * Deno.test("My async test description", async (): Promise<void> => {
+ * Deno.test("My async test description", async () => {
  *   const decoder = new TextDecoder("utf-8");
  *   const data = await Deno.readFile("hello_world.txt");
  *   assertEquals(decoder.decode(data), "Hello world");
  * });
  * ```
+ *
+ * @category Testing
  */
 export declare function test(name: string, fn: (t: TestContext) => void | Promise<void>): void;
 
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required. Declared function must have a name.
  *
  * ```ts
- * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
- * Deno.test(function myTestName(): void {
+ * Deno.test(function myTestName() {
  *   assertEquals("hello", "hello");
  * });
  *
- * Deno.test(async function myOtherTestName(): Promise<void> {
+ * Deno.test(async function myOtherTestName() {
  *   const decoder = new TextDecoder("utf-8");
  *   const data = await Deno.readFile("hello_world.txt");
  *   assertEquals(decoder.decode(data), "Hello world");
  * });
  * ```
+ *
+ * @category Testing
  */
 export declare function test(fn: (t: TestContext) => void | Promise<void>): void;
 
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required.
  *
  * ```ts
@@ -326,47 +438,73 @@ export declare function test(fn: (t: TestContext) => void | Promise<void>): void
  *   assertEquals(decoder.decode(data), "Hello world");
  * });
  * ```
+ *
+ * @category Testing
  */
 export declare function test(name: string, options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
 
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required.
  *
  * ```ts
- * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
- * Deno.test({ name: "My test description", permissions: { read: true } }, (): void => {
- *   assertEquals("hello", "hello");
- * });
+ * Deno.test(
+ *   {
+ *     name: "My test description",
+ *     permissions: { read: true },
+ *   },
+ *   () => {
+ *     assertEquals("hello", "hello");
+ *   },
+ * );
  *
- * Deno.test({ name: "My async test description", permissions: { read: false } }, async (): Promise<void> => {
- *   const decoder = new TextDecoder("utf-8");
- *   const data = await Deno.readFile("hello_world.txt");
- *   assertEquals(decoder.decode(data), "Hello world");
- * });
+ * Deno.test(
+ *   {
+ *     name: "My async test description",
+ *     permissions: { read: false },
+ *   },
+ *   async () => {
+ *     const decoder = new TextDecoder("utf-8");
+ *     const data = await Deno.readFile("hello_world.txt");
+ *     assertEquals(decoder.decode(data), "Hello world");
+ *   },
+ * );
  * ```
+ *
+ * @category Testing
  */
 export declare function test(options: Omit<TestDefinition, "fn">, fn: (t: TestContext) => void | Promise<void>): void;
 
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.
+ *
  * `fn` can be async if required. Declared function must have a name.
  *
  * ```ts
- * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
- * Deno.test({ permissions: { read: true } }, function myTestName(): void {
- *   assertEquals("hello", "hello");
- * });
+ * Deno.test(
+ *   { permissions: { read: true } },
+ *   function myTestName() {
+ *     assertEquals("hello", "hello");
+ *   },
+ * );
  *
- * Deno.test({ permissions: { read: false } }, async function myOtherTestName(): Promise<void> {
- *   const decoder = new TextDecoder("utf-8");
- *   const data = await Deno.readFile("hello_world.txt");
- *   assertEquals(decoder.decode(data), "Hello world");
- * });
+ * Deno.test(
+ *   { permissions: { read: false } },
+ *   async function myOtherTestName() {
+ *     const decoder = new TextDecoder("utf-8");
+ *     const data = await Deno.readFile("hello_world.txt");
+ *     assertEquals(decoder.decode(data), "Hello world");
+ *   },
+ * );
  * ```
+ *
+ * @category Testing
  */
 export declare function test(options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;

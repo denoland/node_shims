@@ -52,6 +52,12 @@ export const stdin: typeof Deno.stdin = {
   close() {
     process.stdin.destroy();
   },
+  setRaw(mode, options) {
+    if (options?.cbreak) {
+      throw new Error("The cbreak option is not implemented.");
+    }
+    process.stdin.setRawMode(mode);
+  },
 };
 export const stdout: typeof Deno.stdout = {
   rid: 1,
