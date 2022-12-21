@@ -22,7 +22,7 @@ Commands:
 # get submodules it you did not clone them initially
 git submodule init
 git submodule update
-# upgrade or downgrade your deno binary to match deno source in packages/shim-deno/third_party/deno
+# upgrade or downgrade your deno binary to match deno source version in ./packages/shim-deno/third_party/deno
 deno upgrade --version 1.28.1
 # npm install
 npm i --ignore-scripts
