@@ -19,6 +19,9 @@ Deno shims for Node.js
 Commands:
 
 ```sh
+# get submodules it you did not clone them initially
+git submodule init
+git submodule update
 # npm install
 npm i --ignore-scripts
 # build all packages
