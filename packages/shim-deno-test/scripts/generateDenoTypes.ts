@@ -13,10 +13,10 @@ const project = new tsMorph.Project({
   },
 });
 const libDenoFile = project.addSourceFileAtPath(
-  "../shim-deno/third_party/deno/cli/dts/lib.deno.ns.d.ts",
+  "../shim-deno/third_party/deno/cli/tsc/dts/lib.deno.ns.d.ts",
 );
 const unstableFile = project.addSourceFileAtPath(
-  "../shim-deno/third_party/deno/cli/dts/lib.deno.unstable.d.ts",
+  "../shim-deno/third_party/deno/cli/tsc/dts/lib.deno.unstable.d.ts",
 );
 const statements: (tsMorph.StatementStructures | string)[] = [];
 statements.push("// deno-lint-ignore-file");

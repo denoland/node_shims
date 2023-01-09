@@ -133,6 +133,7 @@ const testsToSkip = new Set([
   "customInspectFunction",
   "urlDriveLetter",
   "urlPathRepeatedSlashes",
+  "urlProtocolParsing", // deno includes more details in the error messages
 
   // write_file_test
   "writeFileAbortSignalPreAborted", // implementation detail

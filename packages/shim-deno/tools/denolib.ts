@@ -1,6 +1,6 @@
 import { Project } from "../../../scripts/ts_morph.ts";
 
-if (!Deno.version.deno.startsWith("1.28.")) {
+if (!Deno.version.deno.startsWith("1.29.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
@@ -67,7 +67,6 @@ function processDeclsFromStable(text: string) {
 
   // use web streams from @types/node
   [
-    "ReadableStreamReader",
     "ReadableStream",
     "WritableStream",
     "ReadableStreamBYOBReader",
@@ -76,8 +75,8 @@ function processDeclsFromStable(text: string) {
     "UnderlyingByteSource",
     "ReadableStreamBYOBRequest",
     "ReadableByteStreamControllerCallback",
-    "ReadableStreamReadDoneResult",
-    "ReadableStreamReadValueResult",
+    "ReadableStreamDefaultReadDoneResult",
+    "ReadableStreamDefaultReadValueResult",
     "ReadableStreamBYOBReadDoneResult",
     "ReadableStreamBYOBReadValueResult",
     "ReadableStreamDefaultReader",
@@ -96,13 +95,13 @@ function processDeclsFromStable(text: string) {
   });
   [
     "ReadableStreamBYOBReadResult",
-    "ReadableStreamReadResult",
+    "ReadableStreamDefaultReadResult",
   ].forEach((name) => {
     sourceFile.getTypeAliasOrThrow(name).remove();
   });
   [
     "ReadableStream",
-    "ReadableStreamReader",
+    "ReadableStreamBYOBReader",
     "WritableStream",
     "ReadableStreamDefaultReader",
     "ReadableByteStreamController",

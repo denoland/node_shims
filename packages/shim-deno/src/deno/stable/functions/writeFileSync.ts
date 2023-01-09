@@ -20,9 +20,13 @@ export const writeFileSync: typeof Deno.writeFileSync = function writeFileSync(
       }
     }
 
-    const openOptions = options.append
-      ? { write: true, create: true, append: true }
-      : { write: true, create: true, truncate: true };
+    const openOptions = {
+      write: true,
+      create: true,
+      createNew: options.createNew,
+      append: !!options.append,
+      truncate: !options.append,
+    };
     const file = openSync(path, openOptions);
 
     if (
