@@ -14,7 +14,7 @@ const project = new Project({
   },
 });
 const domDtsFile = project.addSourceFileAtPath(
-  "../shim-deno/third_party/deno/cli/dts/lib.dom.d.ts",
+  "../shim-deno/third_party/deno/cli/tsc/dts/lib.dom.d.ts",
 );
 const statements: (StatementStructures | string)[] = [];
 statements.push("// deno-lint-ignore-file");
