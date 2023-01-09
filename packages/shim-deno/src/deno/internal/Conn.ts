@@ -28,6 +28,14 @@ export class Conn extends FsFile implements Deno.Conn {
   setKeepAlive(enable?: boolean) {
     this.#socket.setKeepAlive(enable);
   }
+
+  ref(): void {
+    this.#socket.ref();
+  }
+
+  unref(): void {
+    this.#socket.unref();
+  }
 }
 
 export class TlsConn extends Conn implements Deno.TlsConn {
