@@ -46,6 +46,7 @@ const testsToSkip = new Set([
   "seekStart", // not implemented
   "seekSyncStart", // not implemented
   "seekCurrent", // not implemented
+  "seekStartBigInt", // not implemented
   "seekSyncCurrent", // not implemented
   "seekEnd", // not implemented
   "seekSyncEnd", // not implemented
