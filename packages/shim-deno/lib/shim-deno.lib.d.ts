@@ -1092,6 +1092,19 @@ export declare namespace Deno {
    */
   export function openSync(path: string | URL, options?: OpenOptions): FsFile;
   /**
+   * Returns the Operating System uptime in number of seconds.
+   *
+   * ```ts
+   * console.log(Deno.osUptime());
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   *
+   * @tags allow-sys
+   * @category Runtime Environment
+   */
+  export function osUptime(): number;
+  /**
    * Read from a resource ID (`rid`) into an array buffer (`buffer`).
    *
    * Resolves to either the number of bytes read during the operation or EOF
@@ -2006,7 +2019,7 @@ export declare namespace Deno {
    *
    * ### Truncate part of the file
    *
-   * ```
+   * ```ts
    * const file = await Deno.makeTempFile();
    * await Deno.writeFile(file, new TextEncoder().encode("Hello World"));
    * await Deno.truncate(file, 7);
@@ -2218,7 +2231,7 @@ export declare namespace Deno {
    *
    * Then `Deno.args` will contain:
    *
-   * ```
+   * ```ts
    * [ "/etc/passwd" ]
    * ```
    *
@@ -2548,12 +2561,8 @@ export declare namespace Deno {
      * not be available on all platforms.
      */
     birthtime: Date | null;
-    /**
-     * ID of the device containing the file.
-     *
-     * _Linux/Mac OS only._
-     */
-    dev: number | null;
+    /** ID of the device containing the file. */
+    dev: number;
     /**
      * Inode number.
      *
@@ -3853,7 +3862,7 @@ export declare namespace Deno {
      * If set to `true`, will append to a file instead of overwriting previous
      * contents.
      *
-     * @ ∂efault {false}
+     * @default {false}
      */
     append?: boolean;
     /**
@@ -3867,7 +3876,7 @@ export declare namespace Deno {
      * If set to `true`, no file, directory, or symlink is allowed to exist at
      * the target location. When createNew is set to `true`, `create` is ignored.
      *
-     * @ ∂efault {false}
+     * @default {false}
      */
     createNew?: boolean;
     /** Permissions always applied to file. */
@@ -4018,6 +4027,12 @@ export declare namespace Deno {
          * @default {53} */
         port?: number;
       };
+    /**
+     * An abort signal to allow cancellation of the DNS resolution operation.
+     * If the signal becomes aborted the resolveDns operation will be stopped
+     * and the promise returned will be rejected with an AbortError.
+     */
+    signal?: AbortSignal;
   }
 
   /**
@@ -4090,7 +4105,15 @@ export declare namespace Deno {
     arch: "x86_64" | "aarch64";
     /** The operating system that the Deno CLI was built for. `"darwin"` is
      * also known as OSX or MacOS. */
-    os: "darwin" | "linux" | "windows";
+    os:
+      | "darwin"
+      | "linux"
+      | "windows"
+      | "freebsd"
+      | "netbsd"
+      | "aix"
+      | "solaris"
+      | "illumos";
     /** The computer vendor that the Deno CLI was built for. */
     vendor: string;
     /** Optional environment flags that were set for this build of Deno CLI. */
@@ -4147,6 +4170,7 @@ export declare namespace Deno {
     }
 
     export class NotFound extends Error {
+      code: string;
     }
 
     export class PermissionDenied extends Error {
