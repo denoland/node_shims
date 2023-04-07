@@ -1,15 +1,22 @@
 # Stable Progress
 
-92%. 12 stable members to go:
+85%. 28 stable members to go:
 
 - [x] 👻 **`Addr`**
+- [ ] 👻 **`BenchDefinition`**
 - [ ] 👎 **`Buffer`**
 - [x] 👻 **`CAARecord`**
+- [ ] **`ChildProcess`**
 - [x] 👻 **`Closer`**
+- [ ] **`Command`**
+- [ ] 👻 **`CommandOptions`**
+- [ ] 👻 **`CommandOutput`**
+- [ ] 👻 **`CommandStatus`**
 - [x] 👻 **`Conn`**
 - [x] 👻 **`ConnectOptions`**
 - [x] 👻 **`ConnectTlsOptions`**
 - [x] 👻 **`DirEntry`**
+- [x] 👻 **`Env`**
 - [x] 👻 **`EnvPermissionDescriptor`**
 - [x] 👻 **`FfiPermissionDescriptor`**
 - [x] 👎 **`File`**
@@ -32,6 +39,7 @@
 - [x] 👻 **`NAPTRRecord`**
 - [x] 👻 **`NetAddr`**
 - [x] 👻 **`NetPermissionDescriptor`**
+- [ ] 👻 **`NetworkInterfaceInfo`**
 - [x] 👻 **`OpMetrics`**
 - [x] 👻 **`OpenOptions`**
 - [x] 👻 **`PermissionDescriptor`**
@@ -60,10 +68,14 @@
 - [x] **`SeekMode`**
 - [x] 👻 **`Seeker`**
 - [x] 👻 **`SeekerSync`**
+- [x] 👻 **`SetRawOptions`**
 - [x] 👻 **`Signal`**
 - [ ] 👻 **`StartTlsOptions`**
 - [x] 👻 **`SymlinkOptions`**
+- [x] 👻 **`SysPermissionDescriptor`**
+- [ ] 👻 **`SystemMemoryInfo`**
 - [x] 👻 **`TcpConn`**
+- [x] 👻 **`TcpListenOptions`**
 - [x] 👻 **`TestContext`**
 - [x] 👻 **`TestDefinition`**
 - [x] 👻 **`TestStepDefinition`**
@@ -80,6 +92,7 @@
 - [x] 👻 **`WriterSync`**
 - [ ] **`addSignalListener`**
 - [x] **`args`**
+- [ ] **`bench`**
 - [x] **`build`**
 - [x] **`chdir`**
 - [x] **`chmod`**
@@ -89,6 +102,7 @@
 - [x] **`close`**
 - [x] **`connect`**
 - [x] **`connectTls`**
+- [ ] **`consoleSize`**
 - [x] 👎 **`copy`**
 - [x] **`copyFile`**
 - [x] **`copyFileSync`**
@@ -108,6 +122,10 @@
 - [x] **`fsyncSync`**
 - [x] **`ftruncate`**
 - [x] **`ftruncateSync`**
+- [x] **`futime`**
+- [x] **`futimeSync`**
+- [ ] **`gid`**
+- [x] **`hostname`**
 - [x] **`inspect`**
 - [x] **`isatty`**
 - [ ] 👎 **`iter`**
@@ -117,6 +135,7 @@
 - [x] **`linkSync`**
 - [x] **`listen`**
 - [x] **`listenTls`**
+- [x] **`loadavg`**
 - [x] **`lstat`**
 - [x] **`lstatSync`**
 - [x] **`mainModule`**
@@ -128,9 +147,12 @@
 - [x] **`metrics`**
 - [x] **`mkdir`**
 - [x] **`mkdirSync`**
+- [ ] **`networkInterfaces`**
 - [x] **`noColor`**
 - [x] **`open`**
 - [x] **`openSync`**
+- [x] **`osRelease`**
+- [x] **`osUptime`**
 - [x] **`permissions`**
 - [x] **`pid`**
 - [x] **`ppid`**
@@ -148,6 +170,7 @@
 - [x] **`readTextFileSync`**
 - [x] **`realPath`**
 - [x] **`realPathSync`**
+- [ ] **`refTimer`**
 - [x] **`remove`**
 - [ ] **`removeSignalListener`**
 - [x] **`removeSync`**
@@ -168,10 +191,15 @@
 - [x] **`stdout`**
 - [x] **`symlink`**
 - [x] **`symlinkSync`**
+- [ ] **`systemMemoryInfo`**
 - [x] **`test`**
 - [x] **`truncate`**
 - [x] **`truncateSync`**
+- [ ] **`uid`**
+- [ ] **`unrefTimer`**
 - [ ] **`upgradeWebSocket`**
+- [x] **`utime`**
+- [x] **`utimeSync`**
 - [x] **`version`**
 - [x] **`watchFs`**
 - [x] **`write`**
@@ -185,76 +213,66 @@
 
 # Unstable Progress
 
-19%. 33 unstable members to go:
+50%. 1 unstable members to go:
 
-- [ ] 👻 **`BasicAuth`**
-- [ ] 👻 **`BenchDefinition`**
-- [ ] **`Child`**
-- [ ] 👻 **`ChildStatus`**
-- [x] 👻 **`ConnectTlsOptions`**
+- [ ] 🧪 👻 **`AtomicCheck`**
+- [ ] 🧪 **`AtomicOperation`**
+- [ ] 🧪 👻 **`BasicAuth`**
+- [x] 🧪 👻 **`ConnectTlsOptions`**
 - [ ] 🧪 👻 **`CreateHttpClientOptions`**
 - [ ] 🧪 👻 **`DatagramConn`**
-- [ ] 👻 **`DynamicLibrary`**
-- [ ] 👻 **`ForeignFunction`**
-- [ ] 👻 **`ForeignLibraryInterface`**
-- [ ] 👻 **`ForeignStatic`**
-- [ ] 🧪 **`HttpClient`**
-- [x] 👻 **`ListenTlsOptions`**
-- [x] 👻 **`Listener`**
-- [ ] 👻 **`NativeResultType`**
-- [ ] 👻 **`NativeType`**
-- [ ] 👻 **`NetworkInterfaceInfo`**
-- [ ] 👻 **`PointerValue`**
-- [ ] 👻 **`Proxy`**
-- [ ] 👻 **`ServeHandler`**
-- [ ] 👻 **`ServeInit`**
-- [ ] 👻 **`ServeOptions`**
-- [ ] 👻 **`ServeTlsOptions`**
-- [ ] 👻 **`SetRawOptions`**
-- [ ] 👻 **`SpawnOptions`**
-- [ ] 👻 **`SpawnOutput`**
-- [ ] 👻 **`StartTlsOptions`**
-- [ ] 👻 **`SystemMemoryInfo`**
-- [x] 👻 **`TlsConn`**
-- [x] 👻 **`TlsHandshakeInfo`**
-- [x] 👻 **`UnixConnectOptions`**
-- [x] 👻 **`UnixListenOptions`**
+- [ ] 🧪 👻 **`DynamicLibrary`**
+- [ ] 🧪 👻 **`ForeignFunction`**
+- [ ] 🧪 👻 **`ForeignLibraryInterface`**
+- [ ] 🧪 👻 **`ForeignStatic`**
+- [ ] 🧪 👻 **`HttpClient`**
+- [ ] 🧪 **`Kv`**
+- [ ] 👻 **`KvCommitResult`**
+- [ ] 🧪 👻 **`KvConsistencyLevel`**
+- [ ] 🧪 👻 **`KvEntry`**
+- [ ] 🧪 👻 **`KvEntryMaybe`**
+- [ ] 🧪 👻 **`KvKey`**
+- [ ] 🧪 👻 **`KvKeyPart`**
+- [ ] 🧪 **`KvListIterator`**
+- [ ] 🧪 👻 **`KvListOptions`**
+- [ ] 🧪 👻 **`KvListSelector`**
+- [ ] 🧪 👻 **`KvMutation`**
+- [ ] 🧪 **`KvU64`**
+- [x] 🧪 👻 **`ListenTlsOptions`**
+- [ ] 🧪 👻 **`NativeResultType`**
+- [ ] 🧪 👻 **`NativeType`**
+- [ ] 🧪 👻 **`PointerValue`**
+- [ ] 🧪 👻 **`Proxy`**
+- [ ] 🧪 👻 **`ServeHandler`**
+- [ ] 🧪 👻 **`ServeHandlerInfo`**
+- [ ] 🧪 👻 **`ServeInit`**
+- [ ] 🧪 👻 **`ServeOptions`**
+- [ ] 🧪 👻 **`ServeTlsOptions`**
+- [ ] 🧪 👻 **`StartTlsOptions`**
+- [x] 👻 **`TcpListenOptions`**
+- [x] 🧪 👻 **`TlsConn`**
+- [x] 🧪 👻 **`TlsHandshakeInfo`**
+- [ ] 🧪 👻 **`UdpListenOptions`**
+- [x] 🧪 👻 **`UnixConnectOptions`**
+- [x] 🧪 👻 **`UnixListenOptions`**
 - [ ] 🧪 **`UnsafeCallback`**
-- [ ] 👻 **`UnsafeCallbackDefinition`**
+- [ ] 🧪 👻 **`UnsafeCallbackDefinition`**
 - [ ] 🧪 **`UnsafeFnPointer`**
 - [ ] 🧪 **`UnsafePointer`**
 - [ ] 🧪 **`UnsafePointerView`**
-- [ ] **`bench`**
 - [x] 🧪 **`connect`**
 - [x] 🧪 **`connectTls`**
-- [ ] 🧪 **`consoleSize`**
 - [ ] 🧪 **`createHttpClient`**
 - [ ] 🧪 **`dlopen`**
 - [ ] 🧪 **`flock`**
 - [ ] 🧪 **`flockSync`**
 - [ ] 🧪 **`funlock`**
 - [ ] 🧪 **`funlockSync`**
-- [x] 🧪 **`futime`**
-- [x] 🧪 **`futimeSync`**
-- [ ] **`getGid`**
-- [ ] **`getUid`**
-- [ ] 🧪 **`hostname`**
 - [x] 🧪 **`listen`**
 - [ ] 🧪 **`listenDatagram`**
-- [ ] **`loadavg`**
-- [ ] **`networkInterfaces`**
-- [ ] **`osRelease`**
-- [ ] 🧪 **`refTimer`**
-- [x] **`run`**
+- [ ] 🧪 **`openKv`**
+- [x] 🧪 **`run`**
 - [ ] 🧪 **`serve`**
-- [ ] 🧪 **`setRaw`**
-- [ ] **`spawn`**
-- [ ] **`spawnChild`**
-- [ ] **`spawnSync`**
-- [ ] **`systemMemoryInfo`**
 - [ ] 🧪 **`umask`**
-- [ ] 🧪 **`unrefTimer`**
 - [ ] 🧪 **`upgradeHttp`**
 - [ ] 🧪 **`upgradeHttpRaw`**
-- [x] 🧪 **`utime`**
-- [x] 🧪 **`utimeSync`**

@@ -14,7 +14,9 @@ export class Http extends Error {}
 export class Interrupted extends Error {}
 export class InvalidData extends Error {}
 export class NotConnected extends Error {}
-export class NotFound extends Error {}
+export class NotFound extends Error {
+  code = "ENOENT";
+}
 export class PermissionDenied extends Error {}
 export class TimedOut extends Error {}
 export class UnexpectedEof extends Error {}

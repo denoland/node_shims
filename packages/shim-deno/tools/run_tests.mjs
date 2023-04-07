@@ -1,7 +1,7 @@
 // This script runs the unit tests under third_party/deno directory
 
-import fs from "fs";
-import { createRequire } from "module";
+import fs from "node:fs";
+import { createRequire } from "node:module";
 
 // rq = requires
 const testsToSkip = new Set([
@@ -43,6 +43,9 @@ const testsToSkip = new Set([
   "readWritePermFailure", // permissions
   "openNotFound", // todo
   "openModeWriteRead", // not implemented
+  "readableStream", // not implemented
+  "readableStreamTextEncoderPipe", // not implemented
+  "readFileIsDirectoryErrorCode", // todo(https://github.com/denoland/deno/issues/18629): re-enable
   "seekStart", // not implemented
   "seekSyncStart", // not implemented
   "seekCurrent", // not implemented
@@ -51,8 +54,6 @@ const testsToSkip = new Set([
   "seekEnd", // not implemented
   "seekSyncEnd", // not implemented
   "seekMode", // not implemented
-  "readableStream", // not implemented
-  "readableStreamTextEncoderPipe", // not implemented
   "writableStream", // not implemented
 
   // mkdir_test
@@ -64,6 +65,21 @@ const testsToSkip = new Set([
   "mkdirSyncRecursiveMode", // depends on Deno.umask
   "mkdirSyncErrors", // getCreationFlag throws
   "mkdirSyncPerm", // permissions
+
+  // os_test
+  "envPermissionDenied1", // permissions
+  "envPermissionDenied2", // permissions
+  "envCaseInsensitive", // needs Deno.Command
+  "osPpidIsEqualToPidOfParentProcess", // needs Deno.Command
+  "execPathPerm", // permissions
+  "loadavgPerm", // permissions
+  "hostnameWithoutOtherNetworkUsages", // needs Deno.Command
+  "hostnamePerm", // permissions
+  "releasePerm", // permissions
+  "osUptimePerm", // permissions
+  "systemMemoryInfo", // not implemented
+  "getUid", // not implemented
+  "getGid", // not implemented
 
   // process_test
   "runPermissions", // permissions
@@ -109,8 +125,8 @@ const testsToSkip = new Set([
   "sleepSyncLongerPromise", // Deno.sleepSync works differently than Atomics.wait unfortunately
   "AbortSignal.timeout() with listeners", // can't use execCode
   "AbortSignal.timeout() with removed listeners", // can't use execCode
-  "AbortSignal.timeout() with no listeners", // Deno.spawn is not implemented yet
-  "AbortSignal.timeout() with listener for a non-abort event", // Deno.spawn is not implemented yet
+  "AbortSignal.timeout() with no listeners", // Deno.Command is not implemented yet
+  "AbortSignal.timeout() with listener for a non-abort event", // Deno.Command is not implemented yet
   "evalPrimordial", // Timeout is an object, not a number
   "unrefTimer", // can't use execCode
   "unrefTimer - mix ref and unref 1", // can't use execCode
@@ -212,10 +228,10 @@ async function setupTests() {
   process.chdir("third_party/deno/");
 
   globalThis.Deno = (await import("../src/index.ts")).Deno;
-  globalThis.Blob = (await import("buffer")).Blob;
+  globalThis.Blob = (await import("node:buffer")).Blob;
   await webStreamHack();
 
-  globalThis.crypto = (await import("crypto")).webcrypto;
+  globalThis.crypto = (await import("node:crypto")).webcrypto;
 }
 
 async function webStreamHack() {
@@ -225,9 +241,9 @@ async function webStreamHack() {
 
   try {
     if (!globalThis.ReadableStream) {
-      Object.assign(globalThis, await import("stream/web"));
+      Object.assign(globalThis, await import("node:stream/web"));
     }
-    const { Blob } = await import("buffer");
+    const { Blob } = await import("node:buffer");
     if (Blob && !Blob.prototype.stream) {
       Blob.prototype.stream = function name() {
         let position = 0;

@@ -23,17 +23,17 @@ jobs:
       shell: bash
     - uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '18'
         registry-url: 'https://registry.npmjs.org'
     - uses: denoland/setup-deno@v1
       with:
-        deno-version: 1.30.0
+        deno-version: 1.32.3
     - run: deno lint
       if: matrix.os == 'ubuntu-latest'
     - run: deno fmt --check
       if: matrix.os == 'ubuntu-latest'
     - run: npm -v
-    - run: npm ci  --ignore-scripts
+    - run: npm ci --ignore-scripts
     - run: npm run --silent build --workspaces
     - run: npm run --silent test --workspaces
     - name: Try running on Node 14

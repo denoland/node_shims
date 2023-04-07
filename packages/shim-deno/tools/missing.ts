@@ -2,18 +2,20 @@
 
 import { Project, Symbol, SymbolFlags } from "../../../scripts/ts_morph.ts";
 
-let exitCode = 0;
-const ExitCodes = {
-  missingType: 1,
-  typeError: 3,
-} as const;
-
 const project = new Project({
   tsConfigFilePath: `./tsconfig.json`,
 });
-const typeChecker = project.getTypeChecker().compilerObject;
 
-const entryPoint = project.addSourceFileAtPath(`./src/deno.ts`);
+const diagnostics = project.getPreEmitDiagnostics();
+if (diagnostics.length !== 0) {
+  console.error();
+  console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
+  console.error(`Found ${diagnostics.length} errors.`);
+  Deno.exit(1);
+}
+
+const typeChecker = project.getTypeChecker().compilerObject;
+const entryPoint = project.getSourceFileOrThrow(`./src/deno.ts`);
 const implemented = new Set(entryPoint.getExportedDeclarations().keys());
 
 const stableMembers = getDenoMembersFromFile(`./src/deno/stable/lib.deno.d.ts`);
@@ -32,16 +34,6 @@ outputInfo({
   members: unstableMembers,
   includeUnstableInCount: false,
 });
-
-const diagnostics = project.getPreEmitDiagnostics();
-if (diagnostics.length !== 0) {
-  console.error();
-  console.error(project.formatDiagnosticsWithColorAndContext(diagnostics));
-  console.error(`Found ${diagnostics.length} errors.`);
-  exitCode = ExitCodes.typeError;
-}
-
-Deno.exit(exitCode);
 
 function getDenoMembersFromFile(filePath: string) {
   return project

@@ -14,6 +14,7 @@ third_party/deno/cli/tests/unit/get_random_values_test.ts
 third_party/deno/cli/tests/unit/io_test.ts
 third_party/deno/cli/tests/unit/message_channel_test.ts
 third_party/deno/cli/tests/unit/mkdir_test.ts
+third_party/deno/cli/tests/unit/os_test.ts
 third_party/deno/cli/tests/unit/process_test.ts
 third_party/deno/cli/tests/unit/read_file_test.ts
 third_party/deno/cli/tests/unit/read_text_file_test.ts

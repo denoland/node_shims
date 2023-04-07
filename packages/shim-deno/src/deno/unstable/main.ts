@@ -1,4 +1,4 @@
-///<reference path="./lib.deno.unstable.d.ts" />
+/// <reference path="./lib.deno.unstable.d.ts" />
 
 import fs from "fs";
 import mapError from "../internal/errorMap.js";
