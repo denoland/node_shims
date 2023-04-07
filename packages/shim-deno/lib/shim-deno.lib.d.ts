@@ -748,6 +748,19 @@ export declare namespace Deno {
    */
   export function ftruncateSync(rid: number, len?: number): void;
   /**
+   * Get the `hostname` of the machine the Deno process is running on.
+   *
+   * ```ts
+   * console.log(Deno.hostname());
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   *
+   * @tags allow-sys
+   * @category Runtime Environment
+   */
+  export function hostname(): string;
+  /**
    * Converts the input into a string that has the same format as printed by
    * `console.log()`.
    *
@@ -884,6 +897,25 @@ export declare namespace Deno {
    * @category Network
    */
   export function listenTls(options: ListenTlsOptions): TlsListener;
+  /**
+   * Returns an array containing the 1, 5, and 15 minute load averages. The
+   * load average is a measure of CPU and IO utilization of the last one, five,
+   * and 15 minute periods expressed as a fractional number.  Zero means there
+   * is no load. On Windows, the three values are always the same and represent
+   * the current load, not the 1, 5 and 15 minute load averages.
+   *
+   * ```ts
+   * console.log(Deno.loadavg());  // e.g. [ 0.71, 0.44, 0.44 ]
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   *
+   * On Windows there is no API available to retrieve this information and this method returns `[ 0, 0, 0 ]`.
+   *
+   * @tags allow-sys
+   * @category Observability
+   */
+  export function loadavg(): number[];
   /**
    * Resolves to a {@linkcode Deno.FileInfo} for the specified `path`. If
    * `path` is a symlink, information for the symlink will be returned instead
@@ -1091,6 +1123,21 @@ export declare namespace Deno {
    * @category File System
    */
   export function openSync(path: string | URL, options?: OpenOptions): FsFile;
+  /**
+   * Returns the release version of the Operating System.
+   *
+   * ```ts
+   * console.log(Deno.osRelease());
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   * Under consideration to possibly move to Deno.build or Deno.versions and if
+   * it should depend sys-info, which may not be desirable.
+   *
+   * @tags allow-sys
+   * @category Runtime Environment
+   */
+  export function osRelease(): string;
   /**
    * Returns the Operating System uptime in number of seconds.
    *
