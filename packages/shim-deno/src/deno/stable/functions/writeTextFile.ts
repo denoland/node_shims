@@ -8,10 +8,16 @@ export const writeTextFile: typeof Deno.writeTextFile =
   async function writeTextFile(
     path,
     data,
-    { append = false, create = true, mode, signal } = {},
+    { append = false, create = true, createNew = false, mode, signal } = {},
   ) {
     const truncate = create && !append;
-    const flag = getFsFlag({ append, create, truncate, write: true });
+    const flag = getFsFlag({
+      append,
+      create,
+      createNew,
+      truncate,
+      write: true,
+    });
     try {
       await fs.writeFile(path, data, { flag, mode, signal });
       if (mode !== undefined) await fs.chmod(path, mode);
