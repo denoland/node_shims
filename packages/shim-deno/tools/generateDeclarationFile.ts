@@ -260,12 +260,12 @@ function* declToStructures(
       throw new Error("Unhandled.");
     }
 
-    if (!Node.hasStructure(decl)) {
-      // todo(dsherret): remove assertion in next version of ts-morph
-      console.error((decl as Node).getFullText());
+    if (Node.hasStructure(decl)) {
+      yield decl.getStructure() as StatementStructures;
+    } else {
+      console.error(decl.getFullText());
       throw new Error("Unhandled.");
     }
-    yield decl.getStructure();
   }
 }
 
