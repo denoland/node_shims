@@ -1,53 +1,49 @@
 {
   "lint": {
-    "files": {
-      "exclude": [
-        "node_modules",
-        "dist",
-        "packages/sham-weakref/dist",
-        "packages/sham-weakref/node_modules",
-        "packages/shim-crypto/dist",
-        "packages/shim-crypto/node_modules",
-        "packages/shim-deno/dist",
-        "packages/shim-deno/node_modules",
-        "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
-        "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
-        "packages/shim-deno/lib",
-        "packages/shim-deno/third_party",
-        "packages/shim-deno-test/dist",
-        "packages/shim-deno-test/node_modules",
-        "packages/shim-prompts/dist",
-        "packages/shim-prompts/node_modules",
-        "packages/shim-timers/dist",
-        "packages/shim-timers/node_modules"
-      ]
-    },
+    "exclude": [
+      "node_modules",
+      "dist",
+      "packages/sham-weakref/dist",
+      "packages/sham-weakref/node_modules",
+      "packages/shim-crypto/dist",
+      "packages/shim-crypto/node_modules",
+      "packages/shim-deno/dist",
+      "packages/shim-deno/node_modules",
+      "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
+      "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
+      "packages/shim-deno/lib",
+      "packages/shim-deno/third_party",
+      "packages/shim-deno-test/dist",
+      "packages/shim-deno-test/node_modules",
+      "packages/shim-prompts/dist",
+      "packages/shim-prompts/node_modules",
+      "packages/shim-timers/dist",
+      "packages/shim-timers/node_modules"
+    ],
     "rules": {
       "exclude": ["no-explicit-any"]
     }
   },
   "fmt": {
-    "files": {
-      "exclude": [
-        "node_modules",
-        "dist",
-        "packages/sham-weakref/dist",
-        "packages/sham-weakref/node_modules",
-        "packages/shim-crypto/dist",
-        "packages/shim-crypto/node_modules",
-        "packages/shim-deno/dist",
-        "packages/shim-deno/node_modules",
-        "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
-        "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
-        "packages/shim-deno/lib",
-        "packages/shim-deno/third_party",
-        "packages/shim-deno-test/dist",
-        "packages/shim-deno-test/node_modules",
-        "packages/shim-prompts/dist",
-        "packages/shim-prompts/node_modules",
-        "packages/shim-timers/dist",
-        "packages/shim-timers/node_modules"
-      ]
-    }
+    "exclude": [
+      "node_modules",
+      "dist",
+      "packages/sham-weakref/dist",
+      "packages/sham-weakref/node_modules",
+      "packages/shim-crypto/dist",
+      "packages/shim-crypto/node_modules",
+      "packages/shim-deno/dist",
+      "packages/shim-deno/node_modules",
+      "packages/shim-deno/src/deno/stable/lib.deno.d.ts",
+      "packages/shim-deno/src/deno/unstable/lib.deno.unstable.d.ts",
+      "packages/shim-deno/lib",
+      "packages/shim-deno/third_party",
+      "packages/shim-deno-test/dist",
+      "packages/shim-deno-test/node_modules",
+      "packages/shim-prompts/dist",
+      "packages/shim-prompts/node_modules",
+      "packages/shim-timers/dist",
+      "packages/shim-timers/node_modules"
+    ]
   }
 }

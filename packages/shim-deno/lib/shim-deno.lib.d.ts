@@ -1701,6 +1701,8 @@ export declare namespace Deno {
   }
 
   /**
+   * @deprecated Use {@linkcode Deno.Command} instead.
+   *
    * Spawns new subprocess. RunOptions must contain at a minimum the `opt.cmd`,
    * an array of program arguments, the first of which is the binary.
    *
@@ -1745,7 +1747,6 @@ export declare namespace Deno {
    * {@linkcode Deno.Process}.
    *
    * Requires `allow-run` permission.
-   *
    * @tags allow-run
    * @category Sub Process
    */
@@ -3283,12 +3284,13 @@ export declare namespace Deno {
   }
 
   /**
+   * @deprecated Use {@linkcode Deno.Command} instead.
+   *
    * The status resolved from the `.status()` method of a
    * {@linkcode Deno.Process} instance.
    *
    * If `success` is `true`, then `code` will be `0`, but if `success` is
    * `false`, the sub-process exit code will be set in `code`.
-   *
    * @category Sub Process
    */
   export type ProcessStatus = | {
@@ -3435,8 +3437,9 @@ export declare namespace Deno {
   }
 
   /**
-   * Options which can be used with {@linkcode Deno.run}.
+   * @deprecated Use {@linkcode Deno.Command} instead.
    *
+   * Options which can be used with {@linkcode Deno.run}.
    * @category Sub Process
    */
   export interface RunOptions {
@@ -3971,6 +3974,12 @@ export declare namespace Deno {
      * write to stop early. `write()` must reject with a non-null error if
      * would resolve to `n` < `p.byteLength`. `write()` must not modify the
      * slice data, even temporarily.
+     *
+     * This function is one of the lowest
+     * level APIs and most users should not work with this directly, but rather use
+     * [`writeAll()`](https://deno.land/std/streams/write_all.ts?s=writeAll) from
+     * [`std/streams/write_all.ts`](https://deno.land/std/streams/write_all.ts)
+     * instead.
      *
      * Implementations should not retain a reference to `p`.
      */

@@ -65,7 +65,7 @@ export interface TestDefinition {
    * not await. This helps in preventing logic errors and memory leaks
    * in the application code.
    *
-   * Defaults to `true`.
+   * @default {true}
    */
   sanitizeOps?: boolean;
   /**
@@ -73,14 +73,14 @@ export interface TestDefinition {
    * network connections - by ensuring the open resources at the start of the
    * test match the open resources at the end of the test.
    *
-   * Defaults to `true`.
+   * @default {true}
    */
   sanitizeResources?: boolean;
   /**
    * Ensure the test case does not prematurely cause the process to exit,
    * for example via a call to {@linkcode Deno.exit}.
    *
-   * Defaults to `true`.
+   * @default {true}
    */
   sanitizeExit?: boolean;
   /**
@@ -90,7 +90,7 @@ export interface TestDefinition {
    * to "none" to revoke all permissions, or set a more specific set of
    * permissions using a {@linkcode PermissionOptionsObject}.
    *
-   * Defaults to `"inherit"`.
+   * @default {"inherit"}
    */
   permissions?: PermissionOptions;
 }
@@ -162,6 +162,25 @@ export interface TestContext {
    * ```
    */
   step(name: string, fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
+  /**
+   * Run a sub step of the parent test or step. Returns a promise
+   * that resolves to a boolean signifying if the step completed successfully.
+   *
+   * The returned promise never rejects unless the arguments are invalid.
+   *
+   * If the test was ignored the promise returns `false`.
+   *
+   * ```ts
+   * Deno.test(async function aParentTest(t) {
+   *   console.log("before the step");
+   *   await t.step(function step1(t) {
+   *     console.log("current step:", t.name);
+   *   });
+   *   console.log("after the step");
+   * });
+   * ```
+   */
+  step(fn: (t: TestContext) => void | Promise<void>): Promise<boolean>;
 }
 
 /** @category Testing */
@@ -221,7 +240,7 @@ export interface PermissionOptionsObject {
    * If set to `true`, the global `env` permission will be requested.
    * If set to `false`, the global `env` permission will be revoked.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   env?: "inherit" | boolean | string[];
   /**
@@ -230,7 +249,7 @@ export interface PermissionOptionsObject {
    * If set to `true`, the global `sys` permission will be requested.
    * If set to `false`, the global `sys` permission will be revoked.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   sys?: "inherit" | boolean | string[];
   /**
@@ -239,7 +258,7 @@ export interface PermissionOptionsObject {
    * If set to `true`, the global `hrtime` permission will be requested.
    * If set to `false`, the global `hrtime` permission will be revoked.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   hrtime?: "inherit" | boolean;
   /**
@@ -250,7 +269,7 @@ export interface PermissionOptionsObject {
    * if set to `string[]`, the `net` permission will be requested with the
    * specified host strings with the format `"<host>[:<port>]`.
    *
-   * Defaults to `false`.
+   * @default {false}
    *
    * Examples:
    *
@@ -321,7 +340,7 @@ export interface PermissionOptionsObject {
    * If set to `true`, the global `ffi` permission will be requested.
    * If set to `false`, the global `ffi` permission will be revoked.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   ffi?: "inherit" | boolean | Array<string | URL>;
   /**
@@ -332,7 +351,7 @@ export interface PermissionOptionsObject {
    * If set to `Array<string | URL>`, the `read` permission will be requested with the
    * specified file paths.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   read?: "inherit" | boolean | Array<string | URL>;
   /**
@@ -341,7 +360,7 @@ export interface PermissionOptionsObject {
    * If set to `true`, the global `run` permission will be requested.
    * If set to `false`, the global `run` permission will be revoked.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   run?: "inherit" | boolean | Array<string | URL>;
   /**
@@ -352,7 +371,7 @@ export interface PermissionOptionsObject {
    * If set to `Array<string | URL>`, the `write` permission will be requested with the
    * specified file paths.
    *
-   * Defaults to `false`.
+   * @default {false}
    */
   write?: "inherit" | boolean | Array<string | URL>;
 }

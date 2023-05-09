@@ -1,6 +1,9 @@
+// not sure why, but I needed to add this
+/// <reference lib="deno.ns" />
+
 import { Project } from "../../../scripts/ts_morph.ts";
 
-if (!Deno.version.deno.startsWith("1.32.")) {
+if (!Deno.version.deno.startsWith("1.33.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
   Deno.exit(1);
 }
@@ -34,11 +37,11 @@ await Deno.writeTextFile(
 );
 
 async function run(cmd: string) {
+  const parts = cmd.split(" ");
   return new TextDecoder().decode(
-    await Deno.run({
-      cmd: cmd.split(" "),
-      stdout: "piped",
-    }).output(),
+    (await new Deno.Command(parts[0], {
+      args: parts.slice(1),
+    }).output()).stdout,
   );
 }
 

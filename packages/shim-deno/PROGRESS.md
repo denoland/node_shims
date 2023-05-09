@@ -51,7 +51,7 @@
 - [x] 👻 **`PermissionStatusEventMap`**
 - [x] **`Permissions`**
 - [x] **`Process`**
-- [x] 👻 **`ProcessStatus`**
+- [x] 👎 👻 **`ProcessStatus`**
 - [x] 👻 **`ReadFileOptions`**
 - [x] 👻 **`ReadPermissionDescriptor`**
 - [x] 👻 **`Reader`**
@@ -61,7 +61,7 @@
 - [ ] 👻 **`RequestEvent`**
 - [x] 👻 **`ResolveDnsOptions`**
 - [x] 👻 **`ResourceMap`**
-- [x] 👻 **`RunOptions`**
+- [x] 👎 👻 **`RunOptions`**
 - [x] 👻 **`RunPermissionDescriptor`**
 - [x] 👻 **`SOARecord`**
 - [x] 👻 **`SRVRecord`**
@@ -178,7 +178,7 @@
 - [x] **`renameSync`**
 - [x] **`resolveDns`**
 - [x] **`resources`**
-- [x] **`run`**
+- [x] 👎 **`run`**
 - [ ] **`seek`**
 - [ ] **`seekSync`**
 - [ ] **`serveHttp`**
@@ -213,7 +213,7 @@
 
 # Unstable Progress
 
-50%. 1 unstable members to go:
+33%. 2 unstable members to go:
 
 - [ ] 🧪 👻 **`AtomicCheck`**
 - [ ] 🧪 **`AtomicOperation`**
@@ -227,6 +227,7 @@
 - [ ] 🧪 👻 **`ForeignStatic`**
 - [ ] 🧪 👻 **`HttpClient`**
 - [ ] 🧪 **`Kv`**
+- [ ] 👻 **`KvCommitError`**
 - [ ] 👻 **`KvCommitResult`**
 - [ ] 🧪 👻 **`KvConsistencyLevel`**
 - [ ] 🧪 👻 **`KvEntry`**
@@ -275,4 +276,3 @@
 - [ ] 🧪 **`serve`**
 - [ ] 🧪 **`umask`**
 - [ ] 🧪 **`upgradeHttp`**
-- [ ] 🧪 **`upgradeHttpRaw`**
