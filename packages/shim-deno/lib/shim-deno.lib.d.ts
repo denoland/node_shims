@@ -748,6 +748,19 @@ export declare namespace Deno {
    */
   export function ftruncateSync(rid: number, len?: number): void;
   /**
+   * Returns the group id of the process on POSIX platforms. Returns null on windows.
+   *
+   * ```ts
+   * console.log(Deno.gid());
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   *
+   * @tags allow-sys
+   * @category Runtime Environment
+   */
+  export function gid(): number | null;
+  /**
    * Get the `hostname` of the machine the Deno process is running on.
    *
    * ```ts
@@ -2108,6 +2121,19 @@ export declare namespace Deno {
    * @category File System
    */
   export function truncateSync(name: string, len?: number): void;
+  /**
+   * Returns the user id of the process on POSIX platforms. Returns null on Windows.
+   *
+   * ```ts
+   * console.log(Deno.uid());
+   * ```
+   *
+   * Requires `allow-sys` permission.
+   *
+   * @tags allow-sys
+   * @category Runtime Environment
+   */
+  export function uid(): number | null;
   /**
    * Watch for file system events against one or more `paths`, which can be
    * files or directories. These paths must exist already. One user action (e.g.

@@ -1,6 +1,6 @@
 # Stable Progress
 
-85%. 28 stable members to go:
+86%. 26 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👻 **`BenchDefinition`**
@@ -124,7 +124,7 @@
 - [x] **`ftruncateSync`**
 - [x] **`futime`**
 - [x] **`futimeSync`**
-- [ ] **`gid`**
+- [x] **`gid`**
 - [x] **`hostname`**
 - [x] **`inspect`**
 - [x] **`isatty`**
@@ -195,7 +195,7 @@
 - [x] **`test`**
 - [x] **`truncate`**
 - [x] **`truncateSync`**
-- [ ] **`uid`**
+- [x] **`uid`**
 - [ ] **`unrefTimer`**
 - [ ] **`upgradeWebSocket`**
 - [x] **`utime`**
