@@ -148,6 +148,7 @@ const testsToSkip = new Set([
 
   // url_test
   "customInspectFunction",
+  "emptyUrl", // deno includes more details in the error messages
   "urlDriveLetter",
   "urlPathRepeatedSlashes",
   "urlProtocolParsing", // deno includes more details in the error messages
