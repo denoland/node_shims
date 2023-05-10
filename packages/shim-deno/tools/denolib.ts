@@ -68,6 +68,18 @@ function processDeclsFromStable(text: string) {
     // make optional to not conflict with @types/node
     .setHasQuestionToken(true);
 
+  // only allow translating deno signals that also exist in node.js
+  // Deno.Signal := NodeJS.Signals & Deno.Signal
+  const denoSignalType = sourceFile
+    .getModuleOrThrow("Deno")
+    .getTypeAliasOrThrow("Signal");
+  const denoSignals = denoSignalType
+    .getSymbolOrThrow()
+    .getDeclaredType()
+    .getUnionTypes()
+    .map((t) => t.getText()).join(" | ");
+  denoSignalType.setType("NodeJS.Signals & (" + denoSignals + ")");
+
   // use web streams from @types/node
   [
     "ReadableStream",

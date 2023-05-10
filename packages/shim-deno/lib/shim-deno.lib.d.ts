@@ -225,6 +225,24 @@ export declare namespace Deno {
    */
   export function isatty(fd: number): boolean;
   /**
+   * Registers the given function as a listener of the given signal event.
+   *
+   * ```ts
+   * Deno.addSignalListener(
+   *   "SIGTERM",
+   *   () => {
+   *     console.log("SIGTERM!")
+   *   }
+   * );
+   * ```
+   *
+   * _Note_: On Windows only `"SIGINT"` (CTRL+C) and `"SIGBREAK"` (CTRL+Break)
+   * are supported.
+   *
+   * @category Runtime Environment
+   */
+  export function addSignalListener(signal: Signal, handler: () => void): void;
+  /**
    * Change the current working directory to the specified path.
    *
    * ```ts
@@ -1418,6 +1436,24 @@ export declare namespace Deno {
    * @category File System
    */
   export function remove(path: string | URL, options?: RemoveOptions): Promise<void>;
+  /**
+   * Removes the given signal listener that has been registered with
+   * {@linkcode Deno.addSignalListener}.
+   *
+   * ```ts
+   * const listener = () => {
+   *   console.log("SIGTERM!")
+   * };
+   * Deno.addSignalListener("SIGTERM", listener);
+   * Deno.removeSignalListener("SIGTERM", listener);
+   * ```
+   *
+   * _Note_: On Windows only `"SIGINT"` (CTRL+C) and `"SIGBREAK"` (CTRL+Break)
+   * are supported.
+   *
+   * @category Runtime Environment
+   */
+  export function removeSignalListener(signal: Signal, handler: () => void): void;
   /**
    * Synchronously removes the named file or directory.
    *
@@ -3612,40 +3648,7 @@ export declare namespace Deno {
    *
    * @category Runtime Environment
    */
-  export type Signal = | "SIGABRT"
-        | "SIGALRM"
-        | "SIGBREAK"
-        | "SIGBUS"
-        | "SIGCHLD"
-        | "SIGCONT"
-        | "SIGEMT"
-        | "SIGFPE"
-        | "SIGHUP"
-        | "SIGILL"
-        | "SIGINFO"
-        | "SIGINT"
-        | "SIGIO"
-        | "SIGKILL"
-        | "SIGPIPE"
-        | "SIGPROF"
-        | "SIGPWR"
-        | "SIGQUIT"
-        | "SIGSEGV"
-        | "SIGSTKFLT"
-        | "SIGSTOP"
-        | "SIGSYS"
-        | "SIGTERM"
-        | "SIGTRAP"
-        | "SIGTSTP"
-        | "SIGTTIN"
-        | "SIGTTOU"
-        | "SIGURG"
-        | "SIGUSR1"
-        | "SIGUSR2"
-        | "SIGVTALRM"
-        | "SIGWINCH"
-        | "SIGXCPU"
-        | "SIGXFSZ";
+  export type Signal = NodeJS.Signals & ("SIGABRT" | "SIGALRM" | "SIGBREAK" | "SIGBUS" | "SIGCHLD" | "SIGCONT" | "SIGEMT" | "SIGFPE" | "SIGHUP" | "SIGILL" | "SIGINFO" | "SIGINT" | "SIGIO" | "SIGKILL" | "SIGPIPE" | "SIGPROF" | "SIGPWR" | "SIGQUIT" | "SIGSEGV" | "SIGSTKFLT" | "SIGSTOP" | "SIGSYS" | "SIGTERM" | "SIGTRAP" | "SIGTSTP" | "SIGTTIN" | "SIGTTOU" | "SIGURG" | "SIGUSR1" | "SIGUSR2" | "SIGVTALRM" | "SIGWINCH" | "SIGXCPU" | "SIGXFSZ");
 
   /**
    * Options that can be used with {@linkcode symlink} and
