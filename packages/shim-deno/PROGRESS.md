@@ -1,6 +1,6 @@
 # Stable Progress
 
-86%. 26 stable members to go:
+87%. 24 stable members to go:
 
 - [x] 👻 **`Addr`**
 - [ ] 👻 **`BenchDefinition`**
@@ -90,7 +90,7 @@
 - [x] 👻 **`WritePermissionDescriptor`**
 - [x] 👻 **`Writer`**
 - [x] 👻 **`WriterSync`**
-- [ ] **`addSignalListener`**
+- [x] **`addSignalListener`**
 - [x] **`args`**
 - [ ] **`bench`**
 - [x] **`build`**
@@ -172,7 +172,7 @@
 - [x] **`realPathSync`**
 - [ ] **`refTimer`**
 - [x] **`remove`**
-- [ ] **`removeSignalListener`**
+- [x] **`removeSignalListener`**
 - [x] **`removeSync`**
 - [x] **`rename`**
 - [x] **`renameSync`**

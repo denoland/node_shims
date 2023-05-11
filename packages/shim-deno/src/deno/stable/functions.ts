@@ -1,6 +1,7 @@
 // Command palette -> Organize imports
 
 export { isatty } from "tty";
+export { addSignalListener } from "./functions/addSignalListener.js";
 export { chdir } from "./functions/chdir.js";
 export { chmod } from "./functions/chmod.js";
 export { chmodSync } from "./functions/chmodSync.js";
@@ -60,6 +61,7 @@ export { readTextFileSync } from "./functions/readTextFileSync.js";
 export { realPath } from "./functions/realPath.js";
 export { realPathSync } from "./functions/realPathSync.js";
 export { remove } from "./functions/remove.js";
+export { removeSignalListener } from "./functions/removeSignalListener.js";
 export { removeSync } from "./functions/removeSync.js";
 export { rename } from "./functions/rename.js";
 export { renameSync } from "./functions/renameSync.js";
