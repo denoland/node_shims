@@ -1,5 +1,8 @@
 ///<reference path="../lib.deno.d.ts" />
 
+import { readSync } from "../functions/readSync.js";
+import { writeSync } from "../functions/writeSync.js";
+
 function chain<T extends (...args: any[]) => Promise<any>>(
   fn: T,
   cleanup?: () => void,
@@ -45,9 +48,8 @@ export const stdin: typeof Deno.stdin = {
   get readable(): ReadableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
-  readSync() {
-    // Node.js doesn't support readSync for stdin
-    throw new Error("Not implemented.");
+  readSync(buffer: Uint8Array) {
+    return readSync(this.rid, buffer);
   },
   close() {
     process.stdin.destroy();
@@ -74,9 +76,8 @@ export const stdout: typeof Deno.stdout = {
   get writable(): WritableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
-  writeSync() {
-    // Node.js doesn't support writeSync for stdout
-    throw new Error("Not implemented");
+  writeSync(data: Uint8Array) {
+    return writeSync(this.rid, data);
   },
   close() {
     process.stdout.destroy();

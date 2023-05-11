@@ -230,10 +230,14 @@ async function setupTests() {
   process.chdir("third_party/deno/");
 
   globalThis.Deno = (await import("../src/index.ts")).Deno;
-  globalThis.Blob = (await import("node:buffer")).Blob;
+  if (!("Blob" in globalThis)) {
+    globalThis.Blob = (await import("node:buffer")).Blob;
+  }
   await webStreamHack();
 
-  globalThis.crypto = (await import("node:crypto")).webcrypto;
+  if (!("crypto" in globalThis)) {
+    globalThis.crypto = (await import("node:crypto")).webcrypto;
+  }
 }
 
 async function webStreamHack() {
