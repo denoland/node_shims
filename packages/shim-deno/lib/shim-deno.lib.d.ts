@@ -3648,7 +3648,40 @@ export declare namespace Deno {
    *
    * @category Runtime Environment
    */
-  export type Signal = NodeJS.Signals & ("SIGABRT" | "SIGALRM" | "SIGBREAK" | "SIGBUS" | "SIGCHLD" | "SIGCONT" | "SIGEMT" | "SIGFPE" | "SIGHUP" | "SIGILL" | "SIGINFO" | "SIGINT" | "SIGIO" | "SIGKILL" | "SIGPIPE" | "SIGPROF" | "SIGPWR" | "SIGQUIT" | "SIGSEGV" | "SIGSTKFLT" | "SIGSTOP" | "SIGSYS" | "SIGTERM" | "SIGTRAP" | "SIGTSTP" | "SIGTTIN" | "SIGTTOU" | "SIGURG" | "SIGUSR1" | "SIGUSR2" | "SIGVTALRM" | "SIGWINCH" | "SIGXCPU" | "SIGXFSZ");
+  export type Signal = | "SIGABRT"
+        | "SIGALRM"
+        | "SIGBREAK"
+        | "SIGBUS"
+        | "SIGCHLD"
+        | "SIGCONT"
+        | "SIGEMT"
+        | "SIGFPE"
+        | "SIGHUP"
+        | "SIGILL"
+        | "SIGINFO"
+        | "SIGINT"
+        | "SIGIO"
+        | "SIGKILL"
+        | "SIGPIPE"
+        | "SIGPROF"
+        | "SIGPWR"
+        | "SIGQUIT"
+        | "SIGSEGV"
+        | "SIGSTKFLT"
+        | "SIGSTOP"
+        | "SIGSYS"
+        | "SIGTERM"
+        | "SIGTRAP"
+        | "SIGTSTP"
+        | "SIGTTIN"
+        | "SIGTTOU"
+        | "SIGURG"
+        | "SIGUSR1"
+        | "SIGUSR2"
+        | "SIGVTALRM"
+        | "SIGWINCH"
+        | "SIGXCPU"
+        | "SIGXFSZ";
 
   /**
    * Options that can be used with {@linkcode symlink} and
