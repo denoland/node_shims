@@ -78,8 +78,26 @@ const sourceFile = newProject.createSourceFile(
 );
 
 sourceFile.saveSync();
+sourceFile.copyImmediatelySync(`./dist/index.d.ts`, { overwrite: true });
 
 exitIfDiagnostics(newProject, sourceFile.getPreEmitDiagnostics());
+
+// create the internal declaration
+console.log("Generating internal test declaration file...");
+const testInternalFile = newProject.addSourceFileAtPath(
+  "src/deno/internal/test.ts",
+);
+newProject.compilerOptions.set({
+  declaration: true,
+});
+const files = newProject.emitToMemory({
+  emitOnlyDtsFiles: true,
+  targetSourceFile: testInternalFile,
+}).getFiles();
+if (files.length !== 1) {
+  throw new Error("Failed. Should have only generated one file.");
+}
+Deno.writeTextFileSync("./dist/deno/internal/test.d.ts", files[0].text);
 
 function getMainStatements() {
   const statements: StatementStructures[] = [];
