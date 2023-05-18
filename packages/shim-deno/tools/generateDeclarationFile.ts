@@ -78,6 +78,7 @@ const sourceFile = newProject.createSourceFile(
 );
 
 sourceFile.saveSync();
+sourceFile.copyImmediatelySync(`./dist/index.d.ts`, { overwrite: true });
 
 exitIfDiagnostics(newProject, sourceFile.getPreEmitDiagnostics());
 

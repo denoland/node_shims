@@ -3628,7 +3628,7 @@ export declare namespace Deno {
      *
      * It returns the updated offset.
      */
-    seekSync(offset: number, whence: SeekMode): number;
+    seekSync(offset: number | bigint, whence: SeekMode): number;
   }
 
   /** @category I/O */
