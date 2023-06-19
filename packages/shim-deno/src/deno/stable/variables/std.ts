@@ -98,9 +98,8 @@ export const stderr: typeof Deno.stderr = {
   get writable(): WritableStream<Uint8Array> {
     throw new Error("Not implemented.");
   },
-  writeSync() {
-    // Node.js doesn't support writeSync for stderr
-    throw new Error("Not implemented");
+  writeSync(data: Uint8Array) {
+    return writeSync(this.rid, data);
   },
   close() {
     process.stderr.destroy();
