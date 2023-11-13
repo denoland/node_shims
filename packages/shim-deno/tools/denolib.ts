@@ -1,7 +1,7 @@
 // not sure why, but I needed to add this
 /// <reference lib="deno.ns" />
 
-import { Project } from "../../../scripts/ts_morph.ts";
+import { Node, Project } from "../../../scripts/ts_morph.ts";
 
 if (!Deno.version.deno.startsWith("1.38.")) {
   console.error("Wrong Deno version: " + Deno.version.deno);
@@ -40,6 +40,7 @@ async function run(cmd: string) {
 
 function processDeclarationFileText(text: string) {
   return text.replace('/// <reference lib="deno.net" />\n', "")
+    .replace(`/// <reference no-default-lib="true" />\n`, "")
     .replace(
       `/// <reference lib="deno.ns" />`,
       `/// <reference path="../stable/lib.deno.d.ts" />`,
@@ -57,14 +58,9 @@ function processDeclsFromStable(text: string) {
   sourceFile.getInterfaceOrThrow("AbortSignal").remove();
   sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
   sourceFile.getVariableStatementOrThrow("AbortSignal").remove();
-  sourceFile
-    .getInterfaceOrThrow("ImportMeta")
-    .getMethodOrThrow("resolve")
-    // make optional to not conflict with @types/node
-    .setHasQuestionToken(true);
 
-  // use web streams from @types/node
   [
+    // use web streams from @types/node
     "ReadableStream",
     "WritableStream",
     "ReadableStreamBYOBReader",
@@ -88,27 +84,36 @@ function processDeclsFromStable(text: string) {
     "WritableStreamDefaultControllerWriteCallback",
     "WritableStreamDefaultController",
     "WritableStreamDefaultWriter",
-  ].forEach((name) => {
-    sourceFile.getInterfaceOrThrow(name).remove();
-  });
-  [
     "ReadableStreamBYOBReadResult",
     "ReadableStreamDefaultReadResult",
+    // use fetch types from @types/node
+    "Blob",
+    "FormData",
+    "Headers",
+    "Response",
+    "Request",
+    "RequestInit",
+    "URLSearchParams",
+    "URL",
+    // use from @types/node
+    "BroadcastChannel",
+    "Event",
+    "EventTarget",
+    "MessageChannel",
+    "MessagePort",
+    "TextDecoder",
+    "TextEncoder",
+    "performance",
   ].forEach((name) => {
-    sourceFile.getTypeAliasOrThrow(name).remove();
-  });
-  [
-    "ReadableStream",
-    "ReadableStreamBYOBReader",
-    "ReadableStreamBYOBRequest",
-    "WritableStream",
-    "ReadableStreamDefaultReader",
-    "ReadableByteStreamController",
-    "ReadableStreamDefaultController",
-    "WritableStreamDefaultController",
-    "WritableStreamDefaultWriter",
-  ].forEach((name) => {
-    sourceFile.getVariableStatementOrThrow(name).remove();
+    const statements = sourceFile.getStatements().filter((s) => {
+      return Node.hasName(s) && s.getName() === name ||
+        Node.isVariableStatement(s) &&
+          s.getDeclarations().some((d) => d.getName() === name);
+    });
+    if (statements.length === 0) {
+      throw new Error(`Not found: ${name}`);
+    }
+    statements.forEach((s) => s.remove());
   });
   sourceFile.addStatements((writer) => {
     writer.writeLine(
@@ -130,6 +135,7 @@ function processDeclsFromStable(text: string) {
     writer.write("interface ErrorOptions").block(() => {
       writer.writeLine("cause?: unknown;");
     });
+    writer.writeLine(`type MessagePort = typeof globalThis["MessagePort"];`);
   });
 
   return sourceFile.getFullText();

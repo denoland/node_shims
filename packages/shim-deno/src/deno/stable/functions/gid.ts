@@ -2,4 +2,4 @@
 
 import ps from "process";
 
-export const gid: typeof Deno.gid = ps.getgid;
+export const gid: typeof Deno.gid = ps.getgid ?? (() => null);

@@ -77,6 +77,12 @@ statements.push({
     }],
   }],
 });
+// fix up the MessagePort reference
+statements.push({
+  kind: StructureKind.TypeAlias,
+  name: "MessagePort",
+  type: `typeof globalThis["MessagePort"]`,
+});
 
 // Create a new project with limited declarations and add the declaration
 // file to it. Save the file then type check.
@@ -128,9 +134,6 @@ function getMainStatements() {
   );
   statements.push(
     ...[
-      "EventTarget",
-      "Event",
-      "EventInit",
       "EventListenerOptions",
       "AddEventListenerOptions",
       "EventListener",
