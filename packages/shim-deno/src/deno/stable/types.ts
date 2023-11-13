@@ -52,6 +52,7 @@ export type TestContext = Deno.TestContext;
 export type TcpConn = Deno.TcpConn;
 export type TcpListenOptions = Deno.TcpListenOptions;
 export type TlsConn = Deno.TlsConn;
+export type TlsHandshakeInfo = Deno.TlsHandshakeInfo;
 export type TlsListener = Deno.TlsListener;
 export type UnixAddr = Deno.UnixAddr;
 export type UnixConn = Deno.UnixConn;

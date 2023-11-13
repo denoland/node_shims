@@ -14,6 +14,10 @@ export class Listener<TConn extends Deno.Conn> implements Deno.Listener {
     this.#listener = listener;
   }
 
+  [Symbol.dispose]() {
+    this.close();
+  }
+
   async accept() {
     if (!this.#listener) {
       throw new errors.BadResource("Listener not initialised");

@@ -13,6 +13,10 @@ import { writeSync } from "../functions/writeSync.js";
 export class FsFile implements Deno.FsFile {
   constructor(readonly rid: number) {}
 
+  [Symbol.dispose]() {
+    this.close();
+  }
+
   async write(p: Uint8Array): Promise<number> {
     return await write(this.rid, p);
   }

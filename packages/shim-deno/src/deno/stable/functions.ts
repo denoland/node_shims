@@ -1,4 +1,8 @@
-// Command palette -> Organize imports
+import fs from "fs";
+import mapError from "../internal/errorMap.js";
+import { errors } from "./variables.js";
+
+// todo(dsherret): collapse all these files into here
 
 export { isatty } from "tty";
 export { addSignalListener } from "./functions/addSignalListener.js";
@@ -85,3 +89,54 @@ export { writeSync } from "./functions/writeSync.js";
 export { writeTextFile } from "./functions/writeTextFile.js";
 export { writeTextFileSync } from "./functions/writeTextFileSync.js";
 export { args } from "./variables/args.js";
+
+export const futime: typeof Deno.futime = async function (rid, atime, mtime) {
+  try {
+    await new Promise<void>((resolve, reject) => {
+      // doesn't exist in fs.promises
+      fs.futimes(rid, atime, mtime, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  } catch (error) {
+    throw mapError(error);
+  }
+};
+
+export const futimeSync: typeof Deno.futimeSync = function (rid, atime, mtime) {
+  try {
+    fs.futimesSync(rid, atime, mtime);
+  } catch (error: any) {
+    throw mapError(error);
+  }
+};
+
+export const utime: typeof Deno.utime = async function (path, atime, mtime) {
+  try {
+    await fs.promises.utimes(path, atime, mtime);
+  } catch (error: any) {
+    if (error?.code === "ENOENT") {
+      throw new errors.NotFound(
+        `No such file or directory (os error 2), utime '${path}'`,
+      );
+    }
+    throw mapError(error);
+  }
+};
+
+export const utimeSync: typeof Deno.utimeSync = function (path, atime, mtime) {
+  try {
+    fs.utimesSync(path, atime, mtime);
+  } catch (error: any) {
+    if (error?.code === "ENOENT") {
+      throw new errors.NotFound(
+        `No such file or directory (os error 2), utime '${path}'`,
+      );
+    }
+    throw mapError(error);
+  }
+};

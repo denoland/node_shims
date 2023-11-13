@@ -33,5 +33,9 @@ export const watchFs: typeof Deno.watchFs = function watchFs(
     ac.abort();
   }
 
-  return Object.assign(masterWatcher, { rid, close });
+  return Object.assign(masterWatcher, {
+    rid,
+    close,
+    [Symbol.dispose]: close,
+  });
 };

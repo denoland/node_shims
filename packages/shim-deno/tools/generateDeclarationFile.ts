@@ -1,6 +1,7 @@
 import {
   ExportedDeclarations,
   IndentationText,
+  ModuleDeclarationKind,
   ModuleDeclarationStructure,
   Node,
   Project,
@@ -57,6 +58,25 @@ statements.push({
     ).map((s) => exportAndStripAmbient(s)),
   ],
 });
+statements.push({
+  kind: StructureKind.Module,
+  declarationKind: ModuleDeclarationKind.Global,
+  name: "global",
+  hasDeclareKeyword: true,
+  statements: [{
+    kind: StructureKind.Interface,
+    name: "SymbolConstructor",
+    properties: [{
+      isReadonly: true,
+      name: "asyncDispose",
+      type: "unique symbol",
+    }, {
+      isReadonly: true,
+      name: "dispose",
+      type: "unique symbol",
+    }],
+  }],
+});
 
 // Create a new project with limited declarations and add the declaration
 // file to it. Save the file then type check.
@@ -106,23 +126,37 @@ function getMainStatements() {
   const denoStableDeclFile = declarationProject.getSourceFileOrThrow(
     `./src/deno/stable/lib.deno.d.ts`,
   );
-  statements.push(...[
-    "EventTarget",
-    "Event",
-    "EventInit",
-    "EventListenerOptions",
-    "AddEventListenerOptions",
-    "EventListener",
-    "EventListenerObject",
-    "EventListenerOrEventListenerObject",
-  ].map((name) => {
-    const statement = denoStableDeclFile
-      .getStatementOrThrow((s) => Node.hasName(s) && s.getName() === name);
-    if (!Node.hasStructure(statement)) {
-      throw new Error("Unhandled");
-    }
-    return statement.getStructure() as StatementStructures;
-  }));
+  statements.push(
+    ...[
+      "EventTarget",
+      "Event",
+      "EventInit",
+      "EventListenerOptions",
+      "AddEventListenerOptions",
+      "EventListener",
+      "EventListenerObject",
+      "EventListenerOrEventListenerObject",
+      "Disposable",
+      "AsyncDisposable",
+    ].map((name) => {
+      const statements = denoStableDeclFile
+        .getStatements()
+        .filter((s) =>
+          Node.hasName(s) && s.getName() === name ||
+          Node.isVariableStatement(s) &&
+            s.getDeclarations().some((d) => d.getName() === name)
+        );
+      if (statements.length === 0) {
+        throw new Error(`Not found: ${name}`);
+      }
+      return statements.map((statement) => {
+        if (!Node.hasStructure(statement)) {
+          throw new Error("Unhandled");
+        }
+        return statement.getStructure() as StatementStructures;
+      });
+    }).flat(),
+  );
 
   // re-export the export declarations from the index file that aren't relative
   for (const exportDecl of indexFile.getExportDeclarations()) {
@@ -159,11 +193,6 @@ function getDenoNamespace(): ModuleDeclarationStructure {
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
           `./dist/deno/stable/main.d.ts`,
-        )),
-      ),
-      ...Array.from(
-        fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `./dist/deno/unstable/main.d.ts`,
         )),
       ),
     ].map((s) => exportAndStripAmbient(s)),
@@ -313,9 +342,6 @@ function getDeclarationProject() {
   }
   declarationProject.addSourceFileAtPath(
     `./src/deno/stable/lib.deno.d.ts`,
-  );
-  declarationProject.addSourceFileAtPath(
-    `./src/deno/unstable/lib.deno.unstable.d.ts`,
   );
 
   return declarationProject;
