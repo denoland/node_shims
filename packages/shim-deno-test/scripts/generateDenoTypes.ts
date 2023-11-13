@@ -15,9 +15,6 @@ const project = new tsMorph.Project({
 const libDenoFile = project.addSourceFileAtPath(
   "../shim-deno/third_party/deno/cli/tsc/dts/lib.deno.ns.d.ts",
 );
-const unstableFile = project.addSourceFileAtPath(
-  "../shim-deno/third_party/deno/cli/tsc/dts/lib.deno.unstable.d.ts",
-);
 const statements: (tsMorph.StatementStructures | string)[] = [];
 statements.push("// deno-lint-ignore-file");
 statements.push("// deno-fmt-ignore-file");
@@ -27,7 +24,7 @@ statements.push(
 statements.push(`import { URL } from "url";`);
 
 const denoNs = libDenoFile.getModuleOrThrow("Deno");
-const testFunc = denoNs.getFunctionOrThrow("test");
+const testFunc = denoNs.getVariableDeclarationOrThrow("test");
 
 statements.push(...extractTypesFromSymbol({
   symbol: testFunc.getSymbolOrThrow(),
@@ -39,14 +36,19 @@ statements.push(...extractTypesFromSymbol({
       return false;
     }
 
-    const inDeclFile = node.getSourceFile() === libDenoFile ||
-      node.getSourceFile() === unstableFile;
+    const inDeclFile = node.getSourceFile() === libDenoFile;
     return inDeclFile;
   },
 }));
 
+for (const statement of statements) {
+  if (tsMorph.Structure.isVariableStatement(statement)) {
+    statement.hasDeclareKeyword = true;
+  }
+}
+
 const outputFile = project.createSourceFile(
-  "./src/deno.types.gen.ts",
+  "./src/deno.types.gen.d.ts",
   { statements },
   { overwrite: true },
 );

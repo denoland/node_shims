@@ -7,11 +7,25 @@ export type {
   TestStepDefinition,
 } from "./deno.types.gen.js";
 
-export const test: typeof Deno.test = function test() {
+export const test: typeof Deno.test = Object.assign(function test() {
+  handleDefinition(arguments);
+}, {
+  ignore() {
+    handleDefinition(arguments, { ignore: true });
+  },
+  only() {
+    handleDefinition(arguments, { only: true });
+  },
+});
+
+function handleDefinition(
+  args: IArguments,
+  additional?: { ignore?: boolean; only?: boolean },
+) {
   let testDef: Deno.TestDefinition;
-  const firstArg = arguments[0];
-  const secondArg = arguments[1];
-  const thirdArg = arguments[2];
+  const firstArg = args[0];
+  const secondArg = args[1];
+  const thirdArg = args[2];
 
   if (typeof firstArg === "string") {
     if (typeof secondArg === "object") {
@@ -79,5 +93,12 @@ export const test: typeof Deno.test = function test() {
     throw new TypeError("The test name can't be empty");
   }
 
+  if (additional?.ignore) {
+    testDef.ignore = true;
+  }
+  if (additional?.only) {
+    testDef.only = true;
+  }
+
   testDefinitions.push(testDef);
-};
+}

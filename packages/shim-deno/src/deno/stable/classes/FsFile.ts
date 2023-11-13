@@ -10,8 +10,19 @@ import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
 import { writeSync } from "../functions/writeSync.js";
 
+(Symbol as any).dispose ??= Symbol("Symbol.dispose");
+(Symbol as any).asyncDispose ??= Symbol("Symbol.asyncDispose");
+
 export class FsFile implements Deno.FsFile {
+  #closed = false;
+
   constructor(readonly rid: number) {}
+
+  [Symbol.dispose]() {
+    if (!this.#closed) {
+      this.close();
+    }
+  }
 
   async write(p: Uint8Array): Promise<number> {
     return await write(this.rid, p);
@@ -54,6 +65,7 @@ export class FsFile implements Deno.FsFile {
   }
 
   close(): void {
+    this.#closed = true;
     fs.closeSync(this.rid);
   }
 

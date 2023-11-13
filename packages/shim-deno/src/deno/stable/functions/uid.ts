@@ -2,4 +2,4 @@
 
 import ps from "process";
 
-export const uid: typeof Deno.uid = ps.getuid;
+export const uid: typeof Deno.uid = ps.getuid ?? (() => null);

@@ -5,169 +5,25 @@
 import { URL } from "url";
 import { ReadableStream, WritableStream } from "node:stream/web";
 
-/**
- * EventTarget is a DOM interface implemented by objects that can receive events
- * and may have listeners for them.
- *
- * @category DOM Events
- */
-declare class EventTarget {
-  /**
-   * Appends an event listener for events whose type attribute value is type.
-   * The callback argument sets the callback that will be invoked when the event
-   * is dispatched.
-   *
-   * The options argument sets listener-specific options. For compatibility this
-   * can be a boolean, in which case the method behaves exactly as if the value
-   * was specified as options's capture.
-   *
-   * When set to true, options's capture prevents callback from being invoked
-   * when the event's eventPhase attribute value is BUBBLING_PHASE. When false
-   * (or not present), callback will not be invoked when event's eventPhase
-   * attribute value is CAPTURING_PHASE. Either way, callback will be invoked if
-   * event's eventPhase attribute value is AT_TARGET.
-   *
-   * When set to true, options's passive indicates that the callback will not
-   * cancel the event by invoking preventDefault(). This is used to enable
-   * performance optimizations described in § 2.8 Observing event listeners.
-   *
-   * When set to true, options's once indicates that the callback will only be
-   * invoked once after which the event listener will be removed.
-   *
-   * The event listener is appended to target's event listener list and is not
-   * appended if it has the same type, callback, and capture.
-   */
-  addEventListener(type: string, listener: EventListenerOrEventListenerObject | null, options?: boolean | AddEventListenerOptions): void;
-  /**
-   * Dispatches a synthetic event event to target and returns true if either
-   * event's cancelable attribute value is false or its preventDefault() method
-   * was not invoked, and false otherwise.
-   */
-  dispatchEvent(event: Event): boolean;
-  /**
-   * Removes the event listener in target's event listener list with the same
-   * type, callback, and options.
-   */
-  removeEventListener(type: string, callback: EventListenerOrEventListenerObject | null, options?: EventListenerOptions | boolean): void;
-}
-
-/**
- * An event which takes place in the DOM.
- *
- * @category DOM Events
- */
-declare class Event {
-  /**
-   * Returns true or false depending on how event was initialized. True if
-   * event goes through its target's ancestors in reverse tree order, and
-   * false otherwise.
-   */
-  readonly bubbles: boolean;
-  cancelBubble: boolean;
-  /**
-   * Returns true or false depending on how event was initialized. Its return
-   * value does not always carry meaning, but true can indicate that part of the
-   * operation during which event was dispatched, can be canceled by invoking
-   * the preventDefault() method.
-   */
-  readonly cancelable: boolean;
-  /**
-   * Returns true or false depending on how event was initialized. True if
-   * event invokes listeners past a ShadowRoot node that is the root of its
-   * target, and false otherwise.
-   */
-  readonly composed: boolean;
-  /**
-   * Returns the object whose event listener's callback is currently being
-   * invoked.
-   */
-  readonly currentTarget: EventTarget | null;
-  /**
-   * Returns true if preventDefault() was invoked successfully to indicate
-   * cancellation, and false otherwise.
-   */
-  readonly defaultPrevented: boolean;
-  /**
-   * Returns the event's phase, which is one of NONE, CAPTURING_PHASE,
-   * AT_TARGET, and BUBBLING_PHASE.
-   */
-  readonly eventPhase: number;
-  /**
-   * Returns true if event was dispatched by the user agent, and false
-   * otherwise.
-   */
-  readonly isTrusted: boolean;
-  /** Returns the object to which event is dispatched (its target). */
-  readonly target: EventTarget | null;
-  /**
-   * Returns the event's timestamp as the number of milliseconds measured
-   * relative to the time origin.
-   */
-  readonly timeStamp: number;
-  /** Returns the type of event, e.g. "click", "hashchange", or "submit". */
-  readonly type: string;
-  readonly AT_TARGET: number;
-  readonly BUBBLING_PHASE: number;
-  readonly CAPTURING_PHASE: number;
-  readonly NONE: number;
-  static readonly AT_TARGET: number;
-  static readonly BUBBLING_PHASE: number;
-  static readonly CAPTURING_PHASE: number;
-  static readonly NONE: number;
-  constructor(type: string, eventInitDict?: EventInit);
-  /**
-   * Returns the invocation target objects of event's path (objects on which
-   * listeners will be invoked), except for any nodes in shadow trees of which
-   * the shadow root's mode is "closed" that are not reachable from event's
-   * currentTarget.
-   */
-  composedPath(): EventTarget[];
-  /**
-   * If invoked when the cancelable attribute value is true, and while
-   * executing a listener for the event with passive set to false, signals to
-   * the operation that caused event to be dispatched that it needs to be
-   * canceled.
-   */
-  preventDefault(): void;
-  /**
-   * Invoking this method prevents event from reaching any registered event
-   * listeners after the current one finishes running and, when dispatched in a
-   * tree, also prevents event from reaching any other objects.
-   */
-  stopImmediatePropagation(): void;
-  /**
-   * When dispatched in a tree, invoking this method prevents event from
-   * reaching any objects other than the current object.
-   */
-  stopPropagation(): void;
-}
-
 /** @category DOM Events */
-interface EventInit {
-  bubbles?: boolean;
-  cancelable?: boolean;
-  composed?: boolean;
-}
-
-/** @category DOM Events */
-interface EventListenerOptions {
+declare interface EventListenerOptions {
   capture?: boolean;
 }
 
 /** @category DOM Events */
-interface AddEventListenerOptions extends EventListenerOptions {
+declare interface AddEventListenerOptions extends EventListenerOptions {
   once?: boolean;
   passive?: boolean;
   signal?: AbortSignal;
 }
 
 /** @category DOM Events */
-interface EventListener {
+declare interface EventListener {
   (evt: Event): void | Promise<void>;
 }
 
 /** @category DOM Events */
-interface EventListenerObject {
+declare interface EventListenerObject {
   handleEvent(evt: Event): void | Promise<void>;
 }
 
@@ -175,14 +31,24 @@ interface EventListenerObject {
 declare type EventListenerOrEventListenerObject = | EventListener
     | EventListenerObject;
 
+interface Disposable {
+  [Symbol.dispose](): void;
+}
+
+interface AsyncDisposable {
+  [Symbol.asyncDispose](): PromiseLike<void>;
+}
+
 export declare namespace Deno {
   export const File: typeof FsFile;
 
   export class FsFile implements Deno.FsFile {
+    #private;
     readonly rid: number;
     constructor(rid: number);
     get readable(): ReadableStream<Uint8Array>;
     get writable(): WritableStream<Uint8Array>;
+    [Symbol.dispose](): void;
     write(p: Uint8Array): Promise<number>;
     writeSync(p: Uint8Array): number;
     truncate(len?: number): Promise<void>;
@@ -208,6 +74,7 @@ export declare namespace Deno {
   export class PermissionStatus extends EventTarget implements Deno.PermissionStatus {
     readonly state: Deno.PermissionState;
     onchange: ((this: PermissionStatus, ev: Event) => any) | null;
+    readonly partial: boolean;
   }
 
   export enum SeekMode {
@@ -386,46 +253,6 @@ export declare namespace Deno {
    */
   export function connect(options: ConnectOptions): Promise<TcpConn>;
   /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Connects to the hostname (default is "127.0.0.1") and port on the named
-   * transport (default is "tcp"), and resolves to the connection (`Conn`).
-   *
-   * ```ts
-   * const conn1 = await Deno.connect({ port: 80 });
-   * const conn2 = await Deno.connect({ hostname: "192.0.2.1", port: 80 });
-   * const conn3 = await Deno.connect({ hostname: "[2001:db8::1]", port: 80 });
-   * const conn4 = await Deno.connect({ hostname: "golang.org", port: 80, transport: "tcp" });
-   * const conn5 = await Deno.connect({ path: "/foo/bar.sock", transport: "unix" });
-   * ```
-   *
-   * Requires `allow-net` permission for "tcp" and `allow-read` for "unix".
-   *
-   * @tags allow-net, allow-read
-   * @category Network
-   */
-  export function connect(options: ConnectOptions): Promise<TcpConn>;
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Connects to the hostname (default is "127.0.0.1") and port on the named
-   * transport (default is "tcp"), and resolves to the connection (`Conn`).
-   *
-   * ```ts
-   * const conn1 = await Deno.connect({ port: 80 });
-   * const conn2 = await Deno.connect({ hostname: "192.0.2.1", port: 80 });
-   * const conn3 = await Deno.connect({ hostname: "[2001:db8::1]", port: 80 });
-   * const conn4 = await Deno.connect({ hostname: "golang.org", port: 80, transport: "tcp" });
-   * const conn5 = await Deno.connect({ path: "/foo/bar.sock", transport: "unix" });
-   * ```
-   *
-   * Requires `allow-net` permission for "tcp" and `allow-read` for "unix".
-   *
-   * @tags allow-net, allow-read
-   * @category Network
-   */
-  export function connect(options: UnixConnectOptions): Promise<UnixConn>;
-  /**
    * Establishes a secure connection over TLS (transport layer security) using
    * an optional cert file, hostname (default is "127.0.0.1") and port.  The
    * cert file is optional and if not included Mozilla's root certificates will
@@ -437,26 +264,6 @@ export declare namespace Deno {
    * const conn2 = await Deno.connectTls({ caCerts: [caCert], hostname: "192.0.2.1", port: 80 });
    * const conn3 = await Deno.connectTls({ hostname: "[2001:db8::1]", port: 80 });
    * const conn4 = await Deno.connectTls({ caCerts: [caCert], hostname: "golang.org", port: 80});
-   * ```
-   *
-   * Requires `allow-net` permission.
-   *
-   * @tags allow-net
-   * @category Network
-   */
-  export function connectTls(options: ConnectTlsOptions): Promise<TlsConn>;
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Create a TLS connection with an attached client certificate.
-   *
-   * ```ts
-   * const conn = await Deno.connectTls({
-   *   hostname: "deno.land",
-   *   port: 443,
-   *   certChain: "---- BEGIN CERTIFICATE ----\n ...",
-   *   privateKey: "---- BEGIN PRIVATE KEY ----\n ...",
-   * });
    * ```
    *
    * Requires `allow-net` permission.
@@ -900,21 +707,6 @@ export declare namespace Deno {
    */
   export function listen(options: TcpListenOptions & { transport?: "tcp" }): Listener;
   /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Listen announces on the local transport address.
-   *
-   * ```ts
-   * const listener = Deno.listen({ path: "/foo/bar.sock", transport: "unix" })
-   * ```
-   *
-   * Requires `allow-read` and `allow-write` permission.
-   *
-   * @tags allow-read, allow-write
-   * @category Network
-   */
-  export function listen(options: UnixListenOptions & { transport: "unix" }): Listener;
-  /**
    * Listen announces on the local transport address over TLS (transport layer
    * security).
    *
@@ -1192,9 +984,8 @@ export declare namespace Deno {
    * not indicate EOF.
    *
    * This function is one of the lowest level APIs and most users should not
-   * work with this directly, but rather use
-   * [`readAll()`](https://deno.land/std/streams/read_all.ts?s=readAll) from
-   * [`std/streams/read_all.ts`](https://deno.land/std/streams/read_all.ts)
+   * work with this directly, but rather use {@linkcode ReadableStream} and
+   * {@linkcode https://deno.land/std/streams/mod.ts?s=toArrayBuffer|toArrayBuffer}
    * instead.
    *
    * **It is not guaranteed that the full buffer will be read in a single call.**
@@ -1325,10 +1116,8 @@ export declare namespace Deno {
    * not indicate EOF.
    *
    * This function is one of the lowest level APIs and most users should not
-   * work with this directly, but rather use
-   * [`readAllSync()`](https://deno.land/std/streams/read_all.ts?s=readAllSync)
-   * from
-   * [`std/streams/read_all.ts`](https://deno.land/std/streams/read_all.ts)
+   * work with this directly, but rather use {@linkcode ReadableStream} and
+   * {@linkcode https://deno.land/std/streams/mod.ts?s=toArrayBuffer|toArrayBuffer}
    * instead.
    *
    * **It is not guaranteed that the full buffer will be read in a single
@@ -1800,58 +1589,6 @@ export declare namespace Deno {
    * @category Sub Process
    */
   export function run<T extends RunOptions = RunOptions>(opt: T): Process<T>;
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Spawns new subprocess. RunOptions must contain at a minimum the `opt.cmd`,
-   * an array of program arguments, the first of which is the binary.
-   *
-   * ```ts
-   * const p = Deno.run({
-   *   cmd: ["curl", "https://example.com"],
-   * });
-   * const status = await p.status();
-   * ```
-   *
-   * Subprocess uses same working directory as parent process unless `opt.cwd`
-   * is specified.
-   *
-   * Environmental variables from parent process can be cleared using `opt.clearEnv`.
-   * Doesn't guarantee that only `opt.env` variables are present,
-   * as the OS may set environmental variables for processes.
-   *
-   * Environmental variables for subprocess can be specified using `opt.env`
-   * mapping.
-   *
-   * `opt.uid` sets the child process’s user ID. This translates to a setuid call
-   * in the child process. Failure in the setuid call will cause the spawn to fail.
-   *
-   * `opt.gid` is similar to `opt.uid`, but sets the group ID of the child process.
-   * This has the same semantics as the uid field.
-   *
-   * By default subprocess inherits stdio of parent process. To change
-   * this this, `opt.stdin`, `opt.stdout`, and `opt.stderr` can be set
-   * independently to a resource ID (_rid_) of an open file, `"inherit"`,
-   * `"piped"`, or `"null"`:
-   *
-   * - _number_: the resource ID of an open file/resource. This allows you to
-   *   read or write to a file.
-   * - `"inherit"`: The default if unspecified. The subprocess inherits from the
-   *   parent.
-   * - `"piped"`: A new pipe should be arranged to connect the parent and child
-   *   sub-process.
-   * - `"null"`: This stream will be ignored. This is the equivalent of attaching
-   *   the stream to `/dev/null`.
-   *
-   * Details of the spawned process are returned as an instance of
-   * {@linkcode Deno.Process}.
-   *
-   * Requires `allow-run` permission.
-   *
-   * @tags allow-run
-   * @category Sub Process
-   */
-  export function run<T extends UnstableRunOptions = UnstableRunOptions>(opt: T): Process<T>;
   export type UnstableRunOptions = RunOptions & {
         clearEnv?: boolean;
         gid?: number;
@@ -1971,140 +1708,7 @@ export declare namespace Deno {
    *
    * @category Testing
    */
-  export function test(t: TestDefinition): void;
-  /**
-   * Register a test which will be run when `deno test` is used on the command
-   * line and the containing module looks like a test module.
-   *
-   * `fn` can be async if required.
-   *
-   * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-   *
-   * Deno.test("My test description", () => {
-   *   assertEquals("hello", "hello");
-   * });
-   *
-   * Deno.test("My async test description", async () => {
-   *   const decoder = new TextDecoder("utf-8");
-   *   const data = await Deno.readFile("hello_world.txt");
-   *   assertEquals(decoder.decode(data), "Hello world");
-   * });
-   * ```
-   *
-   * @category Testing
-   */
-  export function test(name: string, fn: (t: TestContext) => void | Promise<void>): void;
-  /**
-   * Register a test which will be run when `deno test` is used on the command
-   * line and the containing module looks like a test module.
-   *
-   * `fn` can be async if required. Declared function must have a name.
-   *
-   * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-   *
-   * Deno.test(function myTestName() {
-   *   assertEquals("hello", "hello");
-   * });
-   *
-   * Deno.test(async function myOtherTestName() {
-   *   const decoder = new TextDecoder("utf-8");
-   *   const data = await Deno.readFile("hello_world.txt");
-   *   assertEquals(decoder.decode(data), "Hello world");
-   * });
-   * ```
-   *
-   * @category Testing
-   */
-  export function test(fn: (t: TestContext) => void | Promise<void>): void;
-  /**
-   * Register a test which will be run when `deno test` is used on the command
-   * line and the containing module looks like a test module.
-   *
-   * `fn` can be async if required.
-   *
-   * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
-   *
-   * Deno.test("My test description", { permissions: { read: true } }, (): void => {
-   *   assertEquals("hello", "hello");
-   * });
-   *
-   * Deno.test("My async test description", { permissions: { read: false } }, async (): Promise<void> => {
-   *   const decoder = new TextDecoder("utf-8");
-   *   const data = await Deno.readFile("hello_world.txt");
-   *   assertEquals(decoder.decode(data), "Hello world");
-   * });
-   * ```
-   *
-   * @category Testing
-   */
-  export function test(name: string, options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
-  /**
-   * Register a test which will be run when `deno test` is used on the command
-   * line and the containing module looks like a test module.
-   *
-   * `fn` can be async if required.
-   *
-   * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-   *
-   * Deno.test(
-   *   {
-   *     name: "My test description",
-   *     permissions: { read: true },
-   *   },
-   *   () => {
-   *     assertEquals("hello", "hello");
-   *   },
-   * );
-   *
-   * Deno.test(
-   *   {
-   *     name: "My async test description",
-   *     permissions: { read: false },
-   *   },
-   *   async () => {
-   *     const decoder = new TextDecoder("utf-8");
-   *     const data = await Deno.readFile("hello_world.txt");
-   *     assertEquals(decoder.decode(data), "Hello world");
-   *   },
-   * );
-   * ```
-   *
-   * @category Testing
-   */
-  export function test(options: Omit<TestDefinition, "fn">, fn: (t: TestContext) => void | Promise<void>): void;
-  /**
-   * Register a test which will be run when `deno test` is used on the command
-   * line and the containing module looks like a test module.
-   *
-   * `fn` can be async if required. Declared function must have a name.
-   *
-   * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-   *
-   * Deno.test(
-   *   { permissions: { read: true } },
-   *   function myTestName() {
-   *     assertEquals("hello", "hello");
-   *   },
-   * );
-   *
-   * Deno.test(
-   *   { permissions: { read: false } },
-   *   async function myOtherTestName() {
-   *     const decoder = new TextDecoder("utf-8");
-   *     const data = await Deno.readFile("hello_world.txt");
-   *     assertEquals(decoder.decode(data), "Hello world");
-   *   },
-   * );
-   * ```
-   *
-   * @category Testing
-   */
-  export function test(options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
+  export const test: DenoTest;
   /**
    * Truncates (or extends) the specified file, to reach the specified `len`.
    * If `len` is not specified then the entire file contents are truncated.
@@ -2215,10 +1819,9 @@ export declare namespace Deno {
    * Write to the resource ID (`rid`) the contents of the array buffer (`data`).
    *
    * Resolves to the number of bytes written. This function is one of the lowest
-   * level APIs and most users should not work with this directly, but rather use
-   * [`writeAll()`](https://deno.land/std/streams/write_all.ts?s=writeAll) from
-   * [`std/streams/write_all.ts`](https://deno.land/std/streams/write_all.ts)
-   * instead.
+   * level APIs and most users should not work with this directly, but rather
+   * use {@linkcode WritableStream}, {@linkcode ReadableStream.from} and
+   * {@linkcode ReadableStream.pipeTo}.
    *
    * **It is not guaranteed that the full buffer will be written in a single
    * call.**
@@ -2280,11 +1883,8 @@ export declare namespace Deno {
    *
    * Returns the number of bytes written. This function is one of the lowest
    * level APIs and most users should not work with this directly, but rather
-   * use
-   * [`writeAllSync()`](https://deno.land/std/streams/write_all.ts?s=writeAllSync)
-   * from
-   * [`std/streams/write_all.ts`](https://deno.land/std/streams/write_all.ts)
-   * instead.
+   * use {@linkcode WritableStream}, {@linkcode ReadableStream.from} and
+   * {@linkcode ReadableStream.pipeTo}.
    *
    * **It is not guaranteed that the full buffer will be written in a single
    * call.**
@@ -2352,6 +1952,62 @@ export declare namespace Deno {
    * @category Runtime Environment
    */
   export const args: string[];
+  /**
+   * Changes the access (`atime`) and modification (`mtime`) times of a file
+   * stream resource referenced by `rid`. Given times are either in seconds
+   * (UNIX epoch time) or as `Date` objects.
+   *
+   * ```ts
+   * const file = await Deno.open("file.txt", { create: true, write: true });
+   * await Deno.futime(file.rid, 1556495550, new Date());
+   * ```
+   *
+   * @category File System
+   */
+  export function futime(rid: number, atime: number | Date, mtime: number | Date): Promise<void>;
+  /**
+   * Synchronously changes the access (`atime`) and modification (`mtime`) times
+   * of a file stream resource referenced by `rid`. Given times are either in
+   * seconds (UNIX epoch time) or as `Date` objects.
+   *
+   * ```ts
+   * const file = Deno.openSync("file.txt", { create: true, write: true });
+   * Deno.futimeSync(file.rid, 1556495550, new Date());
+   * ```
+   *
+   * @category File System
+   */
+  export function futimeSync(rid: number, atime: number | Date, mtime: number | Date): void;
+  /**
+   * Changes the access (`atime`) and modification (`mtime`) times of a file
+   * system object referenced by `path`. Given times are either in seconds
+   * (UNIX epoch time) or as `Date` objects.
+   *
+   * ```ts
+   * await Deno.utime("myfile.txt", 1556495550, new Date());
+   * ```
+   *
+   * Requires `allow-write` permission.
+   *
+   * @tags allow-write
+   * @category File System
+   */
+  export function utime(path: string | URL, atime: number | Date, mtime: number | Date): Promise<void>;
+  /**
+   * Synchronously changes the access (`atime`) and modification (`mtime`) times
+   * of a file system object referenced by `path`. Given times are either in
+   * seconds (UNIX epoch time) or as `Date` objects.
+   *
+   * ```ts
+   * Deno.utimeSync("myfile.txt", 1556495550, new Date());
+   * ```
+   *
+   * Requires `allow-write` permission.
+   *
+   * @tags allow-write
+   * @category File System
+   */
+  export function utimeSync(path: string | URL, atime: number | Date, mtime: number | Date): void;
   /** @category Network */
   export type Addr = NetAddr | UnixAddr;
 
@@ -2367,7 +2023,7 @@ export declare namespace Deno {
   }
 
   /** @category Network */
-  export interface Conn extends Reader, Writer, Closer {
+  export interface Conn extends Reader, Writer, Closer, Disposable {
     /** The local address of the connection. */
     readonly localAddr: Addr;
     /** The remote address of the connection. */
@@ -2436,34 +2092,257 @@ export declare namespace Deno {
      * Must be in PEM format.
      */
     caCerts?: string[];
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * @category Network
-   */
-  export interface ConnectTlsOptions {
     /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
-     * PEM formatted client certificate chain.
-     */
-    certChain?: string;
-    /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
-     * PEM formatted (RSA or PKCS8) private key of client certificate.
-     */
-    privateKey?: string;
-    /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
      * Application-Layer Protocol Negotiation (ALPN) protocols supported by
      * the client. If not specified, no ALPN extension will be included in the
      * TLS handshake.
      */
     alpnProtocols?: string[];
+  }
+
+  export interface DenoTest {
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required.
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test({
+     *   name: "example test",
+     *   fn() {
+     *     assertEquals("world", "world");
+     *   },
+     * });
+     *
+     * Deno.test({
+     *   name: "example ignored test",
+     *   ignore: Deno.build.os === "windows",
+     *   fn() {
+     *     // This test is ignored only on Windows machines
+     *   },
+     * });
+     *
+     * Deno.test({
+     *   name: "example async test",
+     *   async fn() {
+     *     const decoder = new TextDecoder("utf-8");
+     *     const data = await Deno.readFile("hello_world.txt");
+     *     assertEquals(decoder.decode(data), "Hello world");
+     *   }
+     * });
+     * ```
+     *
+     * @category Testing
+     */
+    (t: TestDefinition): void;
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required.
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test("My test description", () => {
+     *   assertEquals("hello", "hello");
+     * });
+     *
+     * Deno.test("My async test description", async () => {
+     *   const decoder = new TextDecoder("utf-8");
+     *   const data = await Deno.readFile("hello_world.txt");
+     *   assertEquals(decoder.decode(data), "Hello world");
+     * });
+     * ```
+     *
+     * @category Testing
+     */
+    (name: string, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required. Declared function must have a name.
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test(function myTestName() {
+     *   assertEquals("hello", "hello");
+     * });
+     *
+     * Deno.test(async function myOtherTestName() {
+     *   const decoder = new TextDecoder("utf-8");
+     *   const data = await Deno.readFile("hello_world.txt");
+     *   assertEquals(decoder.decode(data), "Hello world");
+     * });
+     * ```
+     *
+     * @category Testing
+     */
+    (fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required.
+     *
+     * ```ts
+     * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test("My test description", { permissions: { read: true } }, (): void => {
+     *   assertEquals("hello", "hello");
+     * });
+     *
+     * Deno.test("My async test description", { permissions: { read: false } }, async (): Promise<void> => {
+     *   const decoder = new TextDecoder("utf-8");
+     *   const data = await Deno.readFile("hello_world.txt");
+     *   assertEquals(decoder.decode(data), "Hello world");
+     * });
+     * ```
+     *
+     * @category Testing
+     */
+    (name: string, options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required.
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test(
+     *   {
+     *     name: "My test description",
+     *     permissions: { read: true },
+     *   },
+     *   () => {
+     *     assertEquals("hello", "hello");
+     *   },
+     * );
+     *
+     * Deno.test(
+     *   {
+     *     name: "My async test description",
+     *     permissions: { read: false },
+     *   },
+     *   async () => {
+     *     const decoder = new TextDecoder("utf-8");
+     *     const data = await Deno.readFile("hello_world.txt");
+     *     assertEquals(decoder.decode(data), "Hello world");
+     *   },
+     * );
+     * ```
+     *
+     * @category Testing
+     */
+    (options: Omit<TestDefinition, "fn" | "name">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Register a test which will be run when `deno test` is used on the command
+     * line and the containing module looks like a test module.
+     *
+     * `fn` can be async if required. Declared function must have a name.
+     *
+     * ```ts
+     * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+     *
+     * Deno.test(
+     *   { permissions: { read: true } },
+     *   function myTestName() {
+     *     assertEquals("hello", "hello");
+     *   },
+     * );
+     *
+     * Deno.test(
+     *   { permissions: { read: false } },
+     *   async function myOtherTestName() {
+     *     const decoder = new TextDecoder("utf-8");
+     *     const data = await Deno.readFile("hello_world.txt");
+     *     assertEquals(decoder.decode(data), "Hello world");
+     *   },
+     * );
+     * ```
+     *
+     * @category Testing
+     */
+    (options: Omit<TestDefinition, "fn">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(t: Omit<TestDefinition, "ignore">): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(name: string, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(name: string, options: Omit<TestDefinition, "fn" | "name" | "ignore">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(options: Omit<TestDefinition, "fn" | "name" | "ignore">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for ignoring a particular test case.
+     *
+     * @category Testing
+     */
+    ignore(options: Omit<TestDefinition, "fn" | "ignore">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(t: Omit<TestDefinition, "only">): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(name: string, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(name: string, options: Omit<TestDefinition, "fn" | "name" | "only">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(options: Omit<TestDefinition, "fn" | "name" | "only">, fn: (t: TestContext) => void | Promise<void>): void;
+    /**
+     * Shorthand property for focusing a particular test case.
+     *
+     * @category Testing
+     */
+    only(options: Omit<TestDefinition, "fn" | "only">, fn: (t: TestContext) => void | Promise<void>): void;
   }
 
   /**
@@ -2496,7 +2375,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-env` permissions, which controls
+   * The permission descriptor for the `allow-env` and `deny-env` permissions, which controls
    * access to being able to read and write to the process environment variables
    * as well as access other information about the environment. The option
    * `variable` allows scoping the permission to a specific environment
@@ -2511,7 +2390,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-ffi` permissions, which controls
+   * The permission descriptor for the `allow-ffi` and `deny-ffi` permissions, which controls
    * access to loading _foreign_ code and interfacing with it via the
    * [Foreign Function Interface API](https://deno.land/manual/runtime/ffi_api)
    * available in Deno.  The option `path` allows scoping the permission to a
@@ -2526,7 +2405,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-sys` permissions, which controls
+   * The permission descriptor for the `allow-sys` and `deny-sys` permissions, which controls
    * access to sensitive host system information, which malicious code might
    * attempt to exploit. The option `kind` allows scoping the permission to a
    * specific piece of information.
@@ -2722,6 +2601,30 @@ export declare namespace Deno {
      * _Linux/Mac OS only._
      */
     blocks: number | null;
+    /**
+     *  True if this is info for a block device.
+     *
+     * _Linux/Mac OS only._
+     */
+    isBlockDevice: boolean | null;
+    /**
+     *  True if this is info for a char device.
+     *
+     * _Linux/Mac OS only._
+     */
+    isCharDevice: boolean | null;
+    /**
+     *  True if this is info for a fifo.
+     *
+     * _Linux/Mac OS only._
+     */
+    isFifo: boolean | null;
+    /**
+     *  True if this is info for a socket.
+     *
+     * _Linux/Mac OS only._
+     */
+    isSocket: boolean | null;
   }
 
   /**
@@ -2761,7 +2664,7 @@ export declare namespace Deno {
    *
    * @category File System
    */
-  export interface FsWatcher extends AsyncIterable<FsEvent> {
+  export interface FsWatcher extends AsyncIterable<FsEvent>, Disposable {
     /** The resource id. */
     readonly rid: number;
     /** Stops watching the file system and closes the watcher resource. */
@@ -2776,10 +2679,10 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-hrtime` permission, which
+   * The permission descriptor for the `allow-hrtime` and `deny-hrtime` permissions, which
    * controls if the runtime code has access to high resolution time. High
-   * resolution time is consider sensitive information, because it can be used
-   * by malicious code to gain information about the host that it might
+   * resolution time is considered sensitive information, because it can be used
+   * by malicious code to gain information about the host that it might not
    * otherwise have access to.
    *
    * @category Permissions
@@ -2812,6 +2715,18 @@ export declare namespace Deno {
      * @default {4}
      */
     depth?: number;
+    /**
+     * The maximum length for an inspection to take up a single line.
+     *
+     * @default {80}
+     */
+    breakLength?: number;
+    /**
+     * Whether or not to escape sequences.
+     *
+     * @default {true}
+     */
+    escapeSequences?: boolean;
     /**
      * The maximum number of iterable entries to print.
      *
@@ -2860,19 +2775,19 @@ export declare namespace Deno {
    *
    * @category Network
    */
-  export interface Listener extends AsyncIterable<Conn> {
+  export interface Listener<T extends Conn = Conn> extends AsyncIterable<T>, Disposable {
     /** Return the address of the `Listener`. */
     readonly addr: Addr;
     /** Return the rid of the `Listener`. */
     readonly rid: number;
     /** Waits for and resolves to the next connection to the `Listener`. */
-    accept(): Promise<Conn>;
+    accept(): Promise<T>;
     /**
      * Close closes the listener. Any pending accept promises will be rejected
      * with errors.
      */
     close(): void;
-    [Symbol.asyncIterator](): AsyncIterableIterator<Conn>;
+    [Symbol.asyncIterator](): AsyncIterableIterator<T>;
     /**
      * Make the listener block the event loop from finishing.
      *
@@ -2923,17 +2838,7 @@ export declare namespace Deno {
      */
     keyFile?: string;
     transport?: "tcp";
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * @category Network
-   */
-  export interface ListenTlsOptions {
     /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
      * Application-Layer Protocol Negotiation (ALPN) protocols to announce to
      * the client. If not specified, no ALPN extension will be included in the
      * TLS handshake.
@@ -2988,7 +2893,10 @@ export declare namespace Deno {
     external: number;
   }
 
-  /** @category Observability */
+  /**
+   * @category Observability
+   * @deprecated This API has been deprecated in Deno v1.37.1.
+   */
   export interface Metrics extends OpMetrics {
     ops: Record<string, OpMetrics>;
   }
@@ -3030,7 +2938,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-net` permissions, which controls
+   * The permission descriptor for the `allow-net` and `deny-net` permissions, which controls
    * access to opening network ports and connecting to remote hosts via the
    * network. The option `host` allows scoping the permission for outbound
    * connection to a specific host and port.
@@ -3116,7 +3024,10 @@ export declare namespace Deno {
     mode?: number;
   }
 
-  /** @category Observability */
+  /**
+   * @category Observability
+   * @deprecated This API has been deprecated in Deno v1.37.1.
+   */
   export interface OpMetrics {
     opsDispatched: number;
     opsDispatchedSync: number;
@@ -3333,7 +3244,9 @@ export declare namespace Deno {
    *
    * @category Permissions
    */
-  export type PermissionState = "granted" | "denied" | "prompt";
+  export type PermissionState = | "granted"
+        | "denied"
+        | "prompt";
 
   /**
    * The interface which defines what event types are supported by
@@ -3454,7 +3367,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-read` permissions, which controls
+   * The permission descriptor for the `allow-read` and `deny-read` permissions, which controls
    * access to reading resources from the local host. The option `path` allows
    * scoping the permission to a specific path (and if the path is a directory
    * any sub paths).
@@ -3467,7 +3380,7 @@ export declare namespace Deno {
   export interface ReadPermissionDescriptor {
     name: "read";
     /**
-     * The `allow-read` permission can be scoped to a specific path (and if
+     * An `allow-read` or `deny-read` permission can be scoped to a specific path (and if
      * the path is a directory, any sub paths).
      */
     path?: string | URL;
@@ -3567,7 +3480,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-run` permission, which controls
+   * The permission descriptor for the `allow-run` and `deny-run` permissions, which controls
    * access to what sub-processes can be executed by Deno. The option `command`
    * allows scoping the permission to a specific executable.
    *
@@ -3580,7 +3493,7 @@ export declare namespace Deno {
   export interface RunPermissionDescriptor {
     name: "run";
     /**
-     * The `allow-run` permission can be scoped to a specific executable,
+     * An `allow-run` or `deny-run` permission can be scoped to a specific executable,
      * which would be relative to the start-up CWD of the Deno CLI.
      */
     command?: string | URL;
@@ -3900,47 +3813,17 @@ export declare namespace Deno {
   }
 
   /** @category Network */
-  export interface TcpListenOptions extends ListenOptions {
+  export interface TlsConn extends Conn {
     /**
-     * When `true` the SO_REUSEPORT flag will be set on the listener. This
-     * allows multiple processes to listen on the same address and port.
-     *
-     * On Linux this will cause the kernel to distribute incoming connections
-     * across the different processes that are listening on the same address and
-     * port.
-     *
-     * This flag is only supported on Linux. It is silently ignored on other
-     * platforms.
-     *
-     * @default {false}
+     * Runs the client or server handshake protocol to completion if that has
+     * not happened yet. Calling this method is optional; the TLS handshake
+     * will be completed automatically as soon as data is sent or received.
      */
-    reusePort?: boolean;
+    handshake(): Promise<TlsHandshakeInfo>;
   }
 
   /** @category Network */
-  export interface TlsConn extends Conn {
-    /**
-     * Runs the client or server handshake protocol to completion if that has
-     * not happened yet. Calling this method is optional; the TLS handshake
-     * will be completed automatically as soon as data is sent or received.
-     */
-    handshake(): Promise<TlsHandshakeInfo>;
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * @category Network
-   */
-  export interface TlsConn extends Conn {
-    /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
-     * Runs the client or server handshake protocol to completion if that has
-     * not happened yet. Calling this method is optional; the TLS handshake
-     * will be completed automatically as soon as data is sent or received.
-     */
-    handshake(): Promise<TlsHandshakeInfo>;
+  export interface TlsHandshakeInfo {
   }
 
   /**
@@ -3948,11 +3831,7 @@ export declare namespace Deno {
    *
    * @category Network
    */
-  export interface TlsListener extends Listener, AsyncIterable<TlsConn> {
-    /** Waits for a TLS client to connect and accepts the connection. */
-    accept(): Promise<TlsConn>;
-    [Symbol.asyncIterator](): AsyncIterableIterator<TlsConn>;
-  }
+  export type TlsListener = Listener<TlsConn>;
 
   /** @category Network */
   export interface UnixAddr {
@@ -4003,7 +3882,7 @@ export declare namespace Deno {
   }
 
   /**
-   * The permission descriptor for the `allow-write` permissions, which
+   * The permission descriptor for the `allow-write` and `deny-write` permissions, which
    * controls access to writing to resources from the local host. The option
    * `path` allow scoping the permission to a specific path (and if the path is
    * a directory any sub paths).
@@ -4016,7 +3895,7 @@ export declare namespace Deno {
   export interface WritePermissionDescriptor {
     name: "write";
     /**
-     * The `allow-write` permission can be scoped to a specific path (and if
+     * An `allow-write` or `deny-write` permission can be scoped to a specific path (and if
      * the path is a directory, any sub paths).
      */
     path?: string | URL;
@@ -4339,6 +4218,7 @@ export declare namespace Deno {
    * ```
    *
    * @category Observability
+   * @deprecated This API has been deprecated in Deno v1.37.1.
    */
   export function metrics(): Metrics;
   /**
@@ -4565,105 +4445,6 @@ export declare namespace Deno {
     /** A writable stream interface to `stderr`. */
     readonly writable: WritableStream<Uint8Array>;
     };
-
-  /** @category Network */
-  export interface TlsHandshakeInfo {
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * @category Network
-   */
-  export interface TlsHandshakeInfo {
-    /**
-     * *UNSTABLE**: New API, yet to be vetted.
-     *
-     * Contains the ALPN protocol selected during negotiation with the server.
-     * If no ALPN protocol selected, returns `null`.
-     */
-    alpnProtocol: string | null;
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * @category Network
-   */
-  export interface UnixConnectOptions {
-    transport: "unix";
-    path: string;
-  }
-
-  /**
-   * *UNSTABLE**: New API, yet to be vetted.
-   *
-   * Unstable options which can be set when opening a Unix listener via
-   * {@linkcode Deno.listen} or {@linkcode Deno.listenDatagram}.
-   *
-   * @category Network
-   */
-  export interface UnixListenOptions {
-    /** A path to the Unix Socket. */
-    path: string;
-  }
-
-  /**
-   * Changes the access (`atime`) and modification (`mtime`) times of a file
-   * stream resource referenced by `rid`. Given times are either in seconds
-   * (UNIX epoch time) or as `Date` objects.
-   *
-   * ```ts
-   * const file = await Deno.open("file.txt", { create: true, write: true });
-   * await Deno.futime(file.rid, 1556495550, new Date());
-   * ```
-   *
-   * @category File System
-   */
-  export function futime(rid: number, atime: number | Date, mtime: number | Date): Promise<void>;
-  /**
-   * Synchronously changes the access (`atime`) and modification (`mtime`) times
-   * of a file stream resource referenced by `rid`. Given times are either in
-   * seconds (UNIX epoch time) or as `Date` objects.
-   *
-   * ```ts
-   * const file = Deno.openSync("file.txt", { create: true, write: true });
-   * Deno.futimeSync(file.rid, 1556495550, new Date());
-   * ```
-   *
-   * @category File System
-   */
-  export function futimeSync(rid: number, atime: number | Date, mtime: number | Date): void;
-  /**
-   * Changes the access (`atime`) and modification (`mtime`) times of a file
-   * system object referenced by `path`. Given times are either in seconds
-   * (UNIX epoch time) or as `Date` objects.
-   *
-   * ```ts
-   * await Deno.utime("myfile.txt", 1556495550, new Date());
-   * ```
-   *
-   * Requires `allow-write` permission.
-   *
-   * @tags allow-write
-   * @category File System
-   */
-  export function utime(path: string | URL, atime: number | Date, mtime: number | Date): Promise<void>;
-  /**
-   * Synchronously changes the access (`atime`) and modification (`mtime`) times
-   * of a file system object referenced by `path`. Given times are either in
-   * seconds (UNIX epoch time) or as `Date` objects.
-   *
-   * ```ts
-   * Deno.utimeSync("myfile.txt", 1556495550, new Date());
-   * ```
-   *
-   * Requires `allow-write` permission.
-   *
-   * @tags allow-write
-   * @category File System
-   */
-  export function utimeSync(path: string | URL, atime: number | Date, mtime: number | Date): void;
 }
 
 declare module "@deno/shim-deno/test-internals" {
@@ -4671,3 +4452,12 @@ declare module "@deno/shim-deno/test-internals" {
   /** Reference to the array that `Deno.test` calls insert their definition into. */
   export const testDefinitions: TestDefinition[];
 }
+
+declare global {
+  interface SymbolConstructor {
+    readonly asyncDispose: unique symbol;
+    readonly dispose: unique symbol;
+  }
+}
+
+type MessagePort = typeof globalThis["MessagePort"];

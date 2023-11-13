@@ -13,6 +13,17 @@ export async function* mapAsync<T, U>(
   }
 }
 
+export async function* filterAsync<T>(
+  iter: AsyncIterable<T>,
+  filter: (t: T) => boolean,
+): AsyncIterable<T> {
+  for await (const i of iter) {
+    if (filter(i)) {
+      yield i;
+    }
+  }
+}
+
 export async function* merge<T>(iterables: AsyncIterable<T>[]) {
   const racers = new Map<AsyncIterator<T>, Promise<IteratorResult<T>>>(
     map(

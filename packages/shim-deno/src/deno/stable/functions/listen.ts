@@ -40,7 +40,7 @@ async function* _listen(
 }
 
 export const listen: typeof Deno.listen = function listen(options) {
-  if (options.transport === "unix") {
+  if ((options as any).transport === "unix") {
     throw new Error("Unstable UnixListenOptions is not implemented");
   }
   const { port, hostname = "0.0.0.0", transport = "tcp" } = options;

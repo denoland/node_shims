@@ -3,7 +3,7 @@
 import { watch } from "fs/promises";
 import { resolve } from "path";
 
-import { mapAsync, merge } from "../../internal/iterutil.js";
+import { filterAsync, mapAsync, merge } from "../../internal/iterutil.js";
 
 export const watchFs: typeof Deno.watchFs = function watchFs(
   paths,
@@ -20,10 +20,13 @@ export const watchFs: typeof Deno.watchFs = function watchFs(
   const masterWatcher = merge(
     paths.map((path) =>
       mapAsync(
-        watch(path, { recursive: options?.recursive, signal }),
+        filterAsync(
+          watch(path, { recursive: options?.recursive, signal }),
+          (info) => info.filename != null,
+        ),
         (info) => ({
           kind: "modify" as const,
-          paths: [resolve(path, info.filename)],
+          paths: [resolve(path, info.filename!)],
         }),
       )
     ),
@@ -33,5 +36,9 @@ export const watchFs: typeof Deno.watchFs = function watchFs(
     ac.abort();
   }
 
-  return Object.assign(masterWatcher, { rid, close });
+  return Object.assign(masterWatcher, {
+    rid,
+    close,
+    [Symbol.dispose]: close,
+  });
 };

@@ -3,9 +3,14 @@
 import * as fs from "fs";
 import { promisify } from "util";
 import { denoifyFileInfo } from "./stat.js";
+import mapError from "../../internal/errorMap.js";
 
 const nodeFstat = promisify(fs.fstat);
 
 export const fstat: typeof Deno.fstat = async function (fd) {
-  return denoifyFileInfo(await nodeFstat(fd));
+  try {
+    return denoifyFileInfo(await nodeFstat(fd));
+  } catch (err) {
+    throw mapError(err);
+  }
 };
