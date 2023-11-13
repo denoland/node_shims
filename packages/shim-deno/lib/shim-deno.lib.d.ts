@@ -43,6 +43,7 @@ export declare namespace Deno {
   export const File: typeof FsFile;
 
   export class FsFile implements Deno.FsFile {
+    #private;
     readonly rid: number;
     constructor(rid: number);
     get readable(): ReadableStream<Uint8Array>;
