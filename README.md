@@ -20,8 +20,8 @@ Commands:
 
 ```sh
 # get submodules it you did not clone them initially
-git submodule init
-git submodule update
+git submodule init --recursive
+git submodule update --recursive
 # npm install
 npm i --ignore-scripts
 # build all packages
