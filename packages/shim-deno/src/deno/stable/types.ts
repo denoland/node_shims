@@ -4,6 +4,7 @@ export type Closer = Deno.Closer;
 export type Conn = Deno.Conn;
 export type ConnectOptions = Deno.ConnectOptions;
 export type ConnectTlsOptions = Deno.ConnectTlsOptions;
+export type DenoTest = Deno.DenoTest;
 export type DirEntry = Deno.DirEntry;
 export type EnvPermissionDescriptor = Deno.EnvPermissionDescriptor;
 export type FfiPermissionDescriptor = Deno.FfiPermissionDescriptor;
