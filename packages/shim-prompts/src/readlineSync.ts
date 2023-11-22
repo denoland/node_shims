@@ -7,7 +7,7 @@ export function readlineSync() {
   while (char !== "\r" && char !== "\n") {
     line += char;
     try {
-      const bytesRead = readSync(process.stdin.fd, buf, 0, 1, 0);
+      const bytesRead = readSync(process.stdin.fd, buf);
       if (bytesRead === 0) {
         return line;
       }
@@ -20,7 +20,7 @@ export function readlineSync() {
     char = String(buf);
   }
   if (char === "\r") {
-    readSync(process.stdin.fd, buf, 0, 1, 0);
+    readSync(process.stdin.fd, buf);
   }
   return line;
 }
