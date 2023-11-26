@@ -32,7 +32,7 @@ export const prompt: typeof globalThis extends { prompt: infer T } ? T
         writeSync(
           process.stdout.fd,
           new TextEncoder().encode(
-            `${message}${defaultValue ? `[${defaultValue}]` : ""} `,
+            `${message}${defaultValue ? ` [${defaultValue}]` : ""} `,
           ),
         );
         const result = readlineSync();
