@@ -27,7 +27,7 @@ export const prompt: typeof globalThis extends { prompt: infer T } ? T
     (globalThis as any)["prompt"] ??
       function prompt(
         message = "Prompt",
-        defaultValue = undefined,
+        defaultValue,
       ) {
         writeSync(
           process.stdout.fd,
