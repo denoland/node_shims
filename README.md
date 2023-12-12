@@ -11,7 +11,7 @@ Deno shims for Node.js
   `prompt`.
 - [@deno/shim-timers](packages/shim-timers) - Shims for `setTimeout` and
   `setInterval`.
-- [@deno/sham-weakref](packages/sham-weakref) - Sham for the `WeakRef` global
+- [@deno/sham-weakref](packages/sham-weakref) - Shim for the `WeakRef` global
   that uses the global `WeakRef` if it exists.
 
 ## Contributing
