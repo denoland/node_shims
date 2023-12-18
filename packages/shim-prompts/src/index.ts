@@ -26,13 +26,13 @@ export const prompt: typeof globalThis extends { prompt: infer T } ? T
   : (message?: string, _default?: string) => string | null =
     (globalThis as any)["prompt"] ??
       function prompt(
-        message,
-        defaultValue = undefined,
+        message = "Prompt",
+        defaultValue,
       ) {
         writeSync(
           process.stdout.fd,
           new TextEncoder().encode(
-            `${message} ${defaultValue == null ? "" : `[${defaultValue}]`} `,
+            `${message}${defaultValue ? ` [${defaultValue}]` : ""} `,
           ),
         );
         const result = readlineSync();
