@@ -147,7 +147,7 @@ function getMainStatements() {
         .filter((s) =>
           Node.hasName(s) && s.getName() === name ||
           Node.isVariableStatement(s) &&
-            s.getDeclarations().some((d) => d.getName() === name)
+          s.getDeclarations().some((d) => d.getName() === name)
         );
       if (statements.length === 0) {
         throw new Error(`Not found: ${name}`);
@@ -196,8 +196,13 @@ function getDenoNamespace(): ModuleDeclarationStructure {
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
           `./dist/deno/stable/main.d.ts`,
-        )),
-      ),
+        ))),
+      ...Array.from(
+        fileExportsToStructures(declarationProject.getSourceFileOrThrow(
+          `../../node_modules/@deno/kv/script/npm.d.ts`,
+        ))).filter(v => {
+          return !['RemoteServiceOptions', 'makeRemoteService', 'makeNapiBasedService', 'NapiBasedServiceOptions', 'makeLimitedV8Serializer'].includes(v.name)
+        }),
     ].map((s) => exportAndStripAmbient(s)),
   };
 }
@@ -270,9 +275,9 @@ function* declToStructures(
     ?.getTypeNode()
     ?.asKind(SyntaxKind.TypeReference)
     ?.getTypeName() ?? decl.asKind(SyntaxKind.VariableDeclaration)
-    ?.getTypeNode()
-    ?.asKind(SyntaxKind.TypeQuery)
-    ?.getExprName();
+      ?.getTypeNode()
+      ?.asKind(SyntaxKind.TypeQuery)
+      ?.getExprName();
 
   if (Node.hasName(decl) && Node.isQualifiedName(qualifiedName)) {
     const symbol = qualifiedName.getRight().getSymbolOrThrow();

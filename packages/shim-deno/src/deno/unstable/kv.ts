@@ -1,0 +1,1 @@
+export { openKv } from '@deno/kv'

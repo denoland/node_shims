@@ -1,6 +1,6 @@
 {
-  "name": "@deno/shim-deno",
-  "version": "0.17.0",
+  "name": "@reggi/shim-deno",
+  "version": "0.17.0-rc.3",
   "description": "Deno namespace shim for Node.js",
   "keywords": [
     "deno namespace",
@@ -38,6 +38,7 @@
     "update-progress": "deno run --allow-read tools/missing.ts > PROGRESS.md"
   },
   "dependencies": {
+    "@deno/kv": "^0.7.0",
     "@deno/shim-deno-test": "^0.5.0",
     "which": "^4.0.0"
   },
