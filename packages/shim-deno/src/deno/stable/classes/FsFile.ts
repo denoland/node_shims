@@ -64,6 +64,30 @@ export class FsFile implements Deno.FsFile {
     return fstatSync(this.rid);
   }
 
+  sync(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  syncSync(): void {
+    throw new Error("Method not implemented.");
+  }
+
+  syncData(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  syncDataSync(): void {
+    throw new Error("Method not implemented.");
+  }
+
+  utime(atime: number | Date, mtime: number | Date): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  utimeSync(atime: number | Date, mtime: number | Date): void {
+    throw new Error("Method not implemented.");
+  }
+
   close(): void {
     this.#closed = true;
     fs.closeSync(this.rid);

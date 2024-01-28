@@ -4,7 +4,7 @@ import { createConnection } from "net";
 import { Conn } from "../../internal/Conn.js";
 
 export const connect: typeof Deno.connect = function connect(options) {
-  if ((options as any).transport === "unix") {
+  if (options.transport === "unix") {
     throw new Error("Unstable UnixConnectOptions is not implemented");
   }
   const { transport = "tcp", hostname = "127.0.0.1", port } = options;

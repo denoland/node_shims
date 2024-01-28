@@ -59,5 +59,17 @@
     "https://deno.land/x/ts_morph@20.0.0/common/typescript.js": "b9edf0a451685d13e0467a7ed4351d112b74bd1e256b915a2b941054e31c1736",
     "https://deno.land/x/ts_morph@20.0.0/mod.ts": "adba9b82f24865d15d2c78ef6074b9a7457011719056c9928c800f130a617c93",
     "https://deno.land/x/ts_morph@20.0.0/ts_morph.js": "ea8c6d40a5a30ea2d720ef289b7cc817d3be3d0010587c197ea4419026943e0e"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@deno/shim-deno-test@^0.5.0",
+        "npm:@types/node@^20.9.0",
+        "npm:@types/which@^3.0.2",
+        "npm:ts-node@^10.9.1",
+        "npm:typescript@^5.2.2",
+        "npm:which@^4.0.0"
+      ]
+    }
   }
 }

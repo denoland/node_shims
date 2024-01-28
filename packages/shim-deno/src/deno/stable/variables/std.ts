@@ -1,5 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
+import tty from "node:tty";
 import { readSync } from "../functions/readSync.js";
 import { writeSync } from "../functions/writeSync.js";
 
@@ -22,6 +23,9 @@ function chain<T extends (...args: any[]) => Promise<any>>(
 
 export const stdin: typeof Deno.stdin = {
   rid: 0,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   read: chain(
     (p) => {
       return new Promise((resolve, reject) => {
@@ -63,6 +67,9 @@ export const stdin: typeof Deno.stdin = {
 };
 export const stdout: typeof Deno.stdout = {
   rid: 1,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   write: chain((p) => {
     return new Promise((resolve) => {
       const result = process.stdout.write(p);
@@ -85,6 +92,9 @@ export const stdout: typeof Deno.stdout = {
 };
 export const stderr: typeof Deno.stderr = {
   rid: 2,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   write: chain((p) => {
     return new Promise((resolve) => {
       const result = process.stderr.write(p);
