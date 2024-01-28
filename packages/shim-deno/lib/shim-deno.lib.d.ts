@@ -308,6 +308,23 @@ export declare namespace Deno {
    */
   export function connectTls(options: ConnectTlsOptions): Promise<TlsConn>;
   /**
+   * Gets the size of the console as columns/rows.
+   *
+   * ```ts
+   * const { columns, rows } = Deno.consoleSize();
+   * ```
+   *
+   * This returns the size of the console window as reported by the operating
+   * system. It's not a reflection of how many characters will fit within the
+   * console window, but can be used as part of that calculation.
+   *
+   * @category I/O
+   */
+  export function consoleSize(): {
+    columns: number;
+    rows: number;
+    };
+  /**
    * Copies from `src` to `dst` until either EOF (`null`) is read from `src` or
    * an error occurs. It resolves to the number of bytes copied or rejects with
    * the first error encountered while copying.
