@@ -80,11 +80,11 @@ export class FsFile implements Deno.FsFile {
     throw new Error("Method not implemented.");
   }
 
-  utime(atime: number | Date, mtime: number | Date): Promise<void> {
+  utime(_atime: number | Date, _mtime: number | Date): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  utimeSync(atime: number | Date, mtime: number | Date): void {
+  utimeSync(_atime: number | Date, _mtime: number | Date): void {
     throw new Error("Method not implemented.");
   }
 
