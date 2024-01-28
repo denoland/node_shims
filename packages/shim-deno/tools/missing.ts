@@ -81,7 +81,7 @@ function outputInfo(opts: {
     `${percentage}%. ${toGo} ${opts.categoryName.toLowerCase()} members to go:\n`,
   );
 
-  const onlyToGo = Deno.isatty(Deno.stdout.rid);
+  const onlyToGo = Deno.stdout.isTerminal();
   for (const member of opts.members) {
     const toGo = !(member.implemented || member.deprecated);
     if (onlyToGo && !toGo) continue;

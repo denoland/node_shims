@@ -5,6 +5,8 @@ import { fstat } from "../functions/fstat.js";
 import { fstatSync } from "../functions/fstatSync.js";
 import { ftruncate } from "../functions/ftruncate.js";
 import { ftruncateSync } from "../functions/ftruncateSync.js";
+import { fdatasync } from "../functions/fdatasync.js";
+import { fdatasyncSync } from "../functions/fdatasyncSync.js";
 import { read } from "../functions/read.js";
 import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
@@ -62,6 +64,30 @@ export class FsFile implements Deno.FsFile {
 
   statSync(): Deno.FileInfo {
     return fstatSync(this.rid);
+  }
+
+  sync(): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  syncSync(): void {
+    throw new Error("Method not implemented.");
+  }
+
+  syncData(): Promise<void> {
+    return fdatasync(this.rid);
+  }
+
+  syncDataSync(): void {
+    return fdatasyncSync(this.rid);
+  }
+
+  utime(_atime: number | Date, _mtime: number | Date): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  utimeSync(_atime: number | Date, _mtime: number | Date): void {
+    throw new Error("Method not implemented.");
   }
 
   close(): void {

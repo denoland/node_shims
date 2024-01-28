@@ -14,6 +14,7 @@ export { chownSync } from "./functions/chownSync.js";
 export { close } from "./functions/close.js";
 export { connect } from "./functions/connect.js";
 export { connectTls } from "./functions/connectTls.js";
+export { consoleSize } from "./functions/consoleSize.js";
 export { copy } from "./functions/copy.js";
 export { copyFile } from "./functions/copyFile.js";
 export { copyFileSync } from "./functions/copyFileSync.js";

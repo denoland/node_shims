@@ -31,6 +31,12 @@ const testsToSkip = new Set([
   "filesIterCustomBufSize", // deprecated
   "filesIterSync", // deprecated
   "filesIterSyncCustomBufSize", // deprecated
+  "fsFileSyncSyncSuccess", // not implemented
+  "fsFileSyncSuccess", // not implemented
+  "fsFileUtimeSyncSuccess", // not implemented
+  "fsFileUtimeSuccess", // not implemented
+  "futimeSyncSuccess", // not implemented
+  "futimeSuccess", // not implemented
   "readerIter", // deprecated
   "readerIterSync", // deprecated
   "writePermFailure", // permissions
@@ -41,7 +47,8 @@ const testsToSkip = new Set([
   "openUrl", // depends on umask
   "readPermFailure", // permissions
   "readWritePermFailure", // permissions
-  "openNotFound", // todo
+  "openSyncNotFound", // includes full path in node.js
+  "openNotFound", // includes full path in node.js
   "openModeWriteRead", // not implemented
   "readableStream", // not implemented
   "readableStreamTextEncoderPipe", // not implemented
@@ -237,6 +244,18 @@ async function setupTests() {
 
   if (!("crypto" in globalThis)) {
     globalThis.crypto = (await import("node:crypto")).webcrypto;
+  }
+
+  if (Promise.withResolvers === undefined) {
+    // https://github.com/tc39/proposal-promise-with-resolvers/blob/3a78801e073e99217dbeb2c43ba7212f3bdc8b83/polyfills.js#L1C1-L9C2
+    Promise.withResolvers = () => {
+      const out = {};
+      out.promise = new Promise((resolve_, reject_) => {
+        out.resolve = resolve_;
+        out.reject = reject_;
+      });
+      return out;
+    };
   }
 }
 
