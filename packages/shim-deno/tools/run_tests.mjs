@@ -148,6 +148,7 @@ const testsToSkip = new Set([
   "timeoutBindThis",
   "timeoutCallbackThis",
   "timeoutEvalNoScopeLeak",
+  "regression for #20367", // interestingly, node.js seems flaky on this
 
   // truncate_test
   "truncateSyncPerm", // permissions
