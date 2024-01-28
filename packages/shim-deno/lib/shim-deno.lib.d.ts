@@ -63,8 +63,8 @@ export declare namespace Deno {
     syncSync(): void;
     syncData(): Promise<void>;
     syncDataSync(): void;
-    utime(atime: number | Date, mtime: number | Date): Promise<void>;
-    utimeSync(atime: number | Date, mtime: number | Date): void;
+    utime(_atime: number | Date, _mtime: number | Date): Promise<void>;
+    utimeSync(_atime: number | Date, _mtime: number | Date): void;
     close(): void;
   }
 
