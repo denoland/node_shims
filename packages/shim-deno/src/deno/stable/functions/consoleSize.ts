@@ -8,6 +8,7 @@ export const consoleSize: typeof Deno.consoleSize = function consoleSize() {
       return { columns, rows };
     }
   }
-  // both stdout and stderr were piped (not the best Error, but it's what Deno does)
+  // Both stdout and stderr were piped. This is not the best error message,
+  // but it's what Deno does. Opened: https://github.com/denoland/deno/issues/22162
   throw new Error("The handle is invalid.");
 };
