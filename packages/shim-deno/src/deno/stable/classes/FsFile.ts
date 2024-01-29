@@ -1,6 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import * as fs from "fs";
+import * as fs from "node:fs";
+import * as stream from "node:stream";
 import { fstat } from "../functions/fstat.js";
 import { fstatSync } from "../functions/fstatSync.js";
 import { ftruncate } from "../functions/ftruncate.js";
@@ -95,12 +96,28 @@ export class FsFile implements Deno.FsFile {
     fs.closeSync(this.rid);
   }
 
+  #readableStream: ReadableStream<Uint8Array> | undefined;
   get readable(): ReadableStream<Uint8Array> {
-    throw new Error("Not implemented.");
+    if (this.#readableStream == null) {
+      const nodeStream = fs.createReadStream(null as any, {
+        fd: this.rid,
+        autoClose: false,
+      });
+      this.#readableStream = stream.Readable.toWeb(nodeStream);
+    }
+    return this.#readableStream;
   }
 
+  #writableStream: WritableStream<Uint8Array> | undefined;
   get writable(): WritableStream<Uint8Array> {
-    throw new Error("Not implemented.");
+    if (this.#writableStream == null) {
+      const nodeStream = fs.createWriteStream(null as any, {
+        fd: this.rid,
+        autoClose: false,
+      });
+      this.#writableStream = stream.Writable.toWeb(nodeStream);
+    }
+    return this.#writableStream;
   }
 }
 

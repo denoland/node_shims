@@ -50,8 +50,6 @@ const testsToSkip = new Set([
   "openSyncNotFound", // includes full path in node.js
   "openNotFound", // includes full path in node.js
   "openModeWriteRead", // not implemented
-  "readableStream", // not implemented
-  "readableStreamTextEncoderPipe", // not implemented
   "readFileIsDirectoryErrorCode", // todo(https://github.com/denoland/deno/issues/18629): re-enable
   "seekStart", // not implemented
   "seekSyncStart", // not implemented
@@ -61,7 +59,6 @@ const testsToSkip = new Set([
   "seekEnd", // not implemented
   "seekSyncEnd", // not implemented
   "seekMode", // not implemented
-  "writableStream", // not implemented
 
   // mkdir_test
   "mkdirMode", // depends on Deno.umask
