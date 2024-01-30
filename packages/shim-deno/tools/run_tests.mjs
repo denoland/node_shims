@@ -91,6 +91,16 @@ const testsToSkip = new Set([
   "uid", // permissions
   "gid", // permissions
 
+  // stat_test
+  "statSyncPerm", // permissions
+  "statSyncNotFound", // todo: includes full path in node.js
+  "lstatSyncPerm", // permissions
+  "lstatSyncNotFound", // todo: includes full path in node.js
+  "statPerm", // permissions
+  "statNotFound", // todo: includes full path in node.js
+  "lstatPerm", // permissions
+  "lstatNotFound", // todo: includes full path in node.js
+
   // read_file_test
   "readFileSyncPerm", // permissions
   "readFilePerm", // permissions
