@@ -2,8 +2,9 @@
 
 import * as os from "os";
 
+const arch = process.arch === "arm64" ? "aarch64" : "x86_64";
 export const build: typeof Deno.build = {
-  arch: "x86_64",
+  arch,
   os: ((p) => p === "win32" ? "windows" : p === "darwin" ? "darwin" : "linux")(
     os.platform(),
   ),
@@ -11,8 +12,8 @@ export const build: typeof Deno.build = {
   target:
     ((p) =>
       p === "win32"
-        ? "x86_64-pc-windows-msvc"
+        ? `${arch}-pc-windows-msvc`
         : p === "darwin"
-        ? "x86_64-apple-darwin"
-        : "x86_64-unknown-linux-gnu")(os.platform()),
+        ? `${arch}-apple-darwin`
+        : `${arch}-unknown-linux-gnu`)(os.platform()),
 };
