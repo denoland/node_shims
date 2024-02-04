@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "CommonJS",
     "strict": true,
-    "target": "ES2019",
+    "target": "ES2022",
     "lib": ["ES2019"], // no DOM types
     "esModuleInterop": true,
     "declaration": false,
@@ -13,7 +13,7 @@
     "transpileOnly": true,
     "files": true,
     "compilerOptions": {
-      "module": "ES2015"
+      "module": "ES2020"
     }
   },
   "files": ["src/index.ts", "src/test-internals.ts"]
