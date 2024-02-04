@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import stream from "node:stream";
-import tty from "node:tty";
+import stream from "stream";
+import tty from "tty";
 import { readSync } from "../functions/readSync.js";
 import { writeSync } from "../functions/writeSync.js";
 

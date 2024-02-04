@@ -117,10 +117,10 @@ function processDeclsFromStable(text: string) {
   });
   sourceFile.addStatements((writer) => {
     writer.writeLine(
-      `type ReadableStream<R = any> = import("node:stream/web").ReadableStream<R>;`,
+      `type ReadableStream<R = any> = import("stream/web").ReadableStream<R>;`,
     );
     writer.writeLine(
-      `type WritableStream<W = any> = import("node:stream/web").WritableStream<W>;`,
+      `type WritableStream<W = any> = import("stream/web").WritableStream<W>;`,
     );
     writer.write("interface AsyncDisposable").block(() => {
       writer.write("[Symbol.asyncDispose](): PromiseLike<void>;");
