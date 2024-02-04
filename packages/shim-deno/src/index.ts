@@ -1,1 +1,1 @@
-export * as Deno from "./deno.js";
+export * as Deno from "./deno/stable/main.js";

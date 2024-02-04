@@ -52,7 +52,7 @@ statements.push({
     ...Array.from(
       fileExportsToStructures(
         declarationProject.getSourceFileOrThrow(
-          `./dist/deno/internal/test.d.ts`,
+          `./dist/test-internals.d.ts`,
         ),
       ),
     ).map((s) => exportAndStripAmbient(s)),
@@ -111,7 +111,7 @@ exitIfDiagnostics(newProject, sourceFile.getPreEmitDiagnostics());
 // create the internal declaration
 console.log("Generating internal test declaration file...");
 const testInternalFile = newProject.addSourceFileAtPath(
-  "src/deno/internal/test.ts",
+  "src/test-internals.ts",
 );
 newProject.compilerOptions.set({
   declaration: true,
@@ -123,7 +123,7 @@ const files = newProject.emitToMemory({
 if (files.length !== 1) {
   throw new Error("Failed. Should have only generated one file.");
 }
-Deno.writeTextFileSync("./dist/deno/internal/test.d.ts", files[0].text);
+Deno.writeTextFileSync("./dist/test-internals.d.ts", files[0].text);
 
 function getMainStatements() {
   const statements: StatementStructures[] = [];

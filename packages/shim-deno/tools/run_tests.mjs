@@ -189,7 +189,7 @@ const testsToSkip = new Set([
 const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
   .trim().split(/\s/);
 
-const testDefinitions = (await import("../src/deno/internal/test.ts"))
+const testDefinitions = (await import("../src/test-internals.ts"))
   .testDefinitions;
 const filter = getFilter();
 
