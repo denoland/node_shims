@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import * as os from "os";
+import * as os from "node:os";
 
 export const build: typeof Deno.build = {
   arch: "x86_64",

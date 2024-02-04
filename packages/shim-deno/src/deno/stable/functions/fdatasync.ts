@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { fdatasync as nodefdatasync } from "fs";
-import { promisify } from "util";
+import { fdatasync as nodefdatasync } from "node:fs";
+import { promisify } from "node:util";
 
 const _fdatasync = promisify(nodefdatasync);
 

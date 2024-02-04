@@ -1,7 +1,7 @@
 /// <reference path="../lib.deno.d.ts" />
 
-import os from "os";
-import ps from "process";
+import os from "node:os";
+import ps from "node:process";
 
 export const kill: typeof Deno.kill = function (pid, signo) {
   if (pid < 0 && os.platform() === "win32") {

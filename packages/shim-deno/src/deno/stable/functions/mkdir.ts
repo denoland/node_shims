@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { mkdir as nodeMkdir } from "fs/promises";
+import { mkdir as nodeMkdir } from "node:fs/promises";
 import mapError from "../../internal/errorMap.js";
 import { errors } from "../variables.js";
 

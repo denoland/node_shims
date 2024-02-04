@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 export const readSync: typeof Deno.readSync = (fd, buffer) => {
   const bytesRead = fs.readSync(fd, buffer);

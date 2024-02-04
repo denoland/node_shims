@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { readdirSync as nodeReadDir } from "fs";
+import { readdirSync as nodeReadDir } from "node:fs";
 import mapError from "../../internal/errorMap.js";
 
 export const readDirSync: typeof Deno.readDirSync = function* readDir(path) {

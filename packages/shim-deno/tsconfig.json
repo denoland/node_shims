@@ -4,9 +4,9 @@
     "strict": true,
     "target": "ES2019",
     "lib": ["ES2019"], // no DOM types
-    "esModuleInterop": true, // for `undici-fetch`
+    "esModuleInterop": true,
     "declaration": false,
-    "outDir": "dist",
+    "outDir": "dist/script",
     "stripInternal": true
   },
   "ts-node": {

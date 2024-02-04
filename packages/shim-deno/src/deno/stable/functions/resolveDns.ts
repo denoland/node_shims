@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import dns from "dns";
+import dns from "node:dns";
 
 export const resolveDns: typeof Deno.resolveDns = function resolveDns(
   query,

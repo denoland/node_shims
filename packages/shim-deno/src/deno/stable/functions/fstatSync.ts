@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { fstatSync as nodeFstatSync } from "fs";
+import { fstatSync as nodeFstatSync } from "node:fs";
 import { denoifyFileInfo } from "./stat.js";
 import mapError from "../../internal/errorMap.js";
 

@@ -21,7 +21,7 @@ statements.push("// deno-fmt-ignore-file");
 statements.push(
   "// DO NOT EDIT - This file is automatically maintained by `npm run generate-deno-types`",
 );
-statements.push(`import { URL } from "url";`);
+statements.push(`import { URL } from "node:url";`);
 
 const denoNs = libDenoFile.getModuleOrThrow("Deno");
 const testFunc = denoNs.getVariableDeclarationOrThrow("test");

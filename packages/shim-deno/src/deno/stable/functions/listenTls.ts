@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { createServer, Server } from "tls";
+import { createServer, Server } from "node:tls";
 
 import { TlsConn } from "../../internal/Conn.js";
 import { Listener } from "../../internal/Listener.js";

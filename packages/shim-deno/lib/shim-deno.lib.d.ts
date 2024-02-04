@@ -2,7 +2,7 @@
 
 /// <reference types="node" />
 
-import { URL } from "url";
+import { URL } from "node:url";
 import { ReadableStream, WritableStream } from "node:stream/web";
 
 /** @category DOM Events */

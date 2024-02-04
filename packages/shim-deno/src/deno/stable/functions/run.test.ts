@@ -1,4 +1,4 @@
-import assert from "assert/strict";
+import assert from "node:assert/strict";
 import { run } from "./run.js";
 
 Deno.test("error when cwd doesn't exist", () => {

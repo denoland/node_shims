@@ -1,6 +1,6 @@
 /// <reference path="../lib.deno.d.ts" />
 
-import ps from "process";
+import ps from "node:process";
 
 function denoSignalToNodeJs(signal: Deno.Signal): NodeJS.Signals {
   if (signal === "SIGEMT") {

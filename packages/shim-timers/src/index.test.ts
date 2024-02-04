@@ -1,5 +1,5 @@
 import { setInterval, setTimeout } from "./index";
-import * as assert from "assert/strict";
+import * as assert from "node:assert/strict";
 
 console.log("should get setTimeout result that's a number...");
 const timeoutId = setTimeout(() => {}, 100);

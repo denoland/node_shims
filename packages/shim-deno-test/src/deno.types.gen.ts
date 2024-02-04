@@ -1,7 +1,7 @@
 // deno-lint-ignore-file
 // deno-fmt-ignore-file
 // DO NOT EDIT - This file is automatically maintained by `npm run generate-deno-types`
-import { URL } from "url";
+import { URL } from "node:url";
 /**
  * Register a test which will be run when `deno test` is used on the command
  * line and the containing module looks like a test module.

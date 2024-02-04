@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { readFile as nodeReadFile } from "fs/promises";
+import { readFile as nodeReadFile } from "node:fs/promises";
 import mapError from "../../internal/errorMap.js";
 
 export const readFile: typeof Deno.readFile = async function readFile(

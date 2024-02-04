@@ -1,6 +1,6 @@
 import { BufferStreamReader, StreamWriter } from "./streams.js";
-import fs from "fs";
-import assert from "assert/strict";
+import fs from "node:fs";
+import assert from "node:assert/strict";
 
 // use a small buffer size for testing to cause many reads and writes
 const highWaterMark = 128;

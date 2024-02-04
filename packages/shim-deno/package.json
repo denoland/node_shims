@@ -22,14 +22,20 @@
     "url": "https://github.com/denoland/node_deno_shims.git"
   },
   "exports": {
-    ".": "./dist/index.js",
-    "./test-internals": "./dist/test-internals.js"
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./test-internals": {
+      "import": "./dist/test-internals.mjs",
+      "require": "./dist/test-internals.cjs"
+    }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "npm run denolib && tsc && npm run generate-declaration-file && deno run -A tools/bundle.ts",
+    "build": "npm run denolib && tsc && tsc --build tsconfig.esm.json && npm run generate-declaration-file && deno run -A tools/bundle.ts",
     "prepublishOnly": "npm run build",
     "clean": "git clean -fXde !node_modules/",
     "test": "node --loader=ts-node/esm tools/run_tests.mjs",

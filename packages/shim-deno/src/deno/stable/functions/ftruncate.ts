@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { ftruncate as nodeftruncate } from "fs";
-import { promisify } from "util";
+import { ftruncate as nodeftruncate } from "node:fs";
+import { promisify } from "node:util";
 
 const _ftruncate = promisify(nodeftruncate);
 

@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { opendir } from "fs/promises";
+import { opendir } from "node:fs/promises";
 import mapError from "../../internal/errorMap.js";
 
 export const readDir: typeof Deno.readDir = async function* readDir(path) {

@@ -1,4 +1,4 @@
-import { writeSync } from "fs";
+import { writeSync } from "node:fs";
 import { readlineSync } from "./readlineSync.js";
 
 export const alert: typeof globalThis extends { alert: infer T } ? T

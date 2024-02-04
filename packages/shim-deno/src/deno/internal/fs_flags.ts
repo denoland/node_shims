@@ -2,8 +2,8 @@
 // <source path="https://github.com/rust-lang/rust/blob/304441960e7058fe97f09ef00b20739b4dc56d11/library/std/src/sys/unix/fs.rs#L694-L728" />
 
 import * as errors from "../stable/variables/errors.js";
-import { constants } from "fs";
-import os from "os";
+import { constants } from "node:fs";
+import os from "node:os";
 
 const { O_APPEND, O_CREAT, O_EXCL, O_RDONLY, O_RDWR, O_TRUNC, O_WRONLY } =
   constants;

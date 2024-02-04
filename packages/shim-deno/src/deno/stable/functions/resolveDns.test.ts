@@ -1,4 +1,4 @@
-import assert from "assert/strict";
+import assert from "node:assert/strict";
 import { resolveDns } from "./resolveDns.js";
 
 Deno.test("resolve A as ipV4 string", async () => {

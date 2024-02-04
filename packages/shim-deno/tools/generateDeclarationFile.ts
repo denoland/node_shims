@@ -19,7 +19,9 @@ console.log("Generating declaration file...");
 const statements: (StatementStructures | WriterFunction)[] = [];
 const declarationProject = getDeclarationProject();
 
-const indexFile = declarationProject.getSourceFileOrThrow(`./dist/index.d.ts`);
+const indexFile = declarationProject.getSourceFileOrThrow(
+  `./dist/script/index.d.ts`,
+);
 
 // header
 statements.push((writer) => {
@@ -30,7 +32,7 @@ statements.push((writer) => {
     .blankLine()
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
-    .writeLine(`import { URL } from "url";`)
+    .writeLine(`import { URL } from "node:url";`)
     .writeLine(
       `import { ReadableStream, WritableStream } from "node:stream/web";`,
     )
@@ -52,7 +54,7 @@ statements.push({
     ...Array.from(
       fileExportsToStructures(
         declarationProject.getSourceFileOrThrow(
-          `./dist/test-internals.d.ts`,
+          `./dist/script/test-internals.d.ts`,
         ),
       ),
     ).map((s) => exportAndStripAmbient(s)),
@@ -104,7 +106,8 @@ const sourceFile = newProject.createSourceFile(
 );
 
 sourceFile.saveSync();
-sourceFile.copyImmediatelySync(`./dist/index.d.ts`, { overwrite: true });
+sourceFile.copyImmediatelySync(`./dist/index.d.cts`, { overwrite: true });
+sourceFile.copyImmediatelySync(`./dist/index.d.mts`, { overwrite: true });
 
 exitIfDiagnostics(newProject, sourceFile.getPreEmitDiagnostics());
 
@@ -123,7 +126,8 @@ const files = newProject.emitToMemory({
 if (files.length !== 1) {
   throw new Error("Failed. Should have only generated one file.");
 }
-Deno.writeTextFileSync("./dist/test-internals.d.ts", files[0].text);
+Deno.writeTextFileSync("./dist/test-internals.d.cts", files[0].text);
+Deno.writeTextFileSync("./dist/test-internals.d.mts", files[0].text);
 
 function getMainStatements() {
   const statements: StatementStructures[] = [];
@@ -195,7 +199,7 @@ function getDenoNamespace(): ModuleDeclarationStructure {
     statements: [
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `./dist/deno/stable/main.d.ts`,
+          `./dist/script/deno/stable/main.d.ts`,
         )),
       ),
     ].map((s) => exportAndStripAmbient(s)),
