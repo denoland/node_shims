@@ -9,8 +9,8 @@
     "ponyfill",
     "shim"
   ],
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
   "author": "Thomas Rory Gummerson <thomas@gummerson.no> (https://trgwii.no/)",
   "contributors": [
     "Wojciech Pawlik <woj.pawlik@gmail.com>",
