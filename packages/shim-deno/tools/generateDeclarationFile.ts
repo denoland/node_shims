@@ -32,9 +32,9 @@ statements.push((writer) => {
     .blankLine()
     .writeLine(`/// <reference types="node" />`)
     .blankLine()
-    .writeLine(`import { URL } from "node:url";`)
+    .writeLine(`import { URL } from "url";`)
     .writeLine(
-      `import { ReadableStream, WritableStream } from "node:stream/web";`,
+      `import { ReadableStream, WritableStream } from "stream/web";`,
     )
     .blankLine();
 });

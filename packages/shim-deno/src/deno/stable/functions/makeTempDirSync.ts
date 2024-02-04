@@ -1,8 +1,8 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { mkdtempSync } from "node:fs";
-import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { mkdtempSync } from "fs";
+import { join } from "path";
+import { tmpdir } from "os";
 
 export const makeTempDirSync: typeof Deno.makeTempDirSync =
   function makeTempDirSync(

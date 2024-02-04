@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { open as _open } from "node:fs";
-import { promisify } from "node:util";
+import { open as _open } from "fs";
+import { promisify } from "util";
 
 import { File } from "../classes/FsFile.js";
 import { getFsFlag } from "../../internal/fs_flags.js";

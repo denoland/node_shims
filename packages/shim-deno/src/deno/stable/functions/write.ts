@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import * as fs from "node:fs";
-import { promisify } from "node:util";
+import * as fs from "fs";
+import { promisify } from "util";
 
 const nodeWrite = promisify(fs.write);
 

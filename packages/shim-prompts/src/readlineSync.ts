@@ -1,4 +1,4 @@
-import { readSync } from "node:fs";
+import { readSync } from "fs";
 
 export function readlineSync() {
   let line = "";

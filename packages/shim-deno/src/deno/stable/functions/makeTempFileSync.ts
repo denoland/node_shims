@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { tmpdir } from "os";
+import { join } from "path";
 import { randomId } from "../../internal/random_id.js";
 import { writeTextFileSync } from "./writeTextFileSync.js";
 

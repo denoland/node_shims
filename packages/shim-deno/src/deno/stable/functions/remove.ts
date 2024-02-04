@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { rm, rmdir } from "node:fs/promises";
+import { rm, rmdir } from "fs/promises";
 
 export const remove: typeof Deno.remove = async function remove(
   path,

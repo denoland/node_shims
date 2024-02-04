@@ -1,10 +1,10 @@
-import fs from "node:fs";
+import fs from "fs";
 import mapError from "../internal/errorMap.js";
 import { errors } from "./variables.js";
 
 // todo(dsherret): collapse all these files into here
 
-export { isatty } from "node:tty";
+export { isatty } from "tty";
 export { addSignalListener } from "./functions/addSignalListener.js";
 export { chdir } from "./functions/chdir.js";
 export { chmod } from "./functions/chmod.js";

@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { connect as tlsConnect } from "node:tls";
+import { connect as tlsConnect } from "tls";
 import { TlsConn } from "../../internal/Conn.js";
 import { readTextFile } from "./readTextFile.js";
 

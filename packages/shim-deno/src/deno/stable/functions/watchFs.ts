@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { watch } from "node:fs/promises";
-import { resolve } from "node:path";
+import { watch } from "fs/promises";
+import { resolve } from "path";
 
 import { filterAsync, mapAsync, merge } from "../../internal/iterutil.js";
 

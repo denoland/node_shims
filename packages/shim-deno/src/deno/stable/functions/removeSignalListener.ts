@@ -1,6 +1,6 @@
 /// <reference path="../lib.deno.d.ts" />
 
-import ps from "node:process";
+import ps from "process";
 
 export const removeSignalListener: typeof Deno.removeSignalListener = (
   signal,

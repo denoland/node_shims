@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import * as fs from "node:fs/promises";
+import * as fs from "fs/promises";
 import mapError from "../../internal/errorMap.js";
 import { getFsFlag } from "../../internal/fs_flags.js";
 

@@ -1,8 +1,8 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { stat as nodeStat } from "node:fs/promises";
-import type { Stats } from "node:fs";
-import * as os from "node:os";
+import { stat as nodeStat } from "fs/promises";
+import type { Stats } from "fs";
+import * as os from "os";
 import mapError from "../../internal/errorMap.js";
 
 const isWindows = os.platform() === "win32";

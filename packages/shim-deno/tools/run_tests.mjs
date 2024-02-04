@@ -1,7 +1,7 @@
 // This script runs the unit tests under third_party/deno directory
 
-import fs from "node:fs";
-import { createRequire } from "node:module";
+import fs from "fs";
+import { createRequire } from "module";
 
 // rq = requires
 const testsToSkip = new Set([
@@ -246,12 +246,12 @@ async function setupTests() {
 
   globalThis.Deno = (await import("../src/index.ts")).Deno;
   if (!("Blob" in globalThis)) {
-    globalThis.Blob = (await import("node:buffer")).Blob;
+    globalThis.Blob = (await import("buffer")).Blob;
   }
   await webStreamHack();
 
   if (!("crypto" in globalThis)) {
-    globalThis.crypto = (await import("node:crypto")).webcrypto;
+    globalThis.crypto = (await import("crypto")).webcrypto;
   }
 
   if (Promise.withResolvers === undefined) {
@@ -274,9 +274,9 @@ async function webStreamHack() {
 
   try {
     if (!globalThis.ReadableStream) {
-      Object.assign(globalThis, await import("node:stream/web"));
+      Object.assign(globalThis, await import("stream/web"));
     }
-    const { Blob } = await import("node:buffer");
+    const { Blob } = await import("buffer");
     if (Blob && !Blob.prototype.stream) {
       Blob.prototype.stream = function name() {
         let position = 0;

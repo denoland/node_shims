@@ -1,10 +1,10 @@
 /// <reference path="../lib.deno.d.ts" />
 
-import childProcess from "node:child_process";
-import fs from "node:fs";
-import os from "node:os";
-import url from "node:url";
-import { once } from "node:events";
+import childProcess from "child_process";
+import fs from "fs";
+import os from "os";
+import url from "url";
+import { once } from "events";
 import which from "which";
 
 import { BufferStreamReader, StreamWriter } from "../../internal/streams.js";

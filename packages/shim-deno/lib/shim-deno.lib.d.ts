@@ -2,8 +2,8 @@
 
 /// <reference types="node" />
 
-import { URL } from "node:url";
-import { ReadableStream, WritableStream } from "node:stream/web";
+import { URL } from "url";
+import { ReadableStream, WritableStream } from "stream/web";
 
 /** @category DOM Events */
 declare interface EventListenerOptions {

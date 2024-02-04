@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
-import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { join } from "path";
+import { pathToFileURL } from "url";
 
 let mainFileName: string | undefined;
 if (typeof require === "function" && typeof module !== "undefined") {

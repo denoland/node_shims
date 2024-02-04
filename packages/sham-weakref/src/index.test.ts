@@ -1,5 +1,5 @@
 import { WeakRef } from "./index";
-import * as assert from "node:assert/strict";
+import * as assert from "assert/strict";
 
 if (globalThis.WeakRef != null) {
   console.log("should store a value in the WeakRef...");

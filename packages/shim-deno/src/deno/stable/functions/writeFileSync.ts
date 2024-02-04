@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { platform } from "node:os";
+import { platform } from "os";
 import { openSync } from "./openSync.js";
 import mapError from "../../internal/errorMap.js";
 import { statSync } from "./statSync.js";

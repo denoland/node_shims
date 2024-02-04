@@ -1,6 +1,6 @@
 import { open } from "./open.ts";
-import assert from "node:assert/strict";
-import path from "node:path";
+import assert from "assert/strict";
+import path from "path";
 
 const withTempDir =
   (test: (tempDirPath: string) => Promise<void>) => async () => {

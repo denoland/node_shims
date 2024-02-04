@@ -1,8 +1,8 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { mkdtemp } from "node:fs/promises";
-import { join } from "node:path";
-import { tmpdir } from "node:os";
+import { mkdtemp } from "fs/promises";
+import { join } from "path";
+import { tmpdir } from "os";
 
 export const makeTempDir: typeof Deno.makeTempDir = function makeTempDir(
   { prefix = "" } = {},

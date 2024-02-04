@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { openSync as nodeOpenSync } from "node:fs";
+import { openSync as nodeOpenSync } from "fs";
 
 import { File } from "../classes/FsFile.js";
 import { getFsFlag } from "../../internal/fs_flags.js";

@@ -1,6 +1,6 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { fileURLToPath } from "node:url";
+import { fileURLToPath } from "url";
 import mapError from "../../internal/errorMap.js";
 import { errors } from "../variables.js";
 

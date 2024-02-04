@@ -1,6 +1,6 @@
 // Copyright 2018-2022 the Deno authors. All rights reserved. MIT license.
 
-import { webcrypto } from "node:crypto";
+import { webcrypto } from "crypto";
 import type { Crypto } from "./crypto.types.gen.js";
 
 // At the time of writing this, DefinitelyTyped is missing types for webcrypto for Node.

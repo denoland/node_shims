@@ -1,7 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
-import { promisify } from "node:util";
-import { read as nodeRead } from "node:fs";
+import { promisify } from "util";
+import { read as nodeRead } from "fs";
 
 const _read = promisify(nodeRead);
 
