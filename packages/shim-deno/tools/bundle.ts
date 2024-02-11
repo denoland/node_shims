@@ -1,4 +1,7 @@
 import $ from "https://deno.land/x/dax@0.38.0/mod.ts";
+import { ensureSpecificDenoVersion } from "./deno_version.ts";
+
+ensureSpecificDenoVersion();
 
 const rootDir = $.path(import.meta).join("../../").resolve();
 $.cd(rootDir);
