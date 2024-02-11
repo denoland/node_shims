@@ -2,6 +2,7 @@ src/deno/internal/streams.test.ts
 src/deno/stable/functions/open.test.ts
 src/deno/stable/functions/resolveDns.test.ts
 src/deno/stable/functions/run.test.ts
+src/deno/stable/variables/mainModule.test.ts
 third_party/deno/cli/tests/unit/abort_controller_test.ts
 third_party/deno/cli/tests/unit/blob_test.ts
 third_party/deno/cli/tests/unit/build_test.ts
