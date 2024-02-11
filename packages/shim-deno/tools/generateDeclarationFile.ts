@@ -14,6 +14,9 @@ import {
   WriterFunction,
 } from "../../../scripts/ts_morph.ts";
 import { exitIfDiagnostics } from "../../../scripts/helpers.ts";
+import { ensureSpecificDenoVersion } from "./deno_version.ts";
+
+ensureSpecificDenoVersion();
 
 console.log("Generating declaration file...");
 const statements: (StatementStructures | WriterFunction)[] = [];

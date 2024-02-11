@@ -2,11 +2,9 @@
 /// <reference lib="deno.ns" />
 
 import { Node, Project } from "../../../scripts/ts_morph.ts";
+import { ensureSpecificDenoVersion } from "./deno_version.ts";
 
-if (!Deno.version.deno.startsWith("1.40.")) {
-  console.error("Wrong Deno version: " + Deno.version.deno);
-  Deno.exit(1);
-}
+ensureSpecificDenoVersion();
 
 const stableTypes = await run("deno types");
 const version = (await run("deno --version")).trim().split("\n").map((line) =>
