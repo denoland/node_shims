@@ -1,6 +1,7 @@
 import {
   ExportedDeclarations,
   IndentationText,
+  ModuleDeclarationKind,
   ModuleDeclarationStructure,
   Node,
   Project,
@@ -13,12 +14,17 @@ import {
   WriterFunction,
 } from "../../../scripts/ts_morph.ts";
 import { exitIfDiagnostics } from "../../../scripts/helpers.ts";
+import { ensureSpecificDenoVersion } from "./deno_version.ts";
+
+ensureSpecificDenoVersion();
 
 console.log("Generating declaration file...");
 const statements: (StatementStructures | WriterFunction)[] = [];
 const declarationProject = getDeclarationProject();
 
-const indexFile = declarationProject.getSourceFileOrThrow(`./dist/index.d.ts`);
+const indexFile = declarationProject.getSourceFileOrThrow(
+  `./dist/script/index.d.ts`,
+);
 
 // header
 statements.push((writer) => {
@@ -31,7 +37,7 @@ statements.push((writer) => {
     .blankLine()
     .writeLine(`import { URL } from "url";`)
     .writeLine(
-      `import { ReadableStream, WritableStream } from "node:stream/web";`,
+      `import { ReadableStream, WritableStream } from "stream/web";`,
     )
     .blankLine();
 });
@@ -51,11 +57,36 @@ statements.push({
     ...Array.from(
       fileExportsToStructures(
         declarationProject.getSourceFileOrThrow(
-          `./dist/deno/internal/test.d.ts`,
+          `./dist/script/test-internals.d.ts`,
         ),
       ),
     ).map((s) => exportAndStripAmbient(s)),
   ],
+});
+statements.push({
+  kind: StructureKind.Module,
+  declarationKind: ModuleDeclarationKind.Global,
+  name: "global",
+  hasDeclareKeyword: true,
+  statements: [{
+    kind: StructureKind.Interface,
+    name: "SymbolConstructor",
+    properties: [{
+      isReadonly: true,
+      name: "asyncDispose",
+      type: "unique symbol",
+    }, {
+      isReadonly: true,
+      name: "dispose",
+      type: "unique symbol",
+    }],
+  }],
+});
+// fix up the MessagePort reference
+statements.push({
+  kind: StructureKind.TypeAlias,
+  name: "MessagePort",
+  type: `typeof globalThis["MessagePort"]`,
 });
 
 // Create a new project with limited declarations and add the declaration
@@ -78,14 +109,15 @@ const sourceFile = newProject.createSourceFile(
 );
 
 sourceFile.saveSync();
-sourceFile.copyImmediatelySync(`./dist/index.d.ts`, { overwrite: true });
+sourceFile.copyImmediatelySync(`./dist/index.d.cts`, { overwrite: true });
+sourceFile.copyImmediatelySync(`./dist/index.d.mts`, { overwrite: true });
 
 exitIfDiagnostics(newProject, sourceFile.getPreEmitDiagnostics());
 
 // create the internal declaration
 console.log("Generating internal test declaration file...");
 const testInternalFile = newProject.addSourceFileAtPath(
-  "src/deno/internal/test.ts",
+  "src/test-internals.ts",
 );
 newProject.compilerOptions.set({
   declaration: true,
@@ -97,7 +129,8 @@ const files = newProject.emitToMemory({
 if (files.length !== 1) {
   throw new Error("Failed. Should have only generated one file.");
 }
-Deno.writeTextFileSync("./dist/deno/internal/test.d.ts", files[0].text);
+Deno.writeTextFileSync("./dist/test-internals.d.cts", files[0].text);
+Deno.writeTextFileSync("./dist/test-internals.d.mts", files[0].text);
 
 function getMainStatements() {
   const statements: StatementStructures[] = [];
@@ -106,23 +139,34 @@ function getMainStatements() {
   const denoStableDeclFile = declarationProject.getSourceFileOrThrow(
     `./src/deno/stable/lib.deno.d.ts`,
   );
-  statements.push(...[
-    "EventTarget",
-    "Event",
-    "EventInit",
-    "EventListenerOptions",
-    "AddEventListenerOptions",
-    "EventListener",
-    "EventListenerObject",
-    "EventListenerOrEventListenerObject",
-  ].map((name) => {
-    const statement = denoStableDeclFile
-      .getStatementOrThrow((s) => Node.hasName(s) && s.getName() === name);
-    if (!Node.hasStructure(statement)) {
-      throw new Error("Unhandled");
-    }
-    return statement.getStructure() as StatementStructures;
-  }));
+  statements.push(
+    ...[
+      "EventListenerOptions",
+      "AddEventListenerOptions",
+      "EventListener",
+      "EventListenerObject",
+      "EventListenerOrEventListenerObject",
+      "Disposable",
+      "AsyncDisposable",
+    ].map((name) => {
+      const statements = denoStableDeclFile
+        .getStatements()
+        .filter((s) =>
+          Node.hasName(s) && s.getName() === name ||
+          Node.isVariableStatement(s) &&
+            s.getDeclarations().some((d) => d.getName() === name)
+        );
+      if (statements.length === 0) {
+        throw new Error(`Not found: ${name}`);
+      }
+      return statements.map((statement) => {
+        if (!Node.hasStructure(statement)) {
+          throw new Error("Unhandled");
+        }
+        return statement.getStructure() as StatementStructures;
+      });
+    }).flat(),
+  );
 
   // re-export the export declarations from the index file that aren't relative
   for (const exportDecl of indexFile.getExportDeclarations()) {
@@ -158,12 +202,7 @@ function getDenoNamespace(): ModuleDeclarationStructure {
     statements: [
       ...Array.from(
         fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `./dist/deno/stable/main.d.ts`,
-        )),
-      ),
-      ...Array.from(
-        fileExportsToStructures(declarationProject.getSourceFileOrThrow(
-          `./dist/deno/unstable/main.d.ts`,
+          `./dist/script/deno/stable/main.d.ts`,
         )),
       ),
     ].map((s) => exportAndStripAmbient(s)),
@@ -313,9 +352,6 @@ function getDeclarationProject() {
   }
   declarationProject.addSourceFileAtPath(
     `./src/deno/stable/lib.deno.d.ts`,
-  );
-  declarationProject.addSourceFileAtPath(
-    `./src/deno/unstable/lib.deno.unstable.d.ts`,
   );
 
   return declarationProject;

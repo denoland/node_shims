@@ -2,6 +2,7 @@ src/deno/internal/streams.test.ts
 src/deno/stable/functions/open.test.ts
 src/deno/stable/functions/resolveDns.test.ts
 src/deno/stable/functions/run.test.ts
+src/deno/stable/variables/mainModule.test.ts
 third_party/deno/cli/tests/unit/abort_controller_test.ts
 third_party/deno/cli/tests/unit/blob_test.ts
 third_party/deno/cli/tests/unit/build_test.ts
@@ -18,6 +19,7 @@ third_party/deno/cli/tests/unit/os_test.ts
 third_party/deno/cli/tests/unit/process_test.ts
 third_party/deno/cli/tests/unit/read_file_test.ts
 third_party/deno/cli/tests/unit/read_text_file_test.ts
+third_party/deno/cli/tests/unit/stat_test.ts
 third_party/deno/cli/tests/unit/sync_test.ts
 third_party/deno/cli/tests/unit/testing_test.ts
 third_party/deno/cli/tests/unit/timers_test.ts

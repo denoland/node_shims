@@ -2,6 +2,12 @@
 
 import * as fs from "fs";
 import { denoifyFileInfo } from "./stat.js";
+import mapError from "../../internal/errorMap.js";
 
-export const lstatSync: typeof Deno.lstatSync = (path) =>
-  denoifyFileInfo(fs.lstatSync(path));
+export const lstatSync: typeof Deno.lstatSync = (path) => {
+  try {
+    return denoifyFileInfo(fs.lstatSync(path));
+  } catch (err) {
+    throw mapError(err);
+  }
+};

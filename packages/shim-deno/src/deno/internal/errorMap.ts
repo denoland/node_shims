@@ -12,6 +12,7 @@ const mapper = (Ctor: typeof errors[keyof typeof errors]) => (err: Error) =>
 const map: Record<string, ReturnType<typeof mapper>> = {
   EEXIST: mapper(errors.AlreadyExists),
   ENOENT: mapper(errors.NotFound),
+  EBADF: mapper(errors.BadResource),
 };
 
 const isNodeErr = (e: unknown): e is Error & { code: string } => {

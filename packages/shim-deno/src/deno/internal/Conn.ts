@@ -17,6 +17,10 @@ export class Conn extends FsFile implements Deno.Conn {
     this.#socket = socket || new Socket({ fd: rid });
   }
 
+  [Symbol.dispose]() {
+    this.close();
+  }
+
   async closeWrite() {
     await new Promise<void>((resolve) => this.#socket.end(resolve));
   }

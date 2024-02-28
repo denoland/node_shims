@@ -1,17 +1,12 @@
 // not sure why, but I needed to add this
 /// <reference lib="deno.ns" />
 
-import { Project } from "../../../scripts/ts_morph.ts";
+import { Node, Project } from "../../../scripts/ts_morph.ts";
+import { ensureSpecificDenoVersion } from "./deno_version.ts";
 
-if (!Deno.version.deno.startsWith("1.33.")) {
-  console.error("Wrong Deno version: " + Deno.version.deno);
-  Deno.exit(1);
-}
+ensureSpecificDenoVersion();
 
 const stableTypes = await run("deno types");
-const unstableTypes = (await run("deno types --unstable"))
-  .replace(stableTypes, "")
-  .trimStart();
 const version = (await run("deno --version")).trim().split("\n").map((line) =>
   line.split(" ")
 ).reduce(
@@ -31,10 +26,6 @@ await Deno.writeTextFile(
   `./src/deno/stable/lib.deno.d.ts`,
   processDeclsFromStable(processDeclarationFileText(stableTypes)),
 );
-await Deno.writeTextFile(
-  `./src/deno/unstable/lib.deno.unstable.d.ts`,
-  processDeclarationFileText(unstableTypes),
-);
 
 async function run(cmd: string) {
   const parts = cmd.split(" ");
@@ -47,10 +38,12 @@ async function run(cmd: string) {
 
 function processDeclarationFileText(text: string) {
   return text.replace('/// <reference lib="deno.net" />\n', "")
+    .replace(`/// <reference no-default-lib="true" />\n`, "")
     .replace(
       `/// <reference lib="deno.ns" />`,
       `/// <reference path="../stable/lib.deno.d.ts" />`,
-    );
+    ).replace(`/// <reference lib="esnext" />\n`, "")
+    .replace(`/// <reference lib="esnext.disposable" />\n`, "");
 }
 
 function processDeclsFromStable(text: string) {
@@ -58,18 +51,14 @@ function processDeclsFromStable(text: string) {
   const sourceFile = project.createSourceFile("deno.lib.d.ts", text);
 
   // these are removed because they're available in @types/node
-  sourceFile.getClassOrThrow("AbortController").remove();
+  sourceFile.getVariableStatementOrThrow("AbortController").remove();
+  sourceFile.getInterfaceOrThrow("AbortController").remove();
   sourceFile.getInterfaceOrThrow("AbortSignal").remove();
   sourceFile.getInterfaceOrThrow("AbortSignalEventMap").remove();
   sourceFile.getVariableStatementOrThrow("AbortSignal").remove();
-  sourceFile
-    .getInterfaceOrThrow("ImportMeta")
-    .getMethodOrThrow("resolve")
-    // make optional to not conflict with @types/node
-    .setHasQuestionToken(true);
 
-  // use web streams from @types/node
   [
+    // use web streams from @types/node
     "ReadableStream",
     "WritableStream",
     "ReadableStreamBYOBReader",
@@ -93,34 +82,58 @@ function processDeclsFromStable(text: string) {
     "WritableStreamDefaultControllerWriteCallback",
     "WritableStreamDefaultController",
     "WritableStreamDefaultWriter",
-  ].forEach((name) => {
-    sourceFile.getInterfaceOrThrow(name).remove();
-  });
-  [
     "ReadableStreamBYOBReadResult",
     "ReadableStreamDefaultReadResult",
+    // use fetch types from @types/node
+    "Blob",
+    "FormData",
+    "Headers",
+    "Response",
+    "Request",
+    "RequestInit",
+    "URLSearchParams",
+    "URL",
+    // use from @types/node
+    "BroadcastChannel",
+    "Event",
+    "EventTarget",
+    "MessageChannel",
+    "MessagePort",
+    "TextDecoder",
+    "TextEncoder",
+    "performance",
   ].forEach((name) => {
-    sourceFile.getTypeAliasOrThrow(name).remove();
-  });
-  [
-    "ReadableStream",
-    "ReadableStreamBYOBReader",
-    "WritableStream",
-    "ReadableStreamDefaultReader",
-    "ReadableByteStreamController",
-    "ReadableStreamDefaultController",
-    "WritableStreamDefaultController",
-    "WritableStreamDefaultWriter",
-  ].forEach((name) => {
-    sourceFile.getVariableStatementOrThrow(name).remove();
+    const statements = sourceFile.getStatements().filter((s) => {
+      return Node.hasName(s) && s.getName() === name ||
+        Node.isVariableStatement(s) &&
+          s.getDeclarations().some((d) => d.getName() === name);
+    });
+    if (statements.length === 0) {
+      throw new Error(`Not found: ${name}`);
+    }
+    statements.forEach((s) => s.remove());
   });
   sourceFile.addStatements((writer) => {
     writer.writeLine(
-      `type ReadableStream<R = any> = import("node:stream/web").ReadableStream<R>;`,
+      `type ReadableStream<R = any> = import("stream/web").ReadableStream<R>;`,
     );
-    writer.write(
-      `type WritableStream<W = any> = import("node:stream/web").WritableStream<W>;`,
+    writer.writeLine(
+      `type WritableStream<W = any> = import("stream/web").WritableStream<W>;`,
     );
+    writer.write("interface AsyncDisposable").block(() => {
+      writer.write("[Symbol.asyncDispose](): PromiseLike<void>;");
+    }).newLine();
+    writer.write("interface Disposable").block(() => {
+      writer.write("[Symbol.dispose](): void;");
+    });
+    writer.write("interface SymbolConstructor").block(() => {
+      writer.writeLine("readonly dispose: unique symbol;");
+      writer.writeLine("readonly asyncDispose: unique symbol;");
+    });
+    writer.write("interface ErrorOptions").block(() => {
+      writer.writeLine("cause?: unknown;");
+    });
+    writer.writeLine(`type MessagePort = typeof globalThis["MessagePort"];`);
   });
 
   return sourceFile.getFullText();

@@ -86,7 +86,9 @@ export class BufferStreamReader implements Deno.Reader {
       }
     }
     if (errors.length > 0) {
-      throw (errors.length > 1 ? new AggregateError(errors) : errors[0]);
+      throw (errors.length > 1
+        ? new (globalThis as any).AggregateError(errors)
+        : errors[0]);
     }
   }
 }

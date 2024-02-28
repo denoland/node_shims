@@ -1,7 +1,7 @@
 // This script runs the unit tests under third_party/deno directory
 
-import fs from "node:fs";
-import { createRequire } from "node:module";
+import fs from "fs";
+import { createRequire } from "module";
 
 // rq = requires
 const testsToSkip = new Set([
@@ -31,6 +31,12 @@ const testsToSkip = new Set([
   "filesIterCustomBufSize", // deprecated
   "filesIterSync", // deprecated
   "filesIterSyncCustomBufSize", // deprecated
+  "fsFileSyncSyncSuccess", // not implemented
+  "fsFileSyncSuccess", // not implemented
+  "fsFileUtimeSyncSuccess", // not implemented
+  "fsFileUtimeSuccess", // not implemented
+  "futimeSyncSuccess", // not implemented
+  "futimeSuccess", // not implemented
   "readerIter", // deprecated
   "readerIterSync", // deprecated
   "writePermFailure", // permissions
@@ -41,10 +47,9 @@ const testsToSkip = new Set([
   "openUrl", // depends on umask
   "readPermFailure", // permissions
   "readWritePermFailure", // permissions
-  "openNotFound", // todo
+  "openSyncNotFound", // includes full path in node.js
+  "openNotFound", // includes full path in node.js
   "openModeWriteRead", // not implemented
-  "readableStream", // not implemented
-  "readableStreamTextEncoderPipe", // not implemented
   "readFileIsDirectoryErrorCode", // todo(https://github.com/denoland/deno/issues/18629): re-enable
   "seekStart", // not implemented
   "seekSyncStart", // not implemented
@@ -54,7 +59,6 @@ const testsToSkip = new Set([
   "seekEnd", // not implemented
   "seekSyncEnd", // not implemented
   "seekMode", // not implemented
-  "writableStream", // not implemented
 
   // mkdir_test
   "mkdirMode", // depends on Deno.umask
@@ -86,6 +90,16 @@ const testsToSkip = new Set([
   "killPermissions", // permissions
   "uid", // permissions
   "gid", // permissions
+
+  // stat_test
+  "statSyncPerm", // permissions
+  "statSyncNotFound", // todo: includes full path in node.js
+  "lstatSyncPerm", // permissions
+  "lstatSyncNotFound", // todo: includes full path in node.js
+  "statPerm", // permissions
+  "statNotFound", // todo: includes full path in node.js
+  "lstatPerm", // permissions
+  "lstatNotFound", // todo: includes full path in node.js
 
   // read_file_test
   "readFileSyncPerm", // permissions
@@ -141,6 +155,7 @@ const testsToSkip = new Set([
   "timeoutBindThis",
   "timeoutCallbackThis",
   "timeoutEvalNoScopeLeak",
+  "regression for #20367", // interestingly, node.js seems flaky on this
 
   // truncate_test
   "truncateSyncPerm", // permissions
@@ -174,7 +189,7 @@ const testsToSkip = new Set([
 const testFiles = fs.readFileSync("tools/working_test_files.txt", "utf8")
   .trim().split(/\s/);
 
-const testDefinitions = (await import("../src/deno/internal/test.ts"))
+const testDefinitions = (await import("../src/test-internals.ts"))
   .testDefinitions;
 const filter = getFilter();
 
@@ -231,12 +246,24 @@ async function setupTests() {
 
   globalThis.Deno = (await import("../src/index.ts")).Deno;
   if (!("Blob" in globalThis)) {
-    globalThis.Blob = (await import("node:buffer")).Blob;
+    globalThis.Blob = (await import("buffer")).Blob;
   }
   await webStreamHack();
 
   if (!("crypto" in globalThis)) {
-    globalThis.crypto = (await import("node:crypto")).webcrypto;
+    globalThis.crypto = (await import("crypto")).webcrypto;
+  }
+
+  if (Promise.withResolvers === undefined) {
+    // https://github.com/tc39/proposal-promise-with-resolvers/blob/3a78801e073e99217dbeb2c43ba7212f3bdc8b83/polyfills.js#L1C1-L9C2
+    Promise.withResolvers = () => {
+      const out = {};
+      out.promise = new Promise((resolve_, reject_) => {
+        out.resolve = resolve_;
+        out.reject = reject_;
+      });
+      return out;
+    };
   }
 }
 
@@ -247,9 +274,9 @@ async function webStreamHack() {
 
   try {
     if (!globalThis.ReadableStream) {
-      Object.assign(globalThis, await import("node:stream/web"));
+      Object.assign(globalThis, await import("stream/web"));
     }
-    const { Blob } = await import("node:buffer");
+    const { Blob } = await import("buffer");
     if (Blob && !Blob.prototype.stream) {
       Blob.prototype.stream = function name() {
         let position = 0;

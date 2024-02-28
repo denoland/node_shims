@@ -1,5 +1,7 @@
 ///<reference path="../lib.deno.d.ts" />
 
+import stream from "stream";
+import tty from "tty";
 import { readSync } from "../functions/readSync.js";
 import { writeSync } from "../functions/writeSync.js";
 
@@ -20,8 +22,12 @@ function chain<T extends (...args: any[]) => Promise<any>>(
   } as T;
 }
 
+let stdinReadable: ReadableStream<Uint8Array> | undefined;
 export const stdin: typeof Deno.stdin = {
   rid: 0,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   read: chain(
     (p) => {
       return new Promise((resolve, reject) => {
@@ -46,7 +52,10 @@ export const stdin: typeof Deno.stdin = {
     () => process.stdin.pause(),
   ),
   get readable(): ReadableStream<Uint8Array> {
-    throw new Error("Not implemented.");
+    if (stdinReadable == null) {
+      stdinReadable = stream.Readable.toWeb(process.stdin);
+    }
+    return stdinReadable;
   },
   readSync(buffer: Uint8Array) {
     return readSync(this.rid, buffer);
@@ -61,8 +70,13 @@ export const stdin: typeof Deno.stdin = {
     process.stdin.setRawMode(mode);
   },
 };
+
+let stdoutWritable: WritableStream<Uint8Array> | undefined;
 export const stdout: typeof Deno.stdout = {
   rid: 1,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   write: chain((p) => {
     return new Promise((resolve) => {
       const result = process.stdout.write(p);
@@ -74,7 +88,10 @@ export const stdout: typeof Deno.stdout = {
     });
   }),
   get writable(): WritableStream<Uint8Array> {
-    throw new Error("Not implemented.");
+    if (stdoutWritable == null) {
+      stdoutWritable = stream.Writable.toWeb(process.stdout);
+    }
+    return stdoutWritable;
   },
   writeSync(data: Uint8Array) {
     return writeSync(this.rid, data);
@@ -83,8 +100,12 @@ export const stdout: typeof Deno.stdout = {
     process.stdout.destroy();
   },
 };
+let stderrWritable: WritableStream<Uint8Array> | undefined;
 export const stderr: typeof Deno.stderr = {
   rid: 2,
+  isTerminal() {
+    return tty.isatty(this.rid);
+  },
   write: chain((p) => {
     return new Promise((resolve) => {
       const result = process.stderr.write(p);
@@ -96,7 +117,10 @@ export const stderr: typeof Deno.stderr = {
     });
   }),
   get writable(): WritableStream<Uint8Array> {
-    throw new Error("Not implemented.");
+    if (stderrWritable == null) {
+      stderrWritable = stream.Writable.toWeb(process.stderr);
+    }
+    return stderrWritable;
   },
   writeSync(data: Uint8Array) {
     return writeSync(this.rid, data);

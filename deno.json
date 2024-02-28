@@ -1,4 +1,5 @@
 {
+  "lock": false,
   "lint": {
     "exclude": [
       "node_modules",
