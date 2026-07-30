@@ -1,6 +1,6 @@
 # @deno/shim-deno
 
-[`Deno` namespace](https://doc.deno.land/builtin/stable) shim for Node.js.
+`Deno` namespace shim for Node.js.
 
 See
 [PROGRESS.md](https://github.com/denoland/node_deno_shims/blob/main/packages/shim-deno/PROGRESS.md)
