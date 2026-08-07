@@ -2,4 +2,10 @@
 
 import * as fs from "fs";
 
-export const close: typeof Deno.close = fs.closeSync;
+import { appends, positions } from "./seekSync.js";
+
+export const close: typeof Deno.close = function close(fd) {
+  fs.closeSync(fd);
+  positions.delete(fd);
+  appends.delete(fd);
+};

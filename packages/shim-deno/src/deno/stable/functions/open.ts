@@ -4,6 +4,7 @@ import { open as _open } from "fs";
 import { promisify } from "util";
 
 import { File } from "../classes/FsFile.js";
+import { appends, positions } from "../functions/seekSync.js";
 import { getFsFlag } from "../../internal/fs_flags.js";
 import mapError from "../../internal/errorMap.js";
 
@@ -25,6 +26,10 @@ export const open: typeof Deno.open = async function open(
   });
   try {
     const fd = await nodeOpen(path, flagMode, mode);
+    positions.set(fd, 0);
+    if (append) {
+      appends.add(fd);
+    }
     return new File(fd);
   } catch (err) {
     throw mapError(err);

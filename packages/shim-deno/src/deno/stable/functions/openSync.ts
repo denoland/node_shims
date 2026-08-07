@@ -3,6 +3,7 @@
 import { openSync as nodeOpenSync } from "fs";
 
 import { File } from "../classes/FsFile.js";
+import { appends, positions } from "../functions/seekSync.js";
 import { getFsFlag } from "../../internal/fs_flags.js";
 import mapError from "../../internal/errorMap.js";
 
@@ -22,6 +23,10 @@ export const openSync: typeof Deno.openSync = function openSync(
   });
   try {
     const fd = nodeOpenSync(path, flagMode, mode);
+    positions.set(fd, 0);
+    if (append) {
+      appends.add(fd);
+    }
     return new File(fd);
   } catch (err) {
     throw mapError(err);

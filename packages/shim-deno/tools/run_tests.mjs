@@ -51,14 +51,6 @@ const testsToSkip = new Set([
   "openNotFound", // includes full path in node.js
   "openModeWriteRead", // not implemented
   "readFileIsDirectoryErrorCode", // todo(https://github.com/denoland/deno/issues/18629): re-enable
-  "seekStart", // not implemented
-  "seekSyncStart", // not implemented
-  "seekCurrent", // not implemented
-  "seekStartBigInt", // not implemented
-  "seekSyncCurrent", // not implemented
-  "seekEnd", // not implemented
-  "seekSyncEnd", // not implemented
-  "seekMode", // not implemented
 
   // mkdir_test
   "mkdirMode", // depends on Deno.umask

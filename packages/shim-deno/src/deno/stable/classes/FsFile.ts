@@ -12,6 +12,8 @@ import { read } from "../functions/read.js";
 import { readSync } from "../functions/readSync.js";
 import { write } from "../functions/write.js";
 import { writeSync } from "../functions/writeSync.js";
+import { seek } from "../functions/seek.js";
+import { seekSync } from "../functions/seekSync.js";
 
 (Symbol as any).dispose ??= Symbol("Symbol.dispose");
 (Symbol as any).asyncDispose ??= Symbol("Symbol.asyncDispose");
@@ -51,12 +53,12 @@ export class FsFile implements Deno.FsFile {
     return readSync(this.rid, p);
   }
 
-  seek(_offset: number, _whence: Deno.SeekMode): Promise<number> {
-    throw new Error("Method not implemented.");
+  async seek(offset: number, whence: Deno.SeekMode): Promise<number> {
+    return await seek(this.rid, offset, whence);
   }
 
-  seekSync(_offset: number, _whence: Deno.SeekMode): number {
-    throw new Error("Method not implemented.");
+  seekSync(offset: number, whence: Deno.SeekMode): number {
+    return seekSync(this.rid, offset, whence);
   }
 
   async stat(): Promise<Deno.FileInfo> {
