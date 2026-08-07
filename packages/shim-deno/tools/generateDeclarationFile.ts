@@ -93,6 +93,7 @@ statements.push({
 // file to it. Save the file then type check.
 const newProject = new Project({
   compilerOptions: {
+    lib: ["lib.esnext.d.ts"],
     // limit to only node types
     types: ["node"],
   },

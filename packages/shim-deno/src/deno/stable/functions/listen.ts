@@ -4,6 +4,12 @@ import { createServer, Server } from "net";
 
 import { Conn } from "../../internal/Conn.js";
 import { Listener } from "../../internal/Listener.js";
+import {
+  TcpListener,
+  TcpListenOptions,
+  UnixListener,
+  UnixListenOptions,
+} from "../types.js";
 
 async function* _listen(
   server: Server,
@@ -39,7 +45,15 @@ async function* _listen(
   }
 }
 
-export const listen: typeof Deno.listen = function listen(options) {
+function listen(options: TcpListenOptions & { transport?: "tcp" }): TcpListener;
+function listen(
+  options: UnixListenOptions & { transport: "unix" },
+): UnixListener;
+function listen(
+  options:
+    | TcpListenOptions & { transport?: "tcp" }
+    | UnixListenOptions & { transport: "unix" },
+): TcpListener | UnixListener {
   if (options.transport === "unix") {
     throw new Error("Unstable UnixListenOptions is not implemented");
   }
@@ -56,11 +70,14 @@ export const listen: typeof Deno.listen = function listen(options) {
   );
 
   // @ts-expect-error undocumented socket._handle property
-  const listener = new Listener(server._handle.fd, {
+  const listener: TcpListener = new Listener(server._handle.fd, {
     hostname,
     port,
     transport: "tcp",
   }, _listen(server, waitFor));
 
   return listener;
-};
+}
+
+const listenFunc: typeof Deno.listen = listen;
+export { listenFunc as listen };

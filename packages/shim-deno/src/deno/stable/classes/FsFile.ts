@@ -2,6 +2,7 @@
 
 import * as fs from "fs";
 import * as stream from "stream";
+import * as tty from "tty";
 import { fstat } from "../functions/fstat.js";
 import { fstatSync } from "../functions/fstatSync.js";
 import { ftruncate } from "../functions/ftruncate.js";
@@ -118,6 +119,30 @@ export class FsFile implements Deno.FsFile {
       this.#writableStream = stream.Writable.toWeb(nodeStream);
     }
     return this.#writableStream;
+  }
+
+  isTerminal(): boolean {
+    return tty.isatty(this.rid);
+  }
+
+  setRaw(_mode: boolean): void {
+    throw new Error("Not implemented.");
+  }
+
+  lock(_exclusive?: boolean | undefined): Promise<void> {
+    throw new Error("Unstable: Not implemented.");
+  }
+
+  lockSync(_exclusive?: boolean | undefined): void {
+    throw new Error("Unstable: Not implemented.");
+  }
+
+  unlock(): Promise<void> {
+    throw new Error("Unstable: Not implemented.");
+  }
+
+  unlockSync(): void {
+    throw new Error("Unstable: Not implemented.");
   }
 }
 

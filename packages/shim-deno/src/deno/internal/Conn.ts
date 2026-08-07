@@ -4,14 +4,16 @@ import { Socket } from "net";
 import { once } from "events";
 
 import { FsFile } from "../stable/classes/FsFile.js";
+import { NetAddr } from "../stable/types.js";
 
-export class Conn extends FsFile implements Deno.Conn {
+export class Conn<A extends Deno.Addr = Deno.Addr> extends FsFile
+  implements Deno.Conn<A> {
   #socket: Socket;
 
   constructor(
     readonly rid: number,
-    readonly localAddr: Deno.Addr,
-    readonly remoteAddr: Deno.Addr,
+    readonly localAddr: A,
+    readonly remoteAddr: A,
     socket?: Socket,
   ) {
     super(rid);
@@ -58,7 +60,7 @@ export class Conn extends FsFile implements Deno.Conn {
   }
 }
 
-export class TlsConn extends Conn implements Deno.TlsConn {
+export class TlsConn extends Conn<NetAddr> implements Deno.TlsConn {
   handshake(): Promise<Deno.TlsHandshakeInfo> {
     console.warn("@deno/shim-deno: Handshake is not supported.");
     return Promise.resolve({

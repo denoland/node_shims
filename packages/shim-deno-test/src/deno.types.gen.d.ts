@@ -9,7 +9,7 @@ import { URL } from "url";
  * `fn` can be async if required.
  *
  * ```ts
- * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+ * import { assertEquals } from "jsr:@std/assert";
  *
  * Deno.test({
  *   name: "example test",
@@ -49,7 +49,7 @@ export interface DenoTest {
    * `fn` can be async if required.
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test({
    *   name: "example test",
@@ -86,7 +86,7 @@ export interface DenoTest {
    * `fn` can be async if required.
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test("My test description", () => {
    *   assertEquals("hello", "hello");
@@ -109,7 +109,7 @@ export interface DenoTest {
    * `fn` can be async if required. Declared function must have a name.
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test(function myTestName() {
    *   assertEquals("hello", "hello");
@@ -132,7 +132,7 @@ export interface DenoTest {
    * `fn` can be async if required.
    *
    * ```ts
-   * import {assert, fail, assertEquals} from "https://deno.land/std/testing/asserts.ts";
+   * import { assert, fail, assertEquals } from "jsr:@std/assert";
    *
    * Deno.test("My test description", { permissions: { read: true } }, (): void => {
    *   assertEquals("hello", "hello");
@@ -155,7 +155,7 @@ export interface DenoTest {
    * `fn` can be async if required.
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test(
    *   {
@@ -190,7 +190,7 @@ export interface DenoTest {
    * `fn` can be async if required. Declared function must have a name.
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test(
    *   { permissions: { read: true } },
@@ -519,7 +519,7 @@ export interface PermissionOptionsObject {
    * Examples:
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test({
    *   name: "inherit",
@@ -534,7 +534,7 @@ export interface PermissionOptionsObject {
    * ```
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test({
    *   name: "true",
@@ -549,7 +549,7 @@ export interface PermissionOptionsObject {
    * ```
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test({
    *   name: "false",
@@ -564,7 +564,7 @@ export interface PermissionOptionsObject {
    * ```
    *
    * ```ts
-   * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+   * import { assertEquals } from "jsr:@std/assert";
    *
    * Deno.test({
    *   name: "localhost:8080",

@@ -7,9 +7,9 @@ import { ensureSpecificDenoVersion } from "./deno_version.ts";
 ensureSpecificDenoVersion();
 
 const stableTypes = await run("deno types");
-const version = (await run("deno --version")).trim().split("\n").map((line) =>
-  line.split(" ")
-).reduce(
+const version = (await run("deno --version")).trim().split("\n").map((
+  line: string,
+) => line.split(" ")).reduce(
   (acc, curr) => ({ ...acc, [curr[0]]: curr[1] }),
   {} as { [k: string]: string },
 );

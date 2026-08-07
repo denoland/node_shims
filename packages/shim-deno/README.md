@@ -20,7 +20,7 @@ starting this project and for their contributions—specifically
 1. Update local version.
 1. In `/.github/workflows/ci.yml`, increase the deno version in the setup-deno
    action
-1. Update version in `./tools/denolib.ts`
+1. Update version in `./tools/deno_version.ts`
 1. Go into `./third_party/deno` and update the submodule:
    - `git fetch --tags`
    - `git checkout v1.x.x` -- replace with version

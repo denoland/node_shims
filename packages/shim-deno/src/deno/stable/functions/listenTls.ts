@@ -5,6 +5,7 @@ import { createServer, Server } from "tls";
 import { TlsConn } from "../../internal/Conn.js";
 import { Listener } from "../../internal/Listener.js";
 import { readTextFileSync } from "./readTextFileSync.js";
+import { TlsCertifiedKeyFromFile } from "../types.js";
 
 async function* _listen(
   server: Server,
@@ -40,16 +41,20 @@ async function* _listen(
   }
 }
 
-export const listenTls: typeof Deno.listenTls = function listen(
-  { port, hostname = "0.0.0.0", transport = "tcp", certFile, keyFile },
-) {
+export const listenTls: typeof Deno.listenTls = function listenTls({
+  port,
+  hostname = "0.0.0.0",
+  transport = "tcp",
+  ...options
+}) {
   if (transport !== "tcp") {
     throw new Error("Deno.listen is only implemented for transport: tcp");
   }
 
-  const [cert, key] = [certFile, keyFile].map((f) =>
-    f == null ? undefined : readTextFileSync(f)
-  );
+  const [cert, key] = [
+    (options as TlsCertifiedKeyFromFile).certFile,
+    (options as TlsCertifiedKeyFromFile).keyFile,
+  ].map((f) => f == null ? undefined : readTextFileSync(f));
 
   const server = createServer({ cert, key });
 

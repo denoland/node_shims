@@ -44,7 +44,9 @@ export interface SubtleCrypto {
   /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto/exportKey) */
   exportKey(format: "jwk", key: CryptoKey): Promise<JsonWebKey>;
   exportKey(format: Exclude<KeyFormat, "jwk">, key: CryptoKey): Promise<ArrayBuffer>;
+  exportKey(format: KeyFormat, key: CryptoKey): Promise<ArrayBuffer | JsonWebKey>;
   /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/SubtleCrypto/generateKey) */
+  generateKey(algorithm: "Ed25519", extractable: boolean, keyUsages: ReadonlyArray<"sign" | "verify">): Promise<CryptoKeyPair>;
   generateKey(algorithm: RsaHashedKeyGenParams | EcKeyGenParams, extractable: boolean, keyUsages: ReadonlyArray<KeyUsage>): Promise<CryptoKeyPair>;
   generateKey(algorithm: AesKeyGenParams | HmacKeyGenParams | Pbkdf2Params, extractable: boolean, keyUsages: ReadonlyArray<KeyUsage>): Promise<CryptoKey>;
   generateKey(algorithm: AlgorithmIdentifier, extractable: boolean, keyUsages: KeyUsage[]): Promise<CryptoKeyPair | CryptoKey>;
@@ -172,6 +174,11 @@ export interface RsaOtherPrimesInfo {
 
 export type KeyFormat = "jwk" | "pkcs8" | "raw" | "spki";
 
+export interface CryptoKeyPair {
+  privateKey: CryptoKey;
+  publicKey: CryptoKey;
+}
+
 export interface RsaHashedKeyGenParams extends RsaKeyGenParams {
   hash: HashAlgorithmIdentifier;
 }
@@ -188,11 +195,6 @@ export interface EcKeyGenParams extends Algorithm {
 }
 
 export type NamedCurve = string;
-
-export interface CryptoKeyPair {
-  privateKey: CryptoKey;
-  publicKey: CryptoKey;
-}
 
 export interface AesKeyGenParams extends Algorithm {
   length: number;

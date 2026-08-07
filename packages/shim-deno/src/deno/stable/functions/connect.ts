@@ -2,8 +2,19 @@
 
 import { createConnection } from "net";
 import { Conn } from "../../internal/Conn.js";
+import {
+  ConnectOptions,
+  NetAddr,
+  TcpConn,
+  UnixConn,
+  UnixConnectOptions,
+} from "../types.js";
 
-export const connect: typeof Deno.connect = function connect(options) {
+function connect(options: ConnectOptions): Promise<TcpConn>;
+function connect(options: UnixConnectOptions): Promise<UnixConn>;
+function connect(
+  options: ConnectOptions | UnixConnectOptions,
+): Promise<TcpConn | UnixConn> {
   if (options.transport === "unix") {
     throw new Error("Unstable UnixConnectOptions is not implemented");
   }
@@ -16,7 +27,7 @@ export const connect: typeof Deno.connect = function connect(options) {
 
   socket.on("error", (err) => console.error(err));
 
-  return new Promise<Conn>((resolve) => {
+  return new Promise<Conn<NetAddr>>((resolve) => {
     socket.once("connect", () => {
       // @ts-expect-error undocumented socket._handle property
       const rid: number = socket._handle.fd;
@@ -38,4 +49,7 @@ export const connect: typeof Deno.connect = function connect(options) {
       resolve(new Conn(rid, localAddr, remoteAddr, socket));
     });
   });
-};
+}
+
+const connectFunc: typeof Deno.connect = connect;
+export { connectFunc as connect };

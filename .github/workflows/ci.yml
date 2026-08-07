@@ -27,7 +27,7 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - uses: denoland/setup-deno@v1
       with:
-        deno-version: 1.40.2
+        deno-version: 1.43.3
     - run: deno lint
       if: matrix.os == 'ubuntu-latest'
     - run: deno fmt --check

@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/denoland/node_deno_shims#readme",
   "devDependencies": {
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.5"
   }
 }

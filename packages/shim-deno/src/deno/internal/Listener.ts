@@ -1,14 +1,19 @@
 ///<reference path="../stable/lib.deno.d.ts" />
 
 import { close } from "../stable/functions/close.js";
+import { Addr } from "../stable/types.js";
 import * as errors from "../stable/variables/errors.js";
+import { Conn } from "./Conn.js";
 
-export class Listener<TConn extends Deno.Conn> implements Deno.Listener {
+export class Listener<
+  TConn extends Deno.Conn = Conn,
+  A extends Deno.Addr = Addr,
+> implements Deno.Listener<TConn, A> {
   #listener: AsyncIterableIterator<TConn>;
 
   constructor(
     readonly rid: number,
-    readonly addr: Deno.Addr,
+    readonly addr: A,
     listener: AsyncIterableIterator<TConn>,
   ) {
     this.#listener = listener;

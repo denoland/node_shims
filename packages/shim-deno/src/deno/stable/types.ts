@@ -16,7 +16,8 @@ export type FsEventFlag = Deno.FsEventFlag;
 export type FsWatcher = Deno.FsWatcher;
 export type HrtimePermissionDescriptor = Deno.HrtimePermissionDescriptor;
 export type InspectOptions = Deno.InspectOptions;
-export type Listener = Deno.Listener;
+export type Listener<T extends Conn = Conn, A extends Addr = Addr> =
+  Deno.Listener<T, A>;
 export type ListenOptions = Deno.ListenOptions;
 export type ListenTlsOptions = Deno.ListenTlsOptions;
 export type MakeTempOptions = Deno.MakeTempOptions;
@@ -63,6 +64,9 @@ export type WriteFileOptions = Deno.WriteFileOptions;
 export type WritePermissionDescriptor = Deno.WritePermissionDescriptor;
 export type Writer = Deno.Writer;
 export type WriterSync = Deno.WriterSync;
+export type TcpListener = Listener<TcpConn, NetAddr>;
+export type UnixListener = Listener<UnixConn, UnixAddr>;
+export type TlsCertifiedKeyFromFile = Deno.TlsCertifiedKeyFromFile;
 
 export type CAARecord = Deno.CAARecord;
 export type MXRecord = Deno.MXRecord;
